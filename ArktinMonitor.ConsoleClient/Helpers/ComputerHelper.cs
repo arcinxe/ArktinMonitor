@@ -19,7 +19,7 @@ namespace ArktinMonitor.ConsoleClient.Helpers
                 Cpu = GetCpuName(),
                 Gpu = GetGpuName(),
                 Name = Environment.MachineName,
-                Ram = GetTotalRamInBytes() / (1024 * 1024),
+                Ram = GetTotalRamInGigaBytes(),
                 OperatingSystem = FriendlyWindowsName()
             };
             return computer;
@@ -55,9 +55,16 @@ namespace ArktinMonitor.ConsoleClient.Helpers
             return gpuNames.OrderByDescending(r => r[1]).FirstOrDefault()[0];
         }
 
-        public static double GetTotalRamInBytes()
+        public static double GetTotalRamInGigaBytes()
         {
-            return new ComputerInfo().TotalPhysicalMemory;
+            var rams = GetComponent("Win32_PhysicalMemory").Get();
+            var totalMemory = 0d;
+
+            foreach (var ram in rams)
+            {
+                totalMemory += Convert.ToDouble( ram.GetPropertyValue("capacity"));
+            }
+            return totalMemory / 1024 / 1024;
 
         }
 
