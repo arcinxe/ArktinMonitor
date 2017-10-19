@@ -49,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArktinMonitorContext.cs" />
     <Compile Include="ArktinMonitorDataAccess.cs" />
     <Compile Include="BlockedApplication.cs" />
     <Compile Include="BlockedSite.cs" />

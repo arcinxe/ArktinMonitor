@@ -19,8 +19,7 @@ namespace ArktinMonitor.WebApp.Controllers
         // GET: api/Computers
         public IQueryable<Computer> GetComputers()
         {
-            var computers = db.Computers;
-            return computers;
+            return db.Computers;
         }
 
         // GET: api/Computers/5

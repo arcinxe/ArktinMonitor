@@ -1,7 +1,11 @@
-﻿using Microsoft.Owin;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(ArktinMonitor.WebApp.Startup))]
+[assembly: OwinStartup(typeof(ArktinMonitor.WebApp.Startup))]
+
 namespace ArktinMonitor.WebApp
 {
     public partial class Startup
