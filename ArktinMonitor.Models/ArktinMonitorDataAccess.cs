@@ -17,12 +17,19 @@ namespace ArktinMonitor.Models
         {
         }
 
-        public DbSet<ComputerUser> Users { get; set; }
+        public DbSet<ComputerUser> ComputerUsers { get; set; }
         public DbSet<WebAccount> WebAccounts { get; set; }
         public DbSet<Computer> Computers { get; set; }
         public DbSet<Disk> Disks { get; set; }
         public DbSet<BlockedApplication> BlockedApplications { get; set; }
         public DbSet<BlockedSite> BlicBlockedSites { get; set; }
         public DbSet<LogTimeInterval> LogTimeIntervals { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Computer>().Ignore(c => c.Disks);
+            modelBuilder.Entity<Computer>().Ignore(c => c.ComputerUsers);
+        }
     }
 }
