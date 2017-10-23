@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ArktinMonitor.Models;
 using Microsoft.VisualBasic.Devices;
 using System.Management;
+using System.Net.NetworkInformation;
 using Microsoft.Win32;
 
 namespace ArktinMonitor.ConsoleClient.Helpers
@@ -20,7 +22,10 @@ namespace ArktinMonitor.ConsoleClient.Helpers
                 Gpu = GetGpuName(),
                 Name = Environment.MachineName,
                 Ram = GetTotalRamInGigaBytes(),
-                OperatingSystem = FriendlyWindowsName()
+                OperatingSystem = GetWindowsName(),
+                MacAddress = GetMacAddress(),
+                Disks = GetDisks(),
+                ComputerUsers = ComputerUsersHelper.GetComputerUsers()
             };
             return computer;
         }
@@ -64,10 +69,39 @@ namespace ArktinMonitor.ConsoleClient.Helpers
             {
                 totalMemory += Convert.ToDouble( ram.GetPropertyValue("capacity"));
             }
-            return totalMemory / 1024 / 1024;
+            //     Bytes         KB     MB     GB
+            return totalMemory / 1024 / 1024 / 1024;
 
         }
 
+        public static string GetMacAddress()
+        {
+            return NetworkInterface.GetAllNetworkInterfaces()
+                .Where(nic => nic.OperationalStatus == OperationalStatus.Up)
+                .Select(nic => nic.GetPhysicalAddress()
+                .ToString()).FirstOrDefault();
+        }
+
+        public static List<Disk> GetDisks()
+        {
+            var counter = 1;
+            var disks = new List<Disk>();
+            foreach (var driveInfo in DriveInfo.GetDrives())
+            {
+                if (driveInfo.IsReady)
+                {
+                    disks.Add(new Disk()
+                    {
+                        Letter = driveInfo.Name,
+                        Name = driveInfo.VolumeLabel,
+                        TotalSpace = driveInfo.TotalSize,
+                        FreeSpace = driveInfo.AvailableFreeSpace,
+                        DiskLocalId = counter++
+                    });
+                }
+            }
+            return disks;
+        }
 
         // Returns list of devices of querred hardware class.
         // https://msdn.microsoft.com/en-us/library/aa389273(v=vs.85).aspx
@@ -76,7 +110,7 @@ namespace ArktinMonitor.ConsoleClient.Helpers
             return new ManagementObjectSearcher($"select * from {hwclass}");
         }
 
-        public static string FriendlyWindowsName()
+        public static string GetWindowsName()
         {
             var productName = HKLM_GetString(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName");
             var csdVersion = HKLM_GetString(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CSDVersion");
