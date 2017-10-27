@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ArktinMonitor.Models
+namespace ArktinMonitor.Data.Models
 {
     public class Computer
     {
@@ -21,9 +17,8 @@ namespace ArktinMonitor.Models
 
         public int WebAccountId { get; set; }
         public virtual WebAccount WebAccount { get; set; }
-
-        // Not mapped in database.
-        public List<Disk> Disks { get; set; }
-        public List<ComputerUser> ComputerUsers { get; set; }
     }
+
+
+
 }

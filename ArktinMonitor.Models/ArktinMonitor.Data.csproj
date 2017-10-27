@@ -7,8 +7,8 @@
     <ProjectGuid>{2C7A4512-1A9B-40A8-9653-D11FD8AC5247}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ArktinMonitor.Models</RootNamespace>
-    <AssemblyName>ArktinMonitor.Models</AssemblyName>
+    <RootNamespace>ArktinMonitor.Data</RootNamespace>
+    <AssemblyName>ArktinMonitor.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -29,12 +29,18 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ArktinMonitor.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -50,19 +56,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArktinMonitorDataAccess.cs" />
-    <Compile Include="BlockedApplication.cs" />
-    <Compile Include="BlockedSite.cs" />
-    <Compile Include="Computer.cs" />
-    <Compile Include="ComputerUser.cs" />
-    <Compile Include="Disk.cs" />
-    <Compile Include="LogTimeInterval.cs" />
+    <Compile Include="ExtensionMethods\ComputerExtension.cs" />
+    <Compile Include="Models\BlockedApplication.cs" />
+    <Compile Include="Models\BlockedSite.cs" />
+    <Compile Include="Models\Computer.cs" />
+    <Compile Include="Models\ComputerUser.cs" />
+    <Compile Include="Models\Disk.cs" />
+    <Compile Include="Models\LogTimeInterval.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Other\TokenResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebAccount.cs" />
+    <Compile Include="Models\WebAccount.cs" />
+    <Compile Include="ResourceModels\ComputerResourceModel.cs" />
+    <Compile Include="ViewModels\ComputerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ArktinMonitor.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

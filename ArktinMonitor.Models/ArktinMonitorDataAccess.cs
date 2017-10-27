@@ -1,9 +1,8 @@
-namespace ArktinMonitor.Models
-{
-    using System;
-    using System.Data.Entity;
-    using System.Linq;
+using System.Data.Entity;
+using ArktinMonitor.Data.Models;
 
+namespace ArktinMonitor.Data
+{
     public class ArktinMonitorDataAccess : DbContext
     {
         // Your context has been configured to use a 'ArktinMonitorDataAccess' connection string from your application's 
@@ -13,7 +12,7 @@ namespace ArktinMonitor.Models
         // If you wish to target a different database and/or database provider, modify the 'ArktinMonitorDataAccess' 
         // connection string in the application configuration file.
         public ArktinMonitorDataAccess()
-            : base("name=ArktinMonitorDataAccess")
+            : base("name=DefaultConnection")
         {
         }
 
@@ -24,12 +23,5 @@ namespace ArktinMonitor.Models
         public DbSet<BlockedApplication> BlockedApplications { get; set; }
         public DbSet<BlockedSite> BlicBlockedSites { get; set; }
         public DbSet<LogTimeInterval> LogTimeIntervals { get; set; }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Computer>().Ignore(c => c.Disks);
-            modelBuilder.Entity<Computer>().Ignore(c => c.ComputerUsers);
-        }
     }
 }

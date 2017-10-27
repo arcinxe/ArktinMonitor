@@ -1,11 +1,8 @@
-namespace ArktinMonitor.Models.Migrations
-{
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ArktinMonitor.Models.ArktinMonitorDataAccess>
+namespace ArktinMonitor.Data.Migrations
+{
+    internal sealed class Configuration : DbMigrationsConfiguration<ArktinMonitorDataAccess>
     {
         public Configuration()
         {
@@ -13,7 +10,7 @@ namespace ArktinMonitor.Models.Migrations
             ContextKey = "ArktinMonitor.Models.ArktinMonitorContext";
         }
 
-        protected override void Seed(ArktinMonitor.Models.ArktinMonitorDataAccess context)
+        protected override void Seed(ArktinMonitorDataAccess context)
         {
             //  This method will be called after migrating to the latest version.
 
