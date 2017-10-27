@@ -10,7 +10,10 @@ namespace ArktinMonitor.WebApp
     {
         public void Configuration(IAppBuilder app)
         {
-            var config = new HttpConfiguration();
+            var config = new HttpConfiguration
+            {
+                IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always // Add this line to enable detail mode in release
+            };
             ConfigureAuth(app);
             app.UseCors(CorsOptions.AllowAll);
             app.UseWebApi(config);

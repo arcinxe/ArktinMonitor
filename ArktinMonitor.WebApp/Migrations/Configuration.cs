@@ -9,7 +9,7 @@ namespace ArktinMonitor.WebApp.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(ArktinMonitor.WebApp.Models.ApplicationDbContext context)

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Routing;
+using ArktinMonitor.Data;
 
 namespace ArktinMonitor.WebApp.Controllers
 {
@@ -29,6 +30,16 @@ namespace ArktinMonitor.WebApp.Controllers
         public HttpResponseMessage Test()
         {
             return Request.CreateResponse(HttpStatusCode.OK, "Hello");
+        }
+
+
+        [Route("Computer")]
+        [HttpGet]
+        public IHttpActionResult Computer()
+        {
+            var db = new ArktinMonitorDataAccess();
+            var computerName = db.Computers.FirstOrDefault().Name;
+            return Ok(computerName);
         }
     }
 }

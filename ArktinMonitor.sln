@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.ConsoleClient", "ArktinMonitor.ConsoleClient\ArktinMonitor.ConsoleClient.csproj", "{4D08606B-27B2-4BB3-BD92-37E1E393ED88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.Models", "ArktinMonitor.Models\ArktinMonitor.Models.csproj", "{2C7A4512-1A9B-40A8-9653-D11FD8AC5247}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.Data", "ArktinMonitor.Models\ArktinMonitor.Data.csproj", "{2C7A4512-1A9B-40A8-9653-D11FD8AC5247}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.WebApp", "ArktinMonitor.WebApp\ArktinMonitor.WebApp.csproj", "{52E33C48-212B-4F6D-947F-2D99DDCC2B91}"
 EndProject

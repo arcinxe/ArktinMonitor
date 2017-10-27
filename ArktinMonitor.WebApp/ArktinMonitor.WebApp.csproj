@@ -220,13 +220,10 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BlockedApplicationsController.cs" />
-    <Compile Include="Controllers\BlockedSitesController.cs" />
+    <Compile Include="Controllers\ComputerController.cs" />
     <Compile Include="Controllers\ComputersController.cs" />
-    <Compile Include="Controllers\ComputerUsersController.cs" />
-    <Compile Include="Controllers\DisksController.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LogTimeIntervalsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
@@ -324,9 +321,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ArktinMonitor.Models\ArktinMonitor.Models.csproj">
+    <ProjectReference Include="..\ArktinMonitor.Models\ArktinMonitor.Data.csproj">
       <Project>{2c7a4512-1a9b-40a8-9653-d11fd8ac5247}</Project>
-      <Name>ArktinMonitor.Models</Name>
+      <Name>ArktinMonitor.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

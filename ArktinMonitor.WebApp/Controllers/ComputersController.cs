@@ -8,7 +8,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using ArktinMonitor.Models;
+using ArktinMonitor.Data;
+using ArktinMonitor.Data.Models;
 
 namespace ArktinMonitor.WebApp.Controllers
 {
