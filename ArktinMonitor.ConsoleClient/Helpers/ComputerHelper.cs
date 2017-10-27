@@ -9,7 +9,6 @@ using System.Management;
 using System.Net.NetworkInformation;
 using ArktinMonitor.Data;
 using ArktinMonitor.Data.Models;
-using ArktinMonitor.Data.ViewModels;
 using Microsoft.Win32;
 using Computer = ArktinMonitor.Data.Models.Computer;
 

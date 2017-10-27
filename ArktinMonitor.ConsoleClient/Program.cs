@@ -11,7 +11,6 @@ using ArktinMonitor.ConsoleClient.Services;
 using ArktinMonitor.Data;
 using ArktinMonitor.Data.ExtensionMethods;
 using ArktinMonitor.Data.Models;
-using ArktinMonitor.Data.ResourceModels;
 using ServiceStack.Text;
 
 namespace ArktinMonitor.ConsoleClient
@@ -58,9 +57,9 @@ namespace ArktinMonitor.ConsoleClient
                 Authorization.RenewBearerToken("marcinxe@gmail.com", "[REDACTED]");
                 var sc = serverClient.SendToServer("api/Computers", comp, Authorization.GetBearerToken.AccessToken);
                 var response = sc.Result;
-                var content = response.Content.ReadAsAsync<ComputerResourceModel>().Result;
-                LocalLogger.Log($"ComputerId: {content.MacAddress}");
-                Console.WriteLine(content.Dump());
+                //var content = response.Content.ReadAsAsync<ComputerResourceModel>().Result;
+                LocalLogger.Log($"ComputerId: {response.StatusCode}");
+                //Console.WriteLine(content.Dump());
             }
             catch (Exception e)
             {
@@ -70,10 +69,10 @@ namespace ArktinMonitor.ConsoleClient
             //JsonHelper.SerializeToJsonFile(Path.Combine(Settings.LocalPath, "computer.json"), computer2);
             //LocalLogger.Log("test");
             //LocalLogger.Log(computer2.Dump());
-            Authorization.RenewBearerToken("marcinxe@gmail.com", "[REDACTED]");
-            var token = Authorization.GetBearerToken;
-            Console.WriteLine(token.Dump());
-            Console.WriteLine(token.Expires.ToLongDateString() + " " + token.Expires.ToLongTimeString());
+            //Authorization.RenewBearerToken("marcinxe@gmail.com", "[REDACTED]");
+            //var token = Authorization.GetBearerToken;
+            //Console.WriteLine(token.Dump());
+            //Console.WriteLine(token.Expires.ToLongDateString() + " " + token.Expires.ToLongTimeString());
 
             Console.Read();
         }
