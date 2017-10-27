@@ -4,19 +4,22 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ArktinMonitor.Models;
 using Microsoft.VisualBasic.Devices;
 using System.Management;
 using System.Net.NetworkInformation;
+using ArktinMonitor.Data;
+using ArktinMonitor.Data.Models;
+using ArktinMonitor.Data.ViewModels;
 using Microsoft.Win32;
+using Computer = ArktinMonitor.Data.Models.Computer;
 
 namespace ArktinMonitor.ConsoleClient.Helpers
 {
     public static class ComputerHelper
     {
-        public static Models.Computer GetComputer()
+        public static ComputerViewModel GetComputer()
         {
-            var computer = new Models.Computer()
+            var computer = new ComputerViewModel()
             {
                 Cpu = GetCpuName(),
                 Gpu = GetGpuName(),
@@ -56,8 +59,13 @@ namespace ArktinMonitor.ConsoleClient.Helpers
                     gpu.GetPropertyValue("AdapterRAM").ToString()
                 });
             }
+            var result = "";
 
-            return gpuNames.OrderByDescending(r => r[1]).FirstOrDefault()[0];
+            var results = gpuNames.OrderByDescending(r => r[1]).FirstOrDefault();
+            if (results != null)
+                result = results[0];
+
+            return result;
         }
 
         public static double GetTotalRamInGigaBytes()
@@ -67,7 +75,7 @@ namespace ArktinMonitor.ConsoleClient.Helpers
 
             foreach (var ram in rams)
             {
-                totalMemory += Convert.ToDouble( ram.GetPropertyValue("capacity"));
+                totalMemory += Convert.ToDouble(ram.GetPropertyValue("capacity"));
             }
             //     Bytes         KB     MB     GB
             return totalMemory / 1024 / 1024 / 1024;
@@ -121,7 +129,7 @@ namespace ArktinMonitor.ConsoleClient.Helpers
             }
             return "";
         }
-        
+
         private static string HKLM_GetString(string path, string key)
         {
             try

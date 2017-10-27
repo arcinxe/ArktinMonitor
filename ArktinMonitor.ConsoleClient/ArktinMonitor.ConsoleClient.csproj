@@ -66,6 +66,7 @@
     <Compile Include="Helpers\ComputerHelper.cs" />
     <Compile Include="Helpers\ComputerUsersHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
+    <Compile Include="Services\Authorization.cs" />
     <Compile Include="Services\LocalLogger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,9 +79,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ArktinMonitor.Models\ArktinMonitor.Models.csproj">
+    <ProjectReference Include="..\ArktinMonitor.Models\ArktinMonitor.Data.csproj">
       <Project>{2C7A4512-1A9B-40A8-9653-D11FD8AC5247}</Project>
-      <Name>ArktinMonitor.Models</Name>
+      <Name>ArktinMonitor.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

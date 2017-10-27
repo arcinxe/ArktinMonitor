@@ -8,7 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using ArktinMonitor.ConsoleClient.Helpers;
 using ArktinMonitor.ConsoleClient.Services;
-using ArktinMonitor.Models;
+using ArktinMonitor.Data;
+using ArktinMonitor.Data.ExtensionMethods;
+using ArktinMonitor.Data.Models;
+using ArktinMonitor.Data.ResourceModels;
 using ServiceStack.Text;
 
 namespace ArktinMonitor.ConsoleClient
@@ -48,32 +51,30 @@ namespace ArktinMonitor.ConsoleClient
             //    db.SaveChanges();
             //}
             var serverClient = new ServerClient();
-            var comp = ComputerHelper.GetComputer();
-            comp.WebAccountId = 4;
+            var comp = ComputerHelper.GetComputer().ToResourceModel();
 
             try
             {
-                var sc = serverClient.SendToServer("api/Computers", comp);
-                //sc.Wait();
+                Authorization.RenewBearerToken("marcinxe@gmail.com", "[REDACTED]");
+                var sc = serverClient.SendToServer("api/Computers", comp, Authorization.GetBearerToken.AccessToken);
                 var response = sc.Result;
-                var content = response.Content.ReadAsAsync<Computer>().Result;
-                //LocalLogger.Log($"result: {sc.Result}");
-                //var result = sc.Result;
-                //LocalLogger.Log(result.ToString());
-                LocalLogger.Log($"ComputerId: {content.ComputerId}");
-                LocalLogger.Log();
-                //LocalLogger.Log($"status: {sc.Status}");
-
-
+                var content = response.Content.ReadAsAsync<ComputerResourceModel>().Result;
+                LocalLogger.Log($"ComputerId: {content.MacAddress}");
+                Console.WriteLine(content.Dump());
             }
             catch (Exception e)
             {
                 LocalLogger.Log("Local", e);
             }
-            var computer2 = ComputerHelper.GetComputer();
-            JsonHelper.SerializeToJsonFile(Path.Combine(Settings.LocalPath, "computer.json"), computer2);
-            LocalLogger.Log("test");
-            LocalLogger.Log(computer2.Dump());
+            //var computer2 = ComputerHelper.GetComputer();
+            //JsonHelper.SerializeToJsonFile(Path.Combine(Settings.LocalPath, "computer.json"), computer2);
+            //LocalLogger.Log("test");
+            //LocalLogger.Log(computer2.Dump());
+            Authorization.RenewBearerToken("marcinxe@gmail.com", "[REDACTED]");
+            var token = Authorization.GetBearerToken;
+            Console.WriteLine(token.Dump());
+            Console.WriteLine(token.Expires.ToLongDateString() + " " + token.Expires.ToLongTimeString());
+
             Console.Read();
         }
     }

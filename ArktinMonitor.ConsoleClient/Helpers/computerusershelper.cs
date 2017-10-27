@@ -6,7 +6,8 @@ using System.Management;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
-using ArktinMonitor.Models;
+using ArktinMonitor.Data;
+using ArktinMonitor.Data.Models;
 
 namespace ArktinMonitor.ConsoleClient.Helpers
 {
