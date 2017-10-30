@@ -5,7 +5,6 @@ namespace ArktinMonitor.Data.Models
     public class LogTimeInterval
     {
         public string LogTimeIntervalId { get; set; }
-        public int LogTimeIntervalLocalId { get; set; }
         public DateTime StartTime { get; set; }
         public TimeSpan Duration { get; set; }
         public string State { get; set; }

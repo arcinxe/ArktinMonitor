@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="ArktinMonitorDataAccess.cs" />
     <Compile Include="ExtensionMethods\ComputerExtension.cs" />
+    <Compile Include="ExtensionMethods\DiskExtension.cs" />
     <Compile Include="Models\BlockedApplication.cs" />
     <Compile Include="Models\BlockedSite.cs" />
     <Compile Include="Models\Computer.cs" />
@@ -67,8 +68,6 @@
     <Compile Include="Other\TokenResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\WebAccount.cs" />
-    <Compile Include="ResourceModels\ComputerResourceModel.cs" />
-    <Compile Include="ViewModels\ComputerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ArktinMonitor.Data.Models;
-using ArktinMonitor.Data.ResourceModels;
-using ArktinMonitor.Data.ViewModels;
 
 namespace ArktinMonitor.Data.ExtensionMethods
 {
@@ -15,6 +13,7 @@ namespace ArktinMonitor.Data.ExtensionMethods
         {
             return new ComputerResourceModel()
             {
+                ComputerId = computer.ComputerId,
                 Name = computer.Name,
                 Cpu = computer.Cpu,
                 Gpu = computer.Gpu,
@@ -60,6 +59,7 @@ namespace ArktinMonitor.Data.ExtensionMethods
         {
             return new Computer()
             {
+                ComputerId = computer.ComputerId,
                 Name = computer.Name,
                 Cpu = computer.Cpu,
                 Gpu = computer.Gpu,

@@ -3,7 +3,6 @@
     public class BlockedSite
     {
         public int BlockedSiteId { get; set; }
-        public int BlockedSiteLocalId { get; set; }
         public string Name { get; set; }
         public string UrlAddress { get; set; }
 
