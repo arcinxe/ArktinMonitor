@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Web.Http;
 using ArktinMonitor.Data;
 using ArktinMonitor.Data.ExtensionMethods;
-using ArktinMonitor.Data.ResourceModels;
+using ArktinMonitor.Data.Models;
 
 namespace ArktinMonitor.WebApp.Controllers
 {
@@ -20,20 +16,17 @@ namespace ArktinMonitor.WebApp.Controllers
         [HttpGet]
         public IHttpActionResult GetAllComputers()
         {
-            var computers = _db.Computers.Where(c => c.WebAccount.Email == User.Identity.Name);
-            var computerResources = new List<ComputerResourceModel>();
-            foreach (var computer in computers)
-            {
-                computerResources.Add(computer.ToResourceModel());
-            }
-            return Ok(computerResources);
+            var computers = _db.Computers.Where(c => c.WebAccount.Email == User.Identity.Name)
+                            .AsEnumerable()
+                            .Select(c => c.ToResourceModel()).ToList();
+            return Ok(computers);
         }
 
-        [Route("Computers")]
+        [Route("Computers", Name = "PostComputer")]
         [HttpPost]
         public IHttpActionResult AddComputer(ComputerResourceModel computer)
         {
-            var exist = _db.Computers.Any(c => c.MacAddress == computer.MacAddress);
+            var exist = computer.ComputerId != 0 && _db.Computers.Any(c => c.ComputerId == computer.ComputerId);
             if (exist) return Ok();
 
             var computerModel = computer.ToModel();
@@ -44,7 +37,7 @@ namespace ArktinMonitor.WebApp.Controllers
             computerModel.WebAccountId = account.WebAccountId;
             _db.Computers.Add(computerModel);
             _db.SaveChanges();
-            return Ok();
+            return CreatedAtRoute("PostComputer", new { id = computerModel.ComputerId }, computerModel);
         }
     }
 }

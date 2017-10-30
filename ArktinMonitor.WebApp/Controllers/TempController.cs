@@ -13,17 +13,17 @@ using ArktinMonitor.Data.Models;
 
 namespace ArktinMonitor.WebApp.Controllers
 {
-    public class ComputersController : ApiController
+    public class TempController : ApiController
     {
         private ArktinMonitorDataAccess db = new ArktinMonitorDataAccess();
 
-        // GET: api/Computers
+        // GET: api/Temp
         public IQueryable<Computer> GetComputers()
         {
             return db.Computers;
         }
 
-        // GET: api/Computers/5
+        // GET: api/Temp/5
         [ResponseType(typeof(Computer))]
         public IHttpActionResult GetComputer(int id)
         {
@@ -36,7 +36,7 @@ namespace ArktinMonitor.WebApp.Controllers
             return Ok(computer);
         }
 
-        // PUT: api/Computers/5
+        // PUT: api/Temp/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutComputer(int id, Computer computer)
         {
@@ -71,7 +71,7 @@ namespace ArktinMonitor.WebApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Computers
+        // POST: api/Temp
         [ResponseType(typeof(Computer))]
         public IHttpActionResult PostComputer(Computer computer)
         {
@@ -86,7 +86,7 @@ namespace ArktinMonitor.WebApp.Controllers
             return CreatedAtRoute("DefaultApi", new { id = computer.ComputerId }, computer);
         }
 
-        // DELETE: api/Computers/5
+        // DELETE: api/Temp/5
         [ResponseType(typeof(Computer))]
         public IHttpActionResult DeleteComputer(int id)
         {
