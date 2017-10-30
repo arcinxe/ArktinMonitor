@@ -10,7 +10,7 @@ namespace ArktinMonitor.ConsoleClient
 {
     internal static class Settings
     {
-        public static string ApiUrl = "http://arktin.azurewebsites.net";//"http://localhost:14100";// https://localhost:44368/
+        public static string ApiUrl = /*"http://arktin.azurewebsites.net"*/"http://localhost:14100" /*"https://localhost:44368/"*/;
 
         public static string LocalPath = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
     }

@@ -51,6 +51,7 @@ namespace ArktinMonitor.ConsoleClient
             //}
             var serverClient = new ServerClient();
             var comp = ComputerHelper.GetComputer().ToResourceModel();
+            comp.ComputerId = 0;
 
             try
             {
@@ -58,7 +59,7 @@ namespace ArktinMonitor.ConsoleClient
                 var sc = serverClient.SendToServer("api/Computers", comp, Authorization.GetBearerToken.AccessToken);
                 var response = sc.Result;
                 //var content = response.Content.ReadAsAsync<ComputerResourceModel>().Result;
-                LocalLogger.Log($"ComputerId: {response.StatusCode}");
+                LocalLogger.Log($"Status: {response.StatusCode}");
                 //Console.WriteLine(content.Dump());
             }
             catch (Exception e)

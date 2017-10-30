@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Management;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using ArktinMonitor.Data;
 using ArktinMonitor.Data.Models;
+using ArktinMonitor.ServiceApp.Services;
 
-namespace ArktinMonitor.ConsoleClient.Helpers
+namespace ArktinMonitor.ServiceApp.Helpers
 {
     class ComputerUsersHelper
     {
@@ -25,14 +22,14 @@ namespace ArktinMonitor.ConsoleClient.Helpers
 
         public static List<ComputerUser> GetComputerUsers()
         {
-            var counter = 1;
             var userGroups = LoadUserGroups();
             var accounts = new List<ComputerUser>();
             var query = new SelectQuery("Win32_UserAccount");
             var searcher = new ManagementObjectSearcher(query);
-            foreach (ManagementObject account in searcher.Get())
+            foreach (var managementObject in searcher.Get())
             {
-                bool isAccountRight = userGroups.Any(g => g.User == account.GetPropertyValue("Name").ToString()) &&
+                var account = (ManagementObject) managementObject;
+                var isAccountRight = userGroups.Any(g => g.User == account.GetPropertyValue("Name").ToString()) &&
                                       !(bool)account.GetPropertyValue("disabled") &&
                                       !(bool)account.GetPropertyValue("lockout") &&
                                       (bool)account.GetPropertyValue("LocalAccount");
@@ -56,8 +53,9 @@ namespace ArktinMonitor.ConsoleClient.Helpers
 
             var query = new SelectQuery("Win32_GroupUser");
             var searcher = new ManagementObjectSearcher(query);
-            foreach (ManagementObject userGroup in searcher.Get())
+            foreach (var managementObject in searcher.Get())
             {
+                var userGroup = (ManagementObject) managementObject;
                 bool isAdminOrUser = (GetName(userGroup, "GroupComponent") == AdministratorsGroupName) ||
                                      (GetName(userGroup, "GroupComponent") == UsersGroupName);
 
@@ -73,6 +71,24 @@ namespace ArktinMonitor.ConsoleClient.Helpers
             return userGroups;
 
         }
+
+        public static string CurrentlyLoggedInUser()
+        {
+            try
+            {
+            var searcher = new ManagementObjectSearcher("SELECT UserName FROM Win32_ComputerSystem");
+            var collection = searcher.Get();
+            var username = (string)collection.Cast<ManagementBaseObject>().First()["UserName"];
+            return username.Split('\\')[1];
+
+            }
+            catch (Exception e)
+            {
+                LocalLogger.Log("CurrentlyLoggedInUser", e);
+                return "";
+            }
+        }
+
 
         // Extracts Name property from strings like that
         // GroupComponent : \\ARCIN-NOTEBOOK\root\cimv2:Win32_Group.Domain="ARCIN-NOTEBOOK",Name="Administratorzy"

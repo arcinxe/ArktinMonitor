@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic.Devices;
 using System.Management;
 using System.Net.NetworkInformation;
-using ArktinMonitor.Data;
 using ArktinMonitor.Data.Models;
 using Microsoft.Win32;
-using Computer = ArktinMonitor.Data.Models.Computer;
 
-namespace ArktinMonitor.ConsoleClient.Helpers
+namespace ArktinMonitor.ServiceApp.Helpers
 {
     public static class ComputerHelper
     {
@@ -91,7 +86,6 @@ namespace ArktinMonitor.ConsoleClient.Helpers
 
         public static List<Disk> GetDisks()
         {
-            var counter = 1;
             var disks = new List<Disk>();
             foreach (var driveInfo in DriveInfo.GetDrives())
             {
