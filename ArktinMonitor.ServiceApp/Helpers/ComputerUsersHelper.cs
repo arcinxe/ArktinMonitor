@@ -20,27 +20,29 @@ namespace ArktinMonitor.ServiceApp.Helpers
             .Translate(typeof(NTAccount))
             .Value.Split('\\')[1];
 
-        public static List<ComputerUser> GetComputerUsers()
+        public static List<ComputerUserLocal> GetComputerUsers()
         {
             var userGroups = LoadUserGroups();
-            var accounts = new List<ComputerUser>();
+            var accounts = new List<ComputerUserLocal>();
             var query = new SelectQuery("Win32_UserAccount");
             var searcher = new ManagementObjectSearcher(query);
             foreach (var managementObject in searcher.Get())
             {
-                var account = (ManagementObject) managementObject;
+                var account = (ManagementObject)managementObject;
                 var isAccountRight = userGroups.Any(g => g.User == account.GetPropertyValue("Name").ToString()) &&
                                       !(bool)account.GetPropertyValue("disabled") &&
                                       !(bool)account.GetPropertyValue("lockout") &&
                                       (bool)account.GetPropertyValue("LocalAccount");
                 if (isAccountRight)
                 {
-                    accounts.Add(new ComputerUser()
+                    accounts.Add(new ComputerUserLocal()
                     {
                         FullName = account.GetPropertyValue("FullName").ToString(),
                         Name = account.GetPropertyValue("Name").ToString(),
                         PrivilegeLevel = userGroups.Where(g => g.User == account.GetPropertyValue("Name").ToString()).Any(g => g.Group == AdministratorsGroupName)
-                        ? "Administrator" : "Standard user"
+                        ? "Administrator" : "Standard user",
+                        BlockedSites = new List<BlockedSiteLocal>(),
+                        BlockedApplications = new List<BlockedApplicationLocal>()
                     });
                 }
             }
@@ -55,7 +57,7 @@ namespace ArktinMonitor.ServiceApp.Helpers
             var searcher = new ManagementObjectSearcher(query);
             foreach (var managementObject in searcher.Get())
             {
-                var userGroup = (ManagementObject) managementObject;
+                var userGroup = (ManagementObject)managementObject;
                 bool isAdminOrUser = (GetName(userGroup, "GroupComponent") == AdministratorsGroupName) ||
                                      (GetName(userGroup, "GroupComponent") == UsersGroupName);
 
@@ -76,10 +78,10 @@ namespace ArktinMonitor.ServiceApp.Helpers
         {
             try
             {
-            var searcher = new ManagementObjectSearcher("SELECT UserName FROM Win32_ComputerSystem");
-            var collection = searcher.Get();
-            var username = (string)collection.Cast<ManagementBaseObject>().First()["UserName"];
-            return username.Split('\\')[1];
+                var searcher = new ManagementObjectSearcher("SELECT UserName FROM Win32_ComputerSystem");
+                var collection = searcher.Get();
+                var username = (string)collection.Cast<ManagementBaseObject>().First()["UserName"];
+                return username.Split('\\')[1];
 
             }
             catch (Exception e)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,6 +68,21 @@ namespace ArktinMonitor.Data.ExtensionMethods
                 OperatingSystem = computer.OperatingSystem,
                 MacAddress = computer.MacAddress
             };
+        }
+        
+        public static bool NeedsUpdate(this ComputerLocal oldComputer, ComputerLocal newComputer)
+        {
+            if (oldComputer == null || newComputer == null)
+            {
+                return true;
+            }
+            var isDifferent = !(oldComputer.Name == newComputer.Name
+                              && oldComputer.Cpu == newComputer.Gpu
+                              && Math.Abs(oldComputer.Ram - newComputer.Ram) < 0.10
+                              && oldComputer.OperatingSystem == newComputer.OperatingSystem
+                              && oldComputer.MacAddress == newComputer.MacAddress);
+                
+            return isDifferent;
         }
     }
 }

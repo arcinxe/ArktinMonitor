@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.Data", "ArktinMonitor.Models\ArktinMonitor.Data.csproj", "{2C7A4512-1A9B-40A8-9653-D11FD8AC5247}"
 EndProject
@@ -10,6 +10,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.ServiceApp", "ArktinMonitor.ServiceApp\ArktinMonitor.ServiceApp.csproj", "{BF7FC115-8A01-4AA3-B4E0-49C9C12DF5F7}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ArktinMonitor.Setup", "ArktinMonitor.Setup\ArktinMonitor.Setup.vdproj", "{05B493D3-87B4-4D24-8D01-BD69FA3F0F93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.IdleTimeCounter", "ArktinMonitor.IdleTimeCounter\ArktinMonitor.IdleTimeCounter.csproj", "{1F20B46F-433C-438F-A83C-447DAA810685}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.MessageBox", "ArktinMonitor.MessageBox\ArktinMonitor.MessageBox.csproj", "{3F9F560C-C76A-427E-8D9C-A4DD14DE541C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkitnMonitor.DesktopApp", "ArkitnMonitor.DesktopApp\ArkitnMonitor.DesktopApp.csproj", "{297F8991-EECD-4886-848B-040F63CA9994}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.Helpers", "ArktinMonitor.Helpers\ArktinMonitor.Helpers.csproj", "{D4342049-9EE2-41DE-8F83-AE638AF733C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,8 +39,27 @@ Global
 		{BF7FC115-8A01-4AA3-B4E0-49C9C12DF5F7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{05B493D3-87B4-4D24-8D01-BD69FA3F0F93}.Debug|Any CPU.ActiveCfg = Debug
 		{05B493D3-87B4-4D24-8D01-BD69FA3F0F93}.Release|Any CPU.ActiveCfg = Release
+		{1F20B46F-433C-438F-A83C-447DAA810685}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F20B46F-433C-438F-A83C-447DAA810685}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F20B46F-433C-438F-A83C-447DAA810685}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F20B46F-433C-438F-A83C-447DAA810685}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F9F560C-C76A-427E-8D9C-A4DD14DE541C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F9F560C-C76A-427E-8D9C-A4DD14DE541C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F9F560C-C76A-427E-8D9C-A4DD14DE541C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F9F560C-C76A-427E-8D9C-A4DD14DE541C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{297F8991-EECD-4886-848B-040F63CA9994}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{297F8991-EECD-4886-848B-040F63CA9994}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{297F8991-EECD-4886-848B-040F63CA9994}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{297F8991-EECD-4886-848B-040F63CA9994}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4342049-9EE2-41DE-8F83-AE638AF733C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4342049-9EE2-41DE-8F83-AE638AF733C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4342049-9EE2-41DE-8F83-AE638AF733C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4342049-9EE2-41DE-8F83-AE638AF733C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7367C57E-7E59-4BA1-8503-9BBC34700B30}
 	EndGlobalSection
 EndGlobal

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace ArktinMonitor.ServiceApp.Services
 {
@@ -16,7 +19,7 @@ namespace ArktinMonitor.ServiceApp.Services
         }
         private static void LogText(string data)
         {
-            // For better formationg when used without parameter.
+            // For better formating when used without parameter.
             string separator = data == "" ? "" : "-";
 
             // If isn't running as a service then also writes data to the console.
@@ -25,10 +28,27 @@ namespace ArktinMonitor.ServiceApp.Services
                 Console.WriteLine(Format(data, separator));
             }
 
-            using (var sw = new StreamWriter(Path.Combine(Settings.LocalStoragePath, "log.log"), true))
+
+
+            var currentContent = new StringBuilder();
+            try
             {
-                sw.WriteLine(Format(data, separator));
+                var rawList = File.ReadAllLines(Path.Combine(Settings.LocalStoragePath, "log.log")).ToList();
+                foreach (var item in rawList)
+                {
+                    currentContent.Append(item + Environment.NewLine);
+                }
             }
+            catch (Exception)
+            {
+                // ignored (file does not exist)
+            }
+            File.WriteAllText(Path.Combine(Settings.LocalStoragePath, "log.log"), Format(data, separator) + Environment.NewLine + currentContent);
+
+            //using (var sw = new StreamWriter(Path.Combine(Settings.LocalStoragePath, "log.log"), true))
+            //{
+            //    sw.WriteLine(Format(data, separator));
+            //}
         }
 
         private static void LogException(string sender, Exception e)
@@ -36,7 +56,7 @@ namespace ArktinMonitor.ServiceApp.Services
             Log($"[{sender}] -- Exception occured --");
             if (Settings.LogFullExceptions)
             {
-                Log($"[{sender}] " + e.ToString());
+                Log($"[{sender}] " + e);
             }
             Log($"[{sender}] " + e.Message);
 
@@ -52,7 +72,7 @@ namespace ArktinMonitor.ServiceApp.Services
 
         private static string Format(string text, string separator)
         {
-            return DateTime.Now.ToString() + " " + separator + " " + text;
+            return DateTime.Now + " " + separator + " " + text;
         }
     }
 }

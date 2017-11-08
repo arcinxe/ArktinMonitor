@@ -11,9 +11,9 @@ namespace ArktinMonitor.ServiceApp.Helpers
 {
     public static class ComputerHelper
     {
-        public static ComputerViewModel GetComputer()
+        public static ComputerLocal GetComputer()
         {
-            var computer = new ComputerViewModel()
+            var computer = new ComputerLocal()
             {
                 Cpu = GetCpuName(),
                 Gpu = GetGpuName(),
@@ -22,7 +22,8 @@ namespace ArktinMonitor.ServiceApp.Helpers
                 OperatingSystem = GetWindowsName(),
                 MacAddress = GetMacAddress(),
                 Disks = GetDisks(),
-                ComputerUsers = ComputerUsersHelper.GetComputerUsers()
+                ComputerUsers = ComputerUsersHelper.GetComputerUsers(),
+                LogTimeIntervals = new List<LogTimeInterval>()
             };
             return computer;
         }
@@ -84,19 +85,19 @@ namespace ArktinMonitor.ServiceApp.Helpers
                 .ToString()).FirstOrDefault();
         }
 
-        public static List<Disk> GetDisks()
+        public static List<DiskLocal> GetDisks()
         {
-            var disks = new List<Disk>();
+            var disks = new List<DiskLocal>();
             foreach (var driveInfo in DriveInfo.GetDrives())
             {
                 if (driveInfo.IsReady)
                 {
-                    disks.Add(new Disk()
+                    disks.Add(new DiskLocal()
                     {
                         Letter = driveInfo.Name,
                         Name = driveInfo.VolumeLabel,
-                        TotalSpace = driveInfo.TotalSize,
-                        FreeSpace = driveInfo.AvailableFreeSpace,
+                        TotalSpaceInGigaBytes = (double)driveInfo.TotalSize / 1024 / 1024 / 1024,
+                        FreeSpaceInGigaBytes = (double)driveInfo.AvailableFreeSpace / 1024 / 1024 / 1024
                     });
                 }
             }

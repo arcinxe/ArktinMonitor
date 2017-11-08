@@ -22,6 +22,12 @@
         "Entry"
         {
         "MsmKey" = "8:_19DCC073EFA4EBA756D6F978DF101201"
+        "OwnerKey" = "8:_5D664C92000B477F8779216BE5932CF2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_19DCC073EFA4EBA756D6F978DF101201"
         "OwnerKey" = "8:_B054F6EE8A0342899BE361A304A36167"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -33,7 +39,31 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_44DB98D23CB57E0CDD4DCE6BA0F5FCEC"
+        "OwnerKey" = "8:_5D664C92000B477F8779216BE5932CF2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5D664C92000B477F8779216BE5932CF2"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_6D57F6205B1A58EAE07A57D59976B1EA"
+        "OwnerKey" = "8:_B054F6EE8A0342899BE361A304A36167"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6D57F6205B1A58EAE07A57D59976B1EA"
+        "OwnerKey" = "8:_5D664C92000B477F8779216BE5932CF2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9ABDA9B6E315FB76263B4B105A4452D8"
         "OwnerKey" = "8:_B054F6EE8A0342899BE361A304A36167"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -52,7 +82,19 @@
         "Entry"
         {
         "MsmKey" = "8:_D1C9D5643AD7A1DE0EDA387C93130E7F"
+        "OwnerKey" = "8:_5D664C92000B477F8779216BE5932CF2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D1C9D5643AD7A1DE0EDA387C93130E7F"
         "OwnerKey" = "8:_E3F50C0BAFAE5721CE48EDCE84EE86FD"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E1B5260611A687B05C7B12BF9AB477D4"
+        "OwnerKey" = "8:_5D664C92000B477F8779216BE5932CF2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -63,8 +105,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E3F50C0BAFAE5721CE48EDCE84EE86FD"
+        "OwnerKey" = "8:_5D664C92000B477F8779216BE5932CF2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E9FBBC2AC09712168A8BB4BFA751B312"
         "OwnerKey" = "8:_6D57F6205B1A58EAE07A57D59976B1EA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E9FBBC2AC09712168A8BB4BFA751B312"
+        "OwnerKey" = "8:_5D664C92000B477F8779216BE5932CF2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -77,6 +131,30 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_B054F6EE8A0342899BE361A304A36167"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_5D664C92000B477F8779216BE5932CF2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E1B5260611A687B05C7B12BF9AB477D4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_44DB98D23CB57E0CDD4DCE6BA0F5FCEC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9ABDA9B6E315FB76263B4B105A4452D8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -195,6 +273,34 @@
             "InstallerClass" = "11:TRUE"
             "CustomActionData" = "8:"
             }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_9070CF6676CA4C78BD0DC7DC2335FD32"
+            {
+            "Name" = "8:Primary output from ArkitnMonitor.DesktopApp (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_5D664C92000B477F8779216BE5932CF2"
+            "FileType" = "3:2"
+            "InstallAction" = "3:1"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:2"
+            "Identifier" = "8:_6306E603_3CC1_4147_8581_E83B56E8D333"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_A117C2185F7947BF8D4F0F5E19A3C52D"
+            {
+            "Name" = "8:Primary output from ArkitnMonitor.DesktopApp (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_5D664C92000B477F8779216BE5932CF2"
+            "FileType" = "3:2"
+            "InstallAction" = "3:4"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:2"
+            "Identifier" = "8:_6D58E14D_E23A_48DF_ABF3_D22CD561F2AC"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:"
+            }
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_BCB04771DB444767B828C3DDBF2A1E78"
             {
             "Name" = "8:Primary output from ArktinMonitor.ServiceApp (Active)"
@@ -263,6 +369,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_44DB98D23CB57E0CDD4DCE6BA0F5FCEC"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_44DB98D23CB57E0CDD4DCE6BA0F5FCEC"
+                    {
+                    "Name" = "8:MaterialDesignColors.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MaterialDesignColors.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_F8600EF3B2784B5AA3EF8F290C34C46F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6D57F6205B1A58EAE07A57D59976B1EA"
             {
             "AssemblyRegister" = "3:1"
@@ -294,6 +431,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9ABDA9B6E315FB76263B4B105A4452D8"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:CredentialManagement, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_9ABDA9B6E315FB76263B4B105A4452D8"
+                    {
+                    "Name" = "8:CredentialManagement.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:CredentialManagement.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_F8600EF3B2784B5AA3EF8F290C34C46F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D1C9D5643AD7A1DE0EDA387C93130E7F"
             {
             "AssemblyRegister" = "3:1"
@@ -308,6 +476,37 @@
                     }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_F8600EF3B2784B5AA3EF8F290C34C46F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E1B5260611A687B05C7B12BF9AB477D4"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MaterialDesignThemes.Wpf, Version=2.3.1.953, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E1B5260611A687B05C7B12BF9AB477D4"
+                    {
+                    "Name" = "8:MaterialDesignThemes.Wpf.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MaterialDesignThemes.Wpf.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F8600EF3B2784B5AA3EF8F290C34C46F"
@@ -444,7 +643,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ArktinMonitor"
         "ProductCode" = "8:{3793FED0-3761-4F79-B85C-679D845C24C1}"
-        "PackageCode" = "8:{3DA088CE-8146-4300-A9E3-F9EC5CD881C7}"
+        "PackageCode" = "8:{C63C0DC3-B889-4679-AF3A-189F105EFD2B}"
         "UpgradeCode" = "8:{80752552-0909-47F5-B6ED-4460073233DA}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -963,6 +1162,34 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_5D664C92000B477F8779216BE5932CF2"
+            {
+            "SourcePath" = "8:..\\ArkitnMonitor.DesktopApp\\obj\\Release\\ArkitnMonitor.DesktopApp.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_F8600EF3B2784B5AA3EF8F290C34C46F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{297F8991-EECD-4886-848B-040F63CA9994}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B054F6EE8A0342899BE361A304A36167"
             {
             "SourcePath" = "8:..\\ArktinMonitor.ServiceApp\\obj\\Release\\ArktinMonitor.ServiceApp.exe"

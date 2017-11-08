@@ -15,9 +15,9 @@ namespace ArktinMonitor.Data.ExtensionMethods
             {
               Computer = disk.Computer.ToResourceModel(),
               Name = disk.Name,
-              TotalSpace = disk.TotalSpace,
+              TotalSpaceInGigaBytes = disk.TotalSpaceInGigaBytes,
               Letter = disk.Letter,
-              FreeSpace = disk.FreeSpace
+              FreeSpaceInGigaBytes = disk.FreeSpaceInGigaBytes
             };
         }
 
@@ -26,10 +26,20 @@ namespace ArktinMonitor.Data.ExtensionMethods
             return new Disk()
             {
                 Name = disk.Name,
-                TotalSpace = disk.TotalSpace,
+                TotalSpaceInGigaBytes = disk.TotalSpaceInGigaBytes,
                 Letter = disk.Letter,
-                FreeSpace = disk.FreeSpace
+                FreeSpaceInGigaBytes = disk.FreeSpaceInGigaBytes
             };
+        }
+
+
+        public static bool NeedsUpdate(this DiskLocal oldDisk, DiskLocal newDisk)
+        {
+            var isDifferent = !(oldDisk.Name == newDisk.Name
+                              && oldDisk.Letter == newDisk.Letter
+                              && Math.Abs(oldDisk.FreeSpaceInGigaBytes - newDisk.FreeSpaceInGigaBytes) < 1024 * 1024 * 50 // Tolerance up to 50 MB.
+                              && Math.Abs(oldDisk.TotalSpaceInGigaBytes - newDisk.TotalSpaceInGigaBytes) < 1024 * 1024 * 50);
+            return isDifferent;
         }
     }
 }

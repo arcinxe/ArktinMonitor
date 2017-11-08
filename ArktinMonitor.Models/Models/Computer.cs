@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ArktinMonitor.Data.Models
@@ -29,7 +30,68 @@ namespace ArktinMonitor.Data.Models
         public int ComputerId { get; set; }
     }
 
-    public class BasicComputer
+    public class ComputerLocal : BasicComputer
+    {
+
+        public bool Synced { get; set; }
+
+        public List<DiskLocal> Disks { get; set; }
+
+        public List<ComputerUserLocal> ComputerUsers { get; set; }
+
+        public List<LogTimeInterval> LogTimeIntervals { get; set; }
+
+
+
+        //// Override of the == operator.
+        //public static bool operator ==(ComputerLocal lhs, ComputerLocal rhs)
+        //{
+        //    if (rhs == null || lhs == null)
+        //    {
+        //        return false;
+        //    }
+
+        //    var status = lhs.Name == rhs.Name
+        //     && lhs.Cpu == rhs.Cpu
+        //     && lhs.Gpu == rhs.Gpu
+        //     && lhs.OperatingSystem == rhs.OperatingSystem
+        //     && Math.Abs(lhs.Ram - rhs.Ram) < 0.10
+        //     && lhs.MacAddress == rhs.MacAddress;
+
+        //    return status;
+        //}
+
+        //public static bool operator !=(ComputerLocal lhs, ComputerLocal rhs)
+        //{
+        //    return !(lhs == rhs);
+        //}
+
+        //protected bool Equals(ComputerLocal other)
+        //{
+        //    return Synced == other.Synced && Equals(Disks, other.Disks) && Equals(ComputerUsers, other.ComputerUsers) && Equals(LogTimeIntervals, other.LogTimeIntervals);
+        //}
+
+        //public override bool Equals(object obj)
+        //{
+        //    if (ReferenceEquals(null, obj)) return false;
+        //    if (ReferenceEquals(this, obj)) return true;
+        //    return obj.GetType() == this.GetType() && Equals((ComputerLocal)obj);
+        //}
+
+        //public override int GetHashCode()
+        //{
+        //    unchecked
+        //    {
+        //        var hashCode = Synced.GetHashCode();
+        //        hashCode = (hashCode * 397) ^ (Disks?.GetHashCode() ?? 0);
+        //        hashCode = (hashCode * 397) ^ (ComputerUsers?.GetHashCode() ?? 0);
+        //        hashCode = (hashCode * 397) ^ (LogTimeIntervals?.GetHashCode() ?? 0);
+        //        return hashCode;
+        //    }
+        //}
+    }
+
+    public abstract class BasicComputer
     {
         public string Name { get; set; }
 

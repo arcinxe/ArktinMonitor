@@ -38,6 +38,9 @@
     <StartupObject>ArktinMonitor.ServiceApp.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CredentialManagement, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CredentialManagement.1.0.2\lib\net35\CredentialManagement.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -57,11 +60,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataCollector.cs" />
+    <Compile Include="Services\AppsBlocker.cs" />
+    <Compile Include="Services\CredentialsManager.cs" />
+    <Compile Include="Services\DataUpdateManager.cs" />
     <Compile Include="Helpers\ComputerHelper.cs" />
     <Compile Include="Helpers\ComputerUsersHelper.cs" />
-    <Compile Include="Helpers\jsonhelper.cs" />
-    <Compile Include="Monitor.cs" />
+    <Compile Include="Helpers\JsonHelper.cs" />
+    <Compile Include="Services\JsonLocalDatabase.cs" />
+    <Compile Include="Services\Monitor.cs" />
     <Compile Include="MonitorService.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -76,13 +82,14 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SendingManager.cs" />
+    <Compile Include="Services\SendingManager.cs" />
     <Compile Include="Services\Authorization.cs" />
     <Compile Include="Services\LocalLogger.cs" />
     <Compile Include="Services\SeverClient.cs" />
+    <Compile Include="Services\SitesBlocker.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="SyncManager.cs" />
-    <Compile Include="TimeLogger.cs" />
+    <Compile Include="Services\SyncManager.cs" />
+    <Compile Include="Services\TimeLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -95,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ArktinMonitor.ico" />
+    <Content Include="ArktinMonitor.IdleTimeCounter.exe" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ArktinMonitor.Models\ArktinMonitor.Data.csproj">
