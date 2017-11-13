@@ -20,5 +20,7 @@
         public string Name { get; set; }
 
         public string UrlAddress { get; set; }
+
+        public bool Active { get; set; }
     }
 }

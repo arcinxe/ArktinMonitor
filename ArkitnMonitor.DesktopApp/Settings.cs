@@ -10,6 +10,7 @@ namespace ArkitnMonitor.DesktopApp
 {
     internal static class Settings
     {
+        //public const string ApiUrl = "http://localhost:14100/";
         public const string ApiUrl = "http://arktin.ml/";
 
         public static bool LogFullExceptions = true;

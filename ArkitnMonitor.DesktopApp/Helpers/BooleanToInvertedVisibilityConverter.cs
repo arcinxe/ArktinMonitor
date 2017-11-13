@@ -11,7 +11,7 @@ namespace ArkitnMonitor.DesktopApp.Helpers
         {
             if (value != null && (bool)value)
             {
-                return Visibility.Hidden;
+                return Visibility.Collapsed;
             }
             return Visibility.Visible;
         }
@@ -34,7 +34,7 @@ namespace ArkitnMonitor.DesktopApp.Helpers
             {
                 return Visibility.Visible;
             }
-            return Visibility.Hidden;
+            return Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

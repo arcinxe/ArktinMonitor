@@ -1,15 +1,19 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Net;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ArkitnMonitor.DesktopApp.Helpers;
+using ArkitnMonitor.DesktopApp.Views;
 using ArktinMonitor.Helpers;
 
 
 namespace ArkitnMonitor.DesktopApp.ViewModel
 {
-    internal class Presenter : ObservableObject
+    internal class LogInViewModel : ViewModelTemplate
     {
+        public Visibility WindowVisibility { get; set; } = Visibility.Visible;
         private string _email = "marcinxe@gmail.com";
-
         public string Email
         {
             get { return _email; }
@@ -18,7 +22,7 @@ namespace ArkitnMonitor.DesktopApp.ViewModel
                 _email = value;
                 RaisePropertyChangedEvent(nameof(Email));
             }
-        } 
+        }
 
         private string _password = "[REDACTED]";
         public string Password
@@ -53,7 +57,7 @@ namespace ArkitnMonitor.DesktopApp.ViewModel
             }
         }
 
-        public int WindowWidth { get; set; } = 300;
+        private bool _succeded;
 
         public ICommand SignInCommand => new DelegateCommand(SignIn);
 
@@ -61,21 +65,34 @@ namespace ArkitnMonitor.DesktopApp.ViewModel
         {
             Busy = true;
             LocalLogger.Log("Signing in...");
-            await Task.Run(() => Authorization.RenewBearerToken(Settings.ApiUrl, _email, _password));
-            AuthorizationStatus = string.IsNullOrWhiteSpace(Authorization.GetBearerToken.AccessToken) 
-                ? "Wrong email or password" : "Succes";
-            WindowWidth = string.IsNullOrWhiteSpace(Authorization.GetBearerToken.AccessToken)
-                ? 300
-                : 420;
-            RaisePropertyChangedEvent(nameof(WindowWidth));
+            var t = await Task.Run(() => CredentialsManager.RenewBearerToken(Settings.ApiUrl, _email, _password));
+            _succeded = !string.IsNullOrWhiteSpace(t?.AccessToken);
+            AuthorizationStatus = _succeded ? "Succes" : "Wrong email or password";
+            if (_succeded)
+            {
+                CredentialsManager.StoreCredentials(_email, _password);
+                CredentialsManager.GetJsonWebToken(Settings.ApiUrl);
+                TransferToEditorWindow();
+            }
             Busy = false;
         }
 
         public ICommand SignUpCommand => new DelegateCommand(SignUp);
 
-        public void SignUp()
+        // Opens Registration page
+        private void SignUp()
         {
-            HyperlinkHelper.OpenUrl(Settings.ApiUrl);
+            //HyperlinkHelper.OpenUrl($"{Settings.ApiUrl}Account/Register");
+            //CredentialsManager.PurgePassword();
+            AuthorizationStatus = CredentialsManager.AreCredentialsStored().ToString();
+            CredentialsManager.GetJsonWebToken(Settings.ApiUrl);
+        }
+
+        private void TransferToEditorWindow()
+        {
+            var window = new EditorWindow();
+            window.Show();
+            OnClosingRequest();
         }
     }
 }

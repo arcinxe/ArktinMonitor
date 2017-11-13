@@ -1,5 +1,5 @@
 ﻿using System.Net.Http;
-using ArktinMonitor.Data.Other;
+using ArktinMonitor.Data.Models;
 
 namespace ArktinMonitor.ServiceApp.Services
 {

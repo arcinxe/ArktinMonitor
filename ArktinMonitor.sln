@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkitnMonitor.DesktopApp", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.Helpers", "ArktinMonitor.Helpers\ArktinMonitor.Helpers.csproj", "{D4342049-9EE2-41DE-8F83-AE638AF733C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.DataGenerator", "ArktinMonitor.DataGenerator\ArktinMonitor.DataGenerator.csproj", "{FB7A99F8-3CED-4E76-9F1A-8F03A206AB87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{D4342049-9EE2-41DE-8F83-AE638AF733C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4342049-9EE2-41DE-8F83-AE638AF733C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4342049-9EE2-41DE-8F83-AE638AF733C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB7A99F8-3CED-4E76-9F1A-8F03A206AB87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB7A99F8-3CED-4E76-9F1A-8F03A206AB87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB7A99F8-3CED-4E76-9F1A-8F03A206AB87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB7A99F8-3CED-4E76-9F1A-8F03A206AB87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

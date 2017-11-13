@@ -41,7 +41,7 @@ namespace ArktinMonitor.Data.Models
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((ComputerUserLocal) obj);
+            return Equals((ComputerUserLocal)obj);
         }
 
         public override int GetHashCode()
@@ -54,6 +54,17 @@ namespace ArktinMonitor.Data.Models
                 return hashCode;
             }
         }
+    }
+
+    public class ComputerUserDesktop : BasicComputerUser
+    {
+        public string VisibleName { get; set; }
+
+        public bool Enabled { get; set; }
+
+        public bool Removed { get; set; }
+
+        public List<BlockedApplicationLocal> BlockedApplications { get; set; }
     }
 
     public abstract class BasicComputerUser : IEquatable<BasicComputerUser>
@@ -76,7 +87,7 @@ namespace ArktinMonitor.Data.Models
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((BasicComputerUser) obj);
+            return Equals((BasicComputerUser)obj);
         }
 
         public override int GetHashCode()

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
+using ArkitnMonitor.DesktopApp.ViewModel;
 
-namespace ArkitnMonitor.DesktopApp
+namespace ArkitnMonitor.DesktopApp.Views
 {
     /// <summary>
     /// Interaction logic for LoginWindow.xaml
@@ -10,6 +11,9 @@ namespace ArkitnMonitor.DesktopApp
         public LoginWindow()
         {
             InitializeComponent();
+            var viewModel = new LogInViewModel();
+            DataContext = viewModel;
+            viewModel.ClosingRequest += (sender, e) => Close();
         }
     }
 }

@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ArkitnMonitor.DesktopApp.Views
 {
     /// <summary>
-    /// Interaction logic for EditorView.xaml
+    /// Interaction logic for EditorWindow.xaml
     /// </summary>
-    public partial class EditorView : UserControl
+    public partial class EditorWindow : Window
     {
-        public EditorView()
+        public EditorWindow()
         {
             InitializeComponent();
         }

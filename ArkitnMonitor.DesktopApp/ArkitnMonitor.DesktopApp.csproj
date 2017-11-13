@@ -70,18 +70,17 @@
     <Compile Include="Helpers\InvertBooleanConverter.cs" />
     <Compile Include="Helpers\PasswordBoxAssistant.cs" />
     <Compile Include="ViewModel\DelegateCommand.cs" />
-    <Compile Include="ViewModel\ObservableObject.cs" />
+    <Compile Include="ViewModel\EditorViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelTemplate.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="ViewModel\Presenter.cs" />
+    <Compile Include="ViewModel\LogInViewModel.cs" />
     <Compile Include="Helpers\BooleanToInvertedVisibilityConverter.cs" />
-    <Compile Include="Views\EditorView.xaml.cs">
-      <DependentUpon>EditorView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SignInView.xaml.cs">
-      <DependentUpon>SignInView.xaml</DependentUpon>
-    </Compile>
-    <Page Include="LoginWindow.xaml">
+    <Page Include="Views\EditorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -89,17 +88,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="LoginWindow.xaml.cs">
+    <Compile Include="Views\EditorWindow.xaml.cs">
+      <DependentUpon>EditorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\EditorView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SignInView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -131,10 +125,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ArktinMonitor.png" />
+    <Resource Include="Images\ArktinMonitor.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ArktinMonitor.ico" />
+    <Resource Include="Images\ArktinMonitor.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ArktinMonitor.Helpers\ArktinMonitor.Helpers.csproj">
