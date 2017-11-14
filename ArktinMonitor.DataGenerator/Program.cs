@@ -1,18 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ArktinMonitor.Data;
+using ArktinMonitor.Helpers;
 
 namespace ArktinMonitor.DataGenerator
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
-            var db = new ArktinMonitorDataAccess();
-            
+            while (true)
+            {
+
+                Console.Title = "Initializing...";
+
+                try
+                {
+                    Console.WriteLine("Enter amount of Web Accounts to generate or leave empty to purge all tables");
+                    if (int.TryParse(Console.ReadLine(), out int result))
+                    {
+                        Settings.AmountOfWebAccounts = result;
+                        LocalLogger.Log("The data generation has been started!");
+                        Generator.GenerateWebAccounts();
+                    }
+                    else
+                    {
+                        Generator.PurgeAll();
+                    }
+                }
+                catch (Exception e)
+                {
+                    LocalLogger.Log("Generator", e);
+                }
+                Console.ReadLine();
+            }
         }
     }
 }
