@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ArktinMonitor.Data.Models
 {
-    class GeneratorData
+    public class GeneratorData
     {
-        public List<string> ComputerBrands { get; set; }
+        public List<string> Manufacturers { get; set; }
 
         public List<string> Cpus { get; set; }
 

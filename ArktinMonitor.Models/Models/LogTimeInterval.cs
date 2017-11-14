@@ -4,7 +4,7 @@ namespace ArktinMonitor.Data.Models
 {
     public class LogTimeInterval : BasicLogTimeInterval
     {
-        public string LogTimeIntervalId { get; set; }
+        public int LogTimeIntervalId { get; set; }
 
         public int? ComputerUserId { get; set; }
 
