@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.IdleTimeCount
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.MessageBox", "ArktinMonitor.MessageBox\ArktinMonitor.MessageBox.csproj", "{3F9F560C-C76A-427E-8D9C-A4DD14DE541C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkitnMonitor.DesktopApp", "ArkitnMonitor.DesktopApp\ArkitnMonitor.DesktopApp.csproj", "{297F8991-EECD-4886-848B-040F63CA9994}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.DesktopApp", "ArktinMonitor.DesktopApp\ArktinMonitor.DesktopApp.csproj", "{297F8991-EECD-4886-848B-040F63CA9994}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.Helpers", "ArktinMonitor.Helpers\ArktinMonitor.Helpers.csproj", "{D4342049-9EE2-41DE-8F83-AE638AF733C7}"
 EndProject
