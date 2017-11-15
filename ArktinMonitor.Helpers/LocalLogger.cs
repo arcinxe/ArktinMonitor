@@ -11,55 +11,67 @@ namespace ArktinMonitor.Helpers
         private static readonly string LocalStoragePath = Environment.UserInteractive
             ? Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)
             : AppDomain.CurrentDomain.BaseDirectory;
+
+        public static bool Enabled = true;
+        public static bool Append = false;
+        public static bool SaveOnDisk = true;
+
         public static void Log(string data = "")
         {
+            if (!Enabled) return;
             LogText(data);
         }
 
         public static void Log(string sender, Exception exception)
         {
+            if (!Enabled) return;
             LogException(sender, exception);
         }
         private static void LogText(string data)
         {
             // For better formating when used without parameter.
-            string separator = data == "" ? "" : "-";
+            var separator = data == "" ? "" : "-";
 
             // If isn't running as a service then also writes data to the console.
             if (Environment.UserInteractive)
             {
                 Console.WriteLine(Format(data, separator));
             }
-
-
-
-            var currentContent = new StringBuilder();
-            try
+            if(!SaveOnDisk) return;
+            if (Append)
             {
-                var rawList = File.ReadAllLines(Path.Combine(LocalStoragePath, "log.log")).ToList();
-                foreach (var item in rawList)
+                using (var sw = new StreamWriter(Path.Combine(LocalStoragePath, "log.log"), true))
                 {
-                    currentContent.Append(item + Environment.NewLine);
+                    sw.WriteLine(Format(data, separator));
                 }
             }
-            catch (Exception)
+            else
             {
-                // ignored (file does not exist)
+                var currentContent = new StringBuilder();
+                try
+                {
+                    var rawList = File.ReadAllLines(Path.Combine(LocalStoragePath, "log.log")).ToList();
+                    foreach (var item in rawList)
+                    {
+                        currentContent.Append(item + Environment.NewLine);
+                    }
+                }
+                catch (Exception)
+                {
+                    // ignored (file does not exist)
+                }
+                File.WriteAllText(Path.Combine(LocalStoragePath, "log.log"), Format(data, separator) + Environment.NewLine + currentContent);
             }
-            File.WriteAllText(Path.Combine(LocalStoragePath, "log.log"), Format(data, separator) + Environment.NewLine + currentContent);
 
-            //using (var sw = new StreamWriter(Path.Combine(LocalStoragePath, "log.log"), true))
-            //{
-            //    sw.WriteLine(Format(data, separator));
-            //}
+
         }
 
         private static void LogException(string sender, Exception e)
         {
             Log($"[{sender}] -- Exception occured --");
-            
-                Log($"[{sender}] " + e);
-            
+
+            Log($"[{sender}] " + e);
+
             Log($"[{sender}] " + e.Message);
 
             // Recursively print exception's message.
