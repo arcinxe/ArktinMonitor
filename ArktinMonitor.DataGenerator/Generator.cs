@@ -229,30 +229,37 @@ namespace ArktinMonitor.DataGenerator
         }
 
         /// <summary>
-        /// Sends all the data from this database straight to HELL
+        /// Sends all the data from this database straight to hell where it belongs.
         /// </summary>
         public static void PurgeAll()
         {
             LocalLogger.Log("The purge has been started!");
             var startTime = DateTime.Now;
+            LocalLogger.Log("Purging BlockedSites...");
             Db.BlicBlockedSites.Clear();
             Db.SaveChanges();
             LocalLogger.Log("Table BlockedSites has been purged!");
+            LocalLogger.Log("Purging BlockedApplications...");
             Db.BlockedApplications.Clear();
             Db.SaveChanges();
             LocalLogger.Log("Table BlockedApplications has been purged!");
+            LocalLogger.Log("Purging LogTimeIntervals...");
             Db.LogTimeIntervals.Clear();
             Db.SaveChanges();
             LocalLogger.Log("Table LogTimeIntervals has been purged!");
+            LocalLogger.Log("Purging ComputerUsers...");
             Db.ComputerUsers.Clear();
             Db.SaveChanges();
             LocalLogger.Log("Table ComputerUsers has been purged!");
+            LocalLogger.Log("Purging Disks...");
             Db.Disks.Clear();
             Db.SaveChanges();
             LocalLogger.Log("Table Disks has been purged!");
+            LocalLogger.Log("Purging Computers...");
             Db.Computers.Clear();
             Db.SaveChanges();
             LocalLogger.Log("Table Computers has been purged!");
+            LocalLogger.Log("Purging WebAccounts...");
             Db.WebAccounts.Clear();
             Db.SaveChanges();
             LocalLogger.Log("Table WebAccounts has been purged!");

@@ -1,4 +1,9 @@
-﻿namespace ArktinMonitor.Data.Models
+﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using ArktinMonitor.Data.Annotations;
+
+namespace ArktinMonitor.Data.Models
 {
     public class BlockedApplication : BasicBlockedApplication
     {
@@ -17,12 +22,83 @@
         public bool Synced { get; set; }
     }
 
-    public abstract class BasicBlockedApplication
+    public class BlockedApplicationDesktop : INotifyPropertyChanged
+    {
+        private int _blockedApplicationId;
+
+        public int BlockedApplicationId
+        {
+            get { return _blockedApplicationId; }
+            set
+            {
+                _blockedApplicationId = value;
+                RaisePropertyChangedEvent(nameof(BlockedApplicationId));
+            }
+        }
+
+        private string _name;
+        public string Name {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                RaisePropertyChangedEvent(nameof(Name));
+            }
+        }
+
+        private string _path;
+        public string Path {
+            get { return _path; }
+            set
+            {
+                _path = value;
+                RaisePropertyChangedEvent(nameof(Path));
+            }
+        }
+
+        private bool _active;
+        public bool Active {
+            get { return _active; }
+            set
+            {
+                _active = value;
+                RaisePropertyChangedEvent(nameof(Active));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
+        protected void RaisePropertyChangedEvent(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    public abstract class BasicBlockedApplication : IEquatable<BasicBlockedApplication>
     {
         public string Name { get; set; }
 
         public string Path { get; set; }
 
         public bool Active { get; set; }
+
+        public bool Equals(BasicBlockedApplication other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return string.Equals(Path, other.Path);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((BasicBlockedApplication) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return Path?.GetHashCode() ?? 0;
+        }
     }
 }

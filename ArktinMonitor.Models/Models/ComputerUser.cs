@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace ArktinMonitor.Data.Models
 {
@@ -56,15 +58,29 @@ namespace ArktinMonitor.Data.Models
         }
     }
 
-    public class ComputerUserDesktop : BasicComputerUser
+    public class ComputerUserDesktop : BasicComputerUser, INotifyPropertyChanged
     {
         public string VisibleName { get; set; }
 
         public bool Enabled { get; set; }
 
-        public bool Removed { get; set; }
+        //public bool Removed { get; set; }
 
-        public List<BlockedApplicationLocal> BlockedApplications { get; set; }
+        private ObservableCollection<BlockedApplicationDesktop> _blockedApplications;
+        public ObservableCollection<BlockedApplicationDesktop> BlockedApplications {
+            get { return _blockedApplications; }
+            set
+            {
+                _blockedApplications = value;
+                RaisePropertyChangedEvent(nameof(BlockedApplications));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
+        protected void RaisePropertyChangedEvent(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
     public abstract class BasicComputerUser : IEquatable<BasicComputerUser>

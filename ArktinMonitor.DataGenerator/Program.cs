@@ -7,6 +7,7 @@ namespace ArktinMonitor.DataGenerator
     {
         private static void Main()
         {
+            LocalLogger.SaveOnDisk = false;
             while (true)
             {
 

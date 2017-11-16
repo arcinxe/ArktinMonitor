@@ -13,7 +13,7 @@ namespace ArktinMonitor.Data
         // 
         // If you wish to target a different database and/or database provider, modify the 'ArktinMonitorDataAccess' 
         // connection string in the application configuration file.
-        public ArktinMonitorDataAccess(): base("name=DefaultConnection"){}
+        public ArktinMonitorDataAccess(): base("name=DefaultConnection") {}
 
         public override int SaveChanges()
         {
