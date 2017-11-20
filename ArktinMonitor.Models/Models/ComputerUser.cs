@@ -23,7 +23,7 @@ namespace ArktinMonitor.Data.Models
 
         public bool Synced { get; set; }
 
-        public bool Hidden { get; set; }
+        public bool Enabled { get; set; }
 
         public bool Removed { get; set; }
 
@@ -35,14 +35,14 @@ namespace ArktinMonitor.Data.Models
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return base.Equals(other) && Hidden == other.Hidden && Removed == other.Removed;
+            return base.Equals(other) && Enabled == other.Enabled && Removed == other.Removed;
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((ComputerUserLocal)obj);
         }
 
@@ -50,23 +50,86 @@ namespace ArktinMonitor.Data.Models
         {
             unchecked
             {
-                int hashCode = base.GetHashCode();
-                hashCode = (hashCode * 397) ^ Hidden.GetHashCode();
+                var hashCode = base.GetHashCode();
+                hashCode = (hashCode * 397) ^ Enabled.GetHashCode();
                 hashCode = (hashCode * 397) ^ Removed.GetHashCode();
                 return hashCode;
             }
         }
     }
 
-    public class ComputerUserDesktop : BasicComputerUser, INotifyPropertyChanged
+    public class ComputerUserDesktop : INotifyPropertyChanged
     {
-        public string VisibleName { get; set; }
+        public int ComputerUserId { get; set; }
 
-        public bool Enabled { get; set; }
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                RaisePropertyChangedEvent(nameof(Name));
+            }
+        }
 
-        //public bool Removed { get; set; }
+        private string _fullName;
+        public string FullName
+        {
+            get { return _fullName; }
+            set
+            {
+                _fullName = value;
+                RaisePropertyChangedEvent(nameof(FullName));
+            }
+        }
+
+        private string _privilegeLevel;
+        public string PrivilegeLevel
+        {
+            get { return _privilegeLevel; }
+            set
+            {
+                _privilegeLevel = value;
+                RaisePropertyChangedEvent(nameof(PrivilegeLevel));
+            }
+        }
+
+
+        private string _visibleName;
+        public string VisibleName {
+            get { return _visibleName; }
+            set
+            {
+                _visibleName = value;
+                RaisePropertyChangedEvent(nameof(VisibleName));
+            }
+        }
+
+        private bool _enabled;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set
+            {
+                _enabled = value;
+                RaisePropertyChangedEvent(nameof(Enabled));
+            }
+        }
+
+        private bool _removed;
+        public bool Removed
+        {
+            get { return _removed; }
+            set
+            {
+                _removed = value;
+                RaisePropertyChangedEvent(nameof(Removed));
+            }
+        }
 
         private ObservableCollection<BlockedApplicationDesktop> _blockedApplications;
+
         public ObservableCollection<BlockedApplicationDesktop> BlockedApplications {
             get { return _blockedApplications; }
             set
@@ -102,7 +165,7 @@ namespace ArktinMonitor.Data.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((BasicComputerUser)obj);
         }
 
@@ -110,7 +173,7 @@ namespace ArktinMonitor.Data.Models
         {
             unchecked
             {
-                var hashCode = (Name != null ? Name.GetHashCode() : 0);
+                var hashCode = Name != null ? Name.GetHashCode() : 0;
                 hashCode = (hashCode * 397) ^ (FullName != null ? FullName.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (PrivilegeLevel != null ? PrivilegeLevel.GetHashCode() : 0);
                 return hashCode;

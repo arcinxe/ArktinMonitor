@@ -4,22 +4,23 @@ using ArktinMonitor.Helpers;
 
 namespace ArktinMonitor.DesktopApp
 {
+    /// <inheritdoc />
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App
     {
         protected override void OnStartup(StartupEventArgs e)
         {
             LocalLogger.Append = false;
-            Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+            Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
             base.OnStartup(e);
         }
 
         private static void Current_DispatcherUnhandledException(object sender,
             System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            LocalLogger.Log("Global exception",e.Exception);
+            LocalLogger.Log("Global exception", e.Exception);
         }
 
         private void App_OnStartup(object sender, StartupEventArgs e)
@@ -28,7 +29,7 @@ namespace ArktinMonitor.DesktopApp
             if (CredentialsManager.AreCredentialsStored())
             {
                 var editorWindow = new EditorWindow();
-                editorWindow.Show();
+            editorWindow.Show();
             }
             else
             {

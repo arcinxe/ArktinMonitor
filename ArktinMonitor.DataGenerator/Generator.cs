@@ -202,7 +202,7 @@ namespace ArktinMonitor.DataGenerator
                 Db.BlockedApplications.Add(app);
                 Db.SaveChanges();
                 LocalLogger.Log($"                      App {app.Name} has been blocked.");
-                //LocalLogger.Log($"                      Path {app.Path}");
+                //LocalLogger.Log($"                      FilePath {app.FilePath}");
                 //LocalLogger.Log();
                 _blockedAppsCounter++;
             }

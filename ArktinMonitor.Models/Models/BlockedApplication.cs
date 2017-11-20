@@ -25,7 +25,6 @@ namespace ArktinMonitor.Data.Models
     public class BlockedApplicationDesktop : INotifyPropertyChanged
     {
         private int _blockedApplicationId;
-
         public int BlockedApplicationId
         {
             get { return _blockedApplicationId; }
@@ -46,13 +45,13 @@ namespace ArktinMonitor.Data.Models
             }
         }
 
-        private string _path;
-        public string Path {
-            get { return _path; }
+        private string _filePath;
+        public string FilePath {
+            get { return _filePath; }
             set
             {
-                _path = value;
-                RaisePropertyChangedEvent(nameof(Path));
+                _filePath = value;
+                RaisePropertyChangedEvent(nameof(FilePath));
             }
         }
 

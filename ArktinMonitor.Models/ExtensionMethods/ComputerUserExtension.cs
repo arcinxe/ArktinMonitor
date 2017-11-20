@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ArktinMonitor.Data.Models;
 
 namespace ArktinMonitor.Data.ExtensionMethods
@@ -20,16 +16,41 @@ namespace ArktinMonitor.Data.ExtensionMethods
                             Active = ba.Active,
                             Name = ba.Name,
                             BlockedApplicationId = ba.BlockedApplicationId,
-                            Path = ba.Path
+                            FilePath = ba.Path
                         });
             return new ComputerUserDesktop
             {
-                Enabled = !computerUser.Hidden,
+                Enabled = computerUser.Enabled,
                 Name = computerUser.Name,
                 FullName = computerUser.FullName,
                 PrivilegeLevel = computerUser.PrivilegeLevel,
                 VisibleName = computerUser.Name,
+                Removed = computerUser.Removed,
                 BlockedApplications = new ObservableCollection<BlockedApplicationDesktop>(blockedApps)
+            };
+        }
+
+
+        public static ComputerUserLocal ToLocalModel(this ComputerUserDesktop computerUser)
+        {
+            var blockedApps =
+                computerUser.BlockedApplications.Select(
+                    ba =>
+                        new BlockedApplicationLocal()
+                        {
+                            Active = ba.Active,
+                            Name = ba.Name,
+                            BlockedApplicationId = ba.BlockedApplicationId,
+                            Path = ba.FilePath
+                        });
+            return new ComputerUserLocal()
+            {
+                Enabled = computerUser.Enabled,
+                Name = computerUser.Name,
+                FullName = computerUser.FullName,
+                PrivilegeLevel = computerUser.PrivilegeLevel,
+                Removed = computerUser.Removed,
+                BlockedApplications = blockedApps.ToList()
             };
         }
     }

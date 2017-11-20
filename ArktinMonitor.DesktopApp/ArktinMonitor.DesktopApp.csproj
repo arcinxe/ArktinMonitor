@@ -33,6 +33,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.3\lib\net45\MaterialDesignColors.dll</HintPath>
@@ -48,6 +52,7 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -66,8 +71,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\BoolToStrikethrough.cs" />
+    <Compile Include="Helpers\DebugDummyConverter.cs" />
     <Compile Include="Helpers\HyperlinkHelper.cs" />
     <Compile Include="Helpers\InvertBooleanConverter.cs" />
+    <Compile Include="Helpers\IntToBoolConverter.cs" />
+    <Compile Include="Helpers\DataGridNewItemPlaceholderToIconConverter.cs" />
     <Compile Include="Helpers\PasswordBoxAssistant.cs" />
     <Compile Include="ViewModel\DelegateCommand.cs" />
     <Compile Include="ViewModel\EditorViewModel.cs" />
@@ -76,6 +85,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="ViewModel\LogInViewModel.cs" />
     <Compile Include="Helpers\BooleanToInvertedVisibilityConverter.cs" />
+    <Compile Include="Helpers\NullToBooleanConverter.cs" />
     <Page Include="Views\EditorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

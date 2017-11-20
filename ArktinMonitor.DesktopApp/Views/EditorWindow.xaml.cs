@@ -12,11 +12,10 @@ namespace ArktinMonitor.DesktopApp.Views
     {
         public EditorWindow()
         {
-            InitializeComponent();
             var viewModel = new EditorViewModel();
-            DataContext = viewModel;
-            InitializeComponent();
+            this.DataContext = viewModel;
             viewModel.ClosingRequest += (sender, e) => Close();
+            InitializeComponent();
         }
     }
 }
