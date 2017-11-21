@@ -55,6 +55,17 @@ namespace ArktinMonitor.Data.Models
             }
         }
 
+        private string _tempfilePath;
+        public string TempFilePath
+        {
+            get { return _tempfilePath; }
+            set
+            {
+                _tempfilePath = value;
+                RaisePropertyChangedEvent(nameof(TempFilePath));
+            }
+        }
+
         private bool _active;
         public bool Active {
             get { return _active; }

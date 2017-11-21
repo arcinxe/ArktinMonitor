@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using ArktinMonitor.Data.Models;
 
@@ -16,7 +17,8 @@ namespace ArktinMonitor.Data.ExtensionMethods
                             Active = ba.Active,
                             Name = ba.Name,
                             BlockedApplicationId = ba.BlockedApplicationId,
-                            FilePath = ba.Path
+                            FilePath = ba.Path,
+                            TempFilePath = ba.Path
                         });
             return new ComputerUserDesktop
             {
@@ -24,7 +26,7 @@ namespace ArktinMonitor.Data.ExtensionMethods
                 Name = computerUser.Name,
                 FullName = computerUser.FullName,
                 PrivilegeLevel = computerUser.PrivilegeLevel,
-                VisibleName = computerUser.Name,
+                VisibleName = computerUser.FullName == string.Empty ? computerUser.Name:computerUser.FullName,
                 Removed = computerUser.Removed,
                 BlockedApplications = new ObservableCollection<BlockedApplicationDesktop>(blockedApps)
             };

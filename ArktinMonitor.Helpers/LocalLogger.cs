@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace ArktinMonitor.Helpers
 {
@@ -20,6 +21,11 @@ namespace ArktinMonitor.Helpers
         {
             if (!Enabled) return;
             LogText(data);
+        }
+
+        public static void Log(object obj)
+        {
+            Log(JsonConvert.SerializeObject(obj, Formatting.Indented));
         }
 
         public static void Log(string sender, Exception exception)
