@@ -11,6 +11,6 @@ namespace ArktinMonitor.DesktopApp.Helpers
         public static void OpenUrl(string url)
         {
             Process.Start(new ProcessStartInfo(url));
-        } 
+        }
     }
 }

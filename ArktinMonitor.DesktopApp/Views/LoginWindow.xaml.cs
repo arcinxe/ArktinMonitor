@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using ArktinMonitor.DesktopApp.ViewModel;
+﻿using ArktinMonitor.DesktopApp.ViewModel;
+using System.Windows;
 
 namespace ArktinMonitor.DesktopApp.Views
 {

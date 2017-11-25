@@ -1,15 +1,13 @@
-﻿using System;
+﻿using ArktinMonitor.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
 using System.Security.Principal;
-using ArktinMonitor.Data.Models;
-using ArktinMonitor.Helpers;
-using ArktinMonitor.ServiceApp.Services;
 
 namespace ArktinMonitor.ServiceApp.Helpers
 {
-    class ComputerUsersHelper
+    internal class ComputerUsersHelper
     {
         // Stores the localized version of group Administrators.
         private static readonly string AdministratorsGroupName = new SecurityIdentifier(WellKnownSidType.BuiltinAdministratorsSid, null)
@@ -72,7 +70,6 @@ namespace ArktinMonitor.ServiceApp.Helpers
                 }
             }
             return userGroups;
-
         }
 
         /// <summary>
@@ -94,7 +91,6 @@ namespace ArktinMonitor.ServiceApp.Helpers
                 return null;
             }
         }
-
 
         // Extracts Name property from strings like that
         // GroupComponent : \\ARCIN-NOTEBOOK\root\cimv2:Win32_Group.Domain="ARCIN-NOTEBOOK",Name="Administratorzy"

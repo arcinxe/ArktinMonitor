@@ -1,11 +1,11 @@
-﻿using System;
+﻿using ArktinMonitor.Data.Models;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management;
 using System.Net.NetworkInformation;
-using ArktinMonitor.Data.Models;
-using Microsoft.Win32;
 
 namespace ArktinMonitor.ServiceApp.Helpers
 {
@@ -74,7 +74,6 @@ namespace ArktinMonitor.ServiceApp.Helpers
             }
             //     Bytes         KB     MB     GB
             return totalMemory / 1024 / 1024 / 1024;
-
         }
 
         public static string GetMacAddress()

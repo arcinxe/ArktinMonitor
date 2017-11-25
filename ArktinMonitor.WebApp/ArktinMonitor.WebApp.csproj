@@ -220,6 +220,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ComputerController.cs" />
+    <Compile Include="Controllers\ComputerUsersController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\DiskController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

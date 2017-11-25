@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace ArktinMonitor.ServiceApp.Services
+namespace ArktinMonitor.ServiceApp.Helpers
 {
     internal static class RunHelper
     {
-
         #region Win32 Constants
 
         private const int CREATE_UNICODE_ENVIRONMENT = 0x00000400;
@@ -17,7 +15,7 @@ namespace ArktinMonitor.ServiceApp.Services
         private const uint INVALID_SESSION_ID = 0xFFFFFFFF;
         private static readonly IntPtr WTS_CURRENT_SERVER_HANDLE = IntPtr.Zero;
 
-        #endregion
+        #endregion Win32 Constants
 
         #region DllImports
 
@@ -68,7 +66,7 @@ namespace ArktinMonitor.ServiceApp.Services
             ref IntPtr ppSessionInfo,
             ref int pCount);
 
-        #endregion
+        #endregion DllImports
 
         #region Win32 Structs
 
@@ -161,7 +159,7 @@ namespace ArktinMonitor.ServiceApp.Services
             public readonly WTS_CONNECTSTATE_CLASS State;
         }
 
-        #endregion
+        #endregion Win32 Structs
 
         // Gets the user token from the currently active session
         private static bool GetSessionUserToken(ref IntPtr phUserToken)
@@ -266,6 +264,5 @@ namespace ArktinMonitor.ServiceApp.Services
 
             return true;
         }
-
     }
 }

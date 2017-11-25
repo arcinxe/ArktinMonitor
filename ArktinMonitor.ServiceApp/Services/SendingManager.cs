@@ -1,6 +1,6 @@
 ﻿namespace ArktinMonitor.ServiceApp.Services
 {
-    class SendingManager
+    internal class SendingManager
     {
     }
 }

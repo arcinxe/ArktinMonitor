@@ -1,19 +1,18 @@
-﻿using System;
+﻿using ArktinMonitor.Data.Models;
+using CredentialManagement;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Security;
-using System.Threading.Tasks;
-using ArktinMonitor.Data.Models;
-using CredentialManagement;
-using Newtonsoft.Json;
 
 namespace ArktinMonitor.Helpers
 {
     public static class CredentialsManager
     {
         private const string PasswordName = "ArktinMonitor";
+
         private static readonly string LocalStoragePath = Environment.UserInteractive
             ? Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)
             : AppDomain.CurrentDomain.BaseDirectory;
@@ -72,6 +71,7 @@ namespace ArktinMonitor.Helpers
         {
             SavePassword(string.Empty);
         }
+
         /// <summary>
         /// Returns Last stored email address from email.an file.
         /// </summary>
@@ -146,6 +146,7 @@ namespace ArktinMonitor.Helpers
                 return null;
             }
         }
+
         /// <summary>
         /// Validates Json Web Token.
         /// </summary>

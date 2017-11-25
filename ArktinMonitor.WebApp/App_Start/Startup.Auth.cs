@@ -1,13 +1,12 @@
-﻿using System;
+﻿using ArktinMonitor.WebApp.Models;
+using ArktinMonitor.WebApp.Providers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
-using Owin;
-using ArktinMonitor.WebApp.Models;
-using ArktinMonitor.WebApp.Providers;
 using Microsoft.Owin.Security.OAuth;
+using Owin;
+using System;
 
 namespace ArktinMonitor.WebApp
 {
@@ -15,6 +14,7 @@ namespace ArktinMonitor.WebApp
     {
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
         public static string PublicClientId { get; private set; }
+
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
@@ -33,12 +33,12 @@ namespace ArktinMonitor.WebApp
                 Provider = new CookieAuthenticationProvider
                 {
                     // Enables the application to validate the security stamp when the user logs in.
-                    // This is a security feature which is used when you change a password or add an external login to your account.  
+                    // This is a security feature which is used when you change a password or add an external login to your account.
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Configure the application for OAuth based flow
@@ -48,7 +48,7 @@ namespace ArktinMonitor.WebApp
                 TokenEndpointPath = new PathString("/Token"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/Account/ExternalLogin"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(2),//TODO: Change value later
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(2),//TODO: Change value later
                 AllowInsecureHttp = true //Don't do this in production
             };
 

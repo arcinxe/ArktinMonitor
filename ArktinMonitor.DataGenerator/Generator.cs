@@ -1,11 +1,11 @@
-﻿using System;
+﻿using ArktinMonitor.Data;
+using ArktinMonitor.Data.Models;
+using ArktinMonitor.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using ArktinMonitor.Data;
-using ArktinMonitor.Data.Models;
-using ArktinMonitor.Helpers;
 
 namespace ArktinMonitor.DataGenerator
 {
@@ -160,10 +160,11 @@ namespace ArktinMonitor.DataGenerator
             }
             return names;
         }
+
         private static void GenerateLogTimeIntervals(int computerId, List<int?> usersIds)
         {
             var now = DateTime.Now;
-            var dateTime = new DateTime(now.Year, now.Month, now.Day, 2.Random(),60.Random(), 0);
+            var dateTime = new DateTime(now.Year, now.Month, now.Day, 2.Random(), 60.Random(), 0);
             usersIds.Add(null);
             for (var i = 0; i < Settings.MaxAmountOfLogTimeIntervals.Random(2); i++)
             {
@@ -177,7 +178,7 @@ namespace ArktinMonitor.DataGenerator
                     Duration = timeSpan,
                     ComputerUserId = userId,
                     State = userId == null ? "Idle" : (2.Random() == 0 ? "Idle" : "Active")
-            };
+                };
                 Db.LogTimeIntervals.Add(log);
                 Db.SaveChanges();
                 var name = Db.ComputerUsers.FirstOrDefault(cu => cu.ComputerUserId == log.ComputerUserId.Value)?.Name ?? "";
@@ -267,8 +268,6 @@ namespace ArktinMonitor.DataGenerator
             LocalLogger.Log($"Finished in {DateTime.Now - startTime:mm\\m\\:ss\\s\\:ff\\m\\s}");
         }
 
-
-
         #region Extension methods
 
         /// <summary>
@@ -291,6 +290,7 @@ namespace ArktinMonitor.DataGenerator
         {
             return Rand.Next(min, max + min);
         }
+
         /// <summary>
         /// Returns random double between min value and this number.
         /// </summary>
@@ -312,6 +312,6 @@ namespace ArktinMonitor.DataGenerator
             dbSet.RemoveRange(dbSet);
         }
 
-        #endregion
+        #endregion Extension methods
     }
 }

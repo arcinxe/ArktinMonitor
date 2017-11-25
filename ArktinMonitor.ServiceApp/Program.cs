@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ArktinMonitor.Helpers;
+using ArktinMonitor.ServiceApp.Services;
+using System;
 using System.IO;
 using System.ServiceProcess;
-using ArktinMonitor.Helpers;
-using ArktinMonitor.ServiceApp.Services;
 
 namespace ArktinMonitor.ServiceApp
 {
@@ -12,8 +12,8 @@ namespace ArktinMonitor.ServiceApp
         {
             Directory.CreateDirectory(Settings.DataStoragePath);
             LocalLogger.FileName = "service.log";
-            LocalLogger.LogStoragePath = Settings.DataStoragePath;
-            
+            LocalLogger.StoragePath = Settings.DataStoragePath;
+
             if (Environment.UserInteractive)
             {
                 // Start console app

@@ -9,7 +9,6 @@
  */
 
 var Util = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Private TransitionEnd Helpers
@@ -101,7 +100,6 @@ var Util = function ($) {
    */
 
   var Util = {
-
     TRANSITION_END: 'bsTransitionEnd',
 
     getUID: function getUID(prefix) {
@@ -159,16 +157,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
 };
 
-
-
-
-
-
-
-
-
-
-
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -192,12 +180,6 @@ var createClass = function () {
     return Constructor;
   };
 }();
-
-
-
-
-
-
 
 var get = function get(object, property, receiver) {
   if (object === null) object = Function.prototype;
@@ -240,16 +222,6 @@ var inherits = function (subClass, superClass) {
   if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 };
 
-
-
-
-
-
-
-
-
-
-
 var possibleConstructorReturn = function (self, call) {
   if (!self) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -266,7 +238,6 @@ var possibleConstructorReturn = function (self, call) {
  */
 
 var Alert = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -301,7 +272,6 @@ var Alert = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Alert = function () {
     function Alert(element) {
@@ -314,7 +284,6 @@ var Alert = function ($) {
 
     createClass(Alert, [{
       key: 'close',
-
 
       // public
 
@@ -338,7 +307,6 @@ var Alert = function ($) {
       }
 
       // private
-
     }, {
       key: '_getRootElement',
       value: function _getRootElement(element) {
@@ -386,7 +354,6 @@ var Alert = function ($) {
       }
 
       // static
-
     }], [{
       key: '_jQueryInterface',
       value: function _jQueryInterface(config) {
@@ -456,7 +423,6 @@ var Alert = function ($) {
  */
 
 var Button = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -493,7 +459,6 @@ var Button = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Button = function () {
     function Button(element) {
@@ -506,7 +471,6 @@ var Button = function ($) {
 
     createClass(Button, [{
       key: 'toggle',
-
 
       // public
 
@@ -560,7 +524,6 @@ var Button = function ($) {
       }
 
       // static
-
     }], [{
       key: '_jQueryInterface',
       value: function _jQueryInterface(config) {
@@ -631,7 +594,6 @@ var Button = function ($) {
  */
 
 var Carousel = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -708,7 +670,6 @@ var Carousel = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Carousel = function () {
     function Carousel(element, config) {
@@ -734,7 +695,6 @@ var Carousel = function ($) {
 
     createClass(Carousel, [{
       key: 'next',
-
 
       // public
 
@@ -836,7 +796,6 @@ var Carousel = function ($) {
       }
 
       // private
-
     }, {
       key: '_getConfig',
       value: function _getConfig(config) {
@@ -1010,7 +969,6 @@ var Carousel = function ($) {
         });
 
         if (Util.supportsTransitionEnd() && $(this._element).hasClass(ClassName.SLIDE)) {
-
           $(nextElement).addClass(orderClassName);
 
           Util.reflow(nextElement);
@@ -1043,7 +1001,6 @@ var Carousel = function ($) {
       }
 
       // static
-
     }], [{
       key: '_jQueryInterface',
       value: function _jQueryInterface(config) {
@@ -1158,7 +1115,6 @@ var Carousel = function ($) {
  */
 
 var Collapse = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -1212,7 +1168,6 @@ var Collapse = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Collapse = function () {
     function Collapse(element, config) {
@@ -1246,7 +1201,6 @@ var Collapse = function ($) {
 
     createClass(Collapse, [{
       key: 'toggle',
-
 
       // public
 
@@ -1400,7 +1354,6 @@ var Collapse = function ($) {
       }
 
       // private
-
     }, {
       key: '_getConfig',
       value: function _getConfig(config) {
@@ -1442,7 +1395,6 @@ var Collapse = function ($) {
       }
 
       // static
-
     }], [{
       key: '_getTargetFromElement',
       value: function _getTargetFromElement(element) {
@@ -1533,7 +1485,6 @@ var Collapse = function ($) {
  */
 
 var Modal = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -1598,7 +1549,6 @@ var Modal = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Modal = function () {
     function Modal(element, config) {
@@ -1619,7 +1569,6 @@ var Modal = function ($) {
 
     createClass(Modal, [{
       key: 'toggle',
-
 
       // public
 
@@ -1715,7 +1664,6 @@ var Modal = function ($) {
         $(this._dialog).off(Event.MOUSEDOWN_DISMISS);
 
         if (transition) {
-
           $(this._element).one(Util.TRANSITION_END, function (event) {
             return _this2._hideModal(event);
           }).emulateTransitionEnd(TRANSITION_DURATION);
@@ -1746,7 +1694,6 @@ var Modal = function ($) {
       }
 
       // private
-
     }, {
       key: '_getConfig',
       value: function _getConfig(config) {
@@ -1936,7 +1883,6 @@ var Modal = function ($) {
       // the following methods are used to handle overflowing modals
       // todo (fat): these should probably be refactored out of modal.js
       // ----------------------------------------------------------------------
-
     }, {
       key: '_adjustDialog',
       value: function _adjustDialog() {
@@ -2029,7 +1975,6 @@ var Modal = function ($) {
       }
 
       // static
-
     }], [{
       key: '_jQueryInterface',
       value: function _jQueryInterface(config, relatedTarget) {
@@ -2130,7 +2075,6 @@ var Modal = function ($) {
  */
 
 var Tooltip = function ($) {
-
   /**
    * Check for Popper dependency
    * Popper - https://popper.js.org
@@ -2230,12 +2174,10 @@ var Tooltip = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Tooltip = function () {
     function Tooltip(element, config) {
       classCallCheck(this, Tooltip);
-
 
       // private
       this._isEnabled = true;
@@ -2256,7 +2198,6 @@ var Tooltip = function ($) {
 
     createClass(Tooltip, [{
       key: 'enable',
-
 
       // public
 
@@ -2293,7 +2234,6 @@ var Tooltip = function ($) {
             context._leave(null, context);
           }
         } else {
-
           if ($(this.getTipElement()).hasClass(ClassName.SHOW)) {
             this._leave(null, this);
             return;
@@ -2472,7 +2412,6 @@ var Tooltip = function ($) {
         this._activeTrigger[Trigger.HOVER] = false;
 
         if (Util.supportsTransitionEnd() && $(this.tip).hasClass(ClassName.FADE)) {
-
           $(tip).one(Util.TRANSITION_END, complete).emulateTransitionEnd(TRANSITION_DURATION);
         } else {
           complete();
@@ -2489,7 +2428,6 @@ var Tooltip = function ($) {
       }
 
       // protected
-
     }, {
       key: 'isWithContent',
       value: function isWithContent() {
@@ -2542,7 +2480,6 @@ var Tooltip = function ($) {
       }
 
       // private
-
     }, {
       key: '_getAttachment',
       value: function _getAttachment(placement) {
@@ -2746,7 +2683,6 @@ var Tooltip = function ($) {
       }
 
       // static
-
     }], [{
       key: '_jQueryInterface',
       value: function _jQueryInterface(config) {
@@ -2834,7 +2770,6 @@ var Tooltip = function ($) {
  */
 
 var Popover = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -2887,7 +2822,6 @@ var Popover = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Popover = function (_Tooltip) {
     inherits(Popover, _Tooltip);
@@ -2899,7 +2833,6 @@ var Popover = function ($) {
 
     createClass(Popover, [{
       key: 'isWithContent',
-
 
       // overrides
 
@@ -2929,7 +2862,6 @@ var Popover = function ($) {
       }
 
       // private
-
     }, {
       key: '_getContent',
       value: function _getContent() {
@@ -2946,7 +2878,6 @@ var Popover = function ($) {
       }
 
       // static
-
     }], [{
       key: '_jQueryInterface',
       value: function _jQueryInterface(config) {
@@ -2973,7 +2904,6 @@ var Popover = function ($) {
       }
     }, {
       key: 'VERSION',
-
 
       // getters
 
@@ -3038,7 +2968,6 @@ var Popover = function ($) {
  */
 
 var ScrollSpy = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -3096,7 +3025,6 @@ var ScrollSpy = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var ScrollSpy = function () {
     function ScrollSpy(element, config) {
@@ -3125,7 +3053,6 @@ var ScrollSpy = function ($) {
 
     createClass(ScrollSpy, [{
       key: 'refresh',
-
 
       // public
 
@@ -3187,7 +3114,6 @@ var ScrollSpy = function ($) {
       }
 
       // private
-
     }, {
       key: '_getConfig',
       value: function _getConfig(config) {
@@ -3291,7 +3217,6 @@ var ScrollSpy = function ($) {
       }
 
       // static
-
     }], [{
       key: '_jQueryInterface',
       value: function _jQueryInterface(config) {
@@ -3365,7 +3290,6 @@ var ScrollSpy = function ($) {
  */
 
 var Tab = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -3409,7 +3333,6 @@ var Tab = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Tab = function () {
     function Tab(element) {
@@ -3422,7 +3345,6 @@ var Tab = function ($) {
 
     createClass(Tab, [{
       key: 'show',
-
 
       // public
 
@@ -3494,7 +3416,6 @@ var Tab = function ($) {
       }
 
       // private
-
     }, {
       key: '_activate',
       value: function _activate(element, container, callback) {
@@ -3543,7 +3464,6 @@ var Tab = function ($) {
         }
 
         if (element.parentNode && $(element.parentNode).hasClass(ClassName.DROPDOWN_MENU)) {
-
           var dropdownElement = $(element).closest(Selector.DROPDOWN)[0];
           if (dropdownElement) {
             $(dropdownElement).find(Selector.DROPDOWN_TOGGLE).addClass(ClassName.ACTIVE);
@@ -3558,7 +3478,6 @@ var Tab = function ($) {
       }
 
       // static
-
     }], [{
       key: '_jQueryInterface',
       value: function _jQueryInterface(config) {
@@ -3757,7 +3676,6 @@ var Base = function ($) {
 
       // ------------------------------------------------------------------------
       // protected
-
     }, {
       key: "addFormGroupFocus",
       value: function addFormGroupFocus() {
@@ -3782,7 +3700,6 @@ var Base = function ($) {
       }
 
       // Find bmd-form-group
-
     }, {
       key: "findMdbFormGroup",
       value: function findMdbFormGroup() {
@@ -3800,7 +3717,6 @@ var Base = function ($) {
 
       // ------------------------------------------------------------------------
       // static
-
     }]);
     return Base;
   }();
@@ -3926,7 +3842,6 @@ var BaseInput = function ($) {
 
       // ------------------------------------------------------------------------
       // protected
-
     }, {
       key: "rejectWithoutRequiredStructure",
       value: function rejectWithoutRequiredStructure() {
@@ -3994,7 +3909,6 @@ var BaseInput = function ($) {
       }
 
       // Will add bmd-form-group to form-group or create a bmd-form-group if necessary
-
     }, {
       key: "resolveMdbFormGroup",
       value: function resolveMdbFormGroup() {
@@ -4027,7 +3941,6 @@ var BaseInput = function ($) {
 
       // Demarcation element (e.g. first child of a form-group)
       //  Subclasses such as file inputs may have different structures
-
     }, {
       key: "outerElement",
       value: function outerElement() {
@@ -4035,7 +3948,6 @@ var BaseInput = function ($) {
       }
 
       // Will add bmd-label to bmd-form-group if not already specified
-
     }, {
       key: "resolveMdbLabel",
       value: function resolveMdbLabel() {
@@ -4056,7 +3968,6 @@ var BaseInput = function ($) {
       }
 
       // Find bmd-label variant based on the config selectors
-
     }, {
       key: "findMdbLabel",
       value: function findMdbLabel() {
@@ -4105,7 +4016,6 @@ var BaseInput = function ($) {
       }
 
       // Find bmd-form-group
-
     }, {
       key: "findFormGroup",
       value: function findFormGroup() {
@@ -4120,7 +4030,6 @@ var BaseInput = function ($) {
 
       // Due to the interconnected nature of labels/inputs/help-blocks, signal the bmd-form-group-* size variation based on
       //  a found form-control-* size
-
     }, {
       key: "resolveMdbFormGroupSizing",
       value: function resolveMdbFormGroupSizing() {
@@ -4139,7 +4048,6 @@ var BaseInput = function ($) {
 
       // ------------------------------------------------------------------------
       // private
-
     }, {
       key: "_rejectInvalidComponentMatches",
       value: function _rejectInvalidComponentMatches() {
@@ -4237,7 +4145,6 @@ var BaseInput = function ($) {
 
       // ------------------------------------------------------------------------
       // static
-
     }]);
     return BaseInput;
   }(Base);
@@ -4309,7 +4216,6 @@ var BaseSelection = function ($) {
       }
 
       // Demarcation element (e.g. first child of a form-group)
-
     }, {
       key: "outerElement",
       value: function outerElement() {
@@ -4350,7 +4256,6 @@ var BaseSelection = function ($) {
 
       // ------------------------------------------------------------------------
       // private
-
     }]);
     return BaseSelection;
   }(BaseInput);
@@ -4428,7 +4333,6 @@ var Checkbox = function ($) {
 
       // ------------------------------------------------------------------------
       // static
-
     }, {
       key: "_jQueryInterface",
       value: function _jQueryInterface(config) {
@@ -4451,7 +4355,6 @@ var Checkbox = function ($) {
    * jQuery
    * ------------------------------------------------------------------------
    */
-
 
   $.fn[JQUERY_NAME] = Checkbox._jQueryInterface;
   $.fn[JQUERY_NAME].Constructor = Checkbox;
@@ -4525,7 +4428,6 @@ var CheckboxInline = function ($) {
 
       // ------------------------------------------------------------------------
       // static
-
     }], [{
       key: "_jQueryInterface",
       value: function _jQueryInterface(config) {
@@ -4548,7 +4450,6 @@ var CheckboxInline = function ($) {
    * jQuery
    * ------------------------------------------------------------------------
    */
-
 
   $.fn[JQUERY_NAME] = CheckboxInline._jQueryInterface;
   $.fn[JQUERY_NAME].Constructor = CheckboxInline;
@@ -4647,7 +4548,6 @@ var CollapseInline = function ($) {
 
       // ------------------------------------------------------------------------
       // static
-
     }], [{
       key: "_jQueryInterface",
       value: function _jQueryInterface(config) {
@@ -4670,7 +4570,6 @@ var CollapseInline = function ($) {
    * jQuery
    * ------------------------------------------------------------------------
    */
-
 
   $.fn[JQUERY_NAME] = CollapseInline._jQueryInterface;
   $.fn[JQUERY_NAME].Constructor = CollapseInline;
@@ -4738,7 +4637,6 @@ var File = function ($) {
     }, {
       key: "outerElement",
 
-
       // ------------------------------------------------------------------------
       // protected
 
@@ -4791,7 +4689,6 @@ var File = function ($) {
 
       // ------------------------------------------------------------------------
       // static
-
     }], [{
       key: "matches",
       value: function matches($element) {
@@ -4827,7 +4724,6 @@ var File = function ($) {
    * jQuery
    * ------------------------------------------------------------------------
    */
-
 
   $.fn[JQUERY_NAME] = File._jQueryInterface;
   $.fn[JQUERY_NAME].Constructor = File;
@@ -4909,7 +4805,6 @@ var Radio = function ($) {
 
       // ------------------------------------------------------------------------
       // static
-
     }, {
       key: "_jQueryInterface",
       value: function _jQueryInterface(config) {
@@ -4932,7 +4827,6 @@ var Radio = function ($) {
    * jQuery
    * ------------------------------------------------------------------------
    */
-
 
   $.fn[JQUERY_NAME] = Radio._jQueryInterface;
   $.fn[JQUERY_NAME].Constructor = Radio;
@@ -4994,7 +4888,6 @@ var RadioInline = function ($) {
 
       // ------------------------------------------------------------------------
       // static
-
     }], [{
       key: "_jQueryInterface",
       value: function _jQueryInterface(config) {
@@ -5017,7 +4910,6 @@ var RadioInline = function ($) {
    * jQuery
    * ------------------------------------------------------------------------
    */
-
 
   $.fn[JQUERY_NAME] = RadioInline._jQueryInterface;
   $.fn[JQUERY_NAME].Constructor = RadioInline;
@@ -5135,7 +5027,6 @@ var Select = function ($) {
 
       // ------------------------------------------------------------------------
       // static
-
     }, {
       key: "_jQueryInterface",
       value: function _jQueryInterface(config) {
@@ -5158,7 +5049,6 @@ var Select = function ($) {
    * jQuery
    * ------------------------------------------------------------------------
    */
-
 
   $.fn[JQUERY_NAME] = Select._jQueryInterface;
   $.fn[JQUERY_NAME].Constructor = Select;
@@ -5215,7 +5105,6 @@ var Switch = function ($) {
 
       // ------------------------------------------------------------------------
       // static
-
     }], [{
       key: "_jQueryInterface",
       value: function _jQueryInterface(config) {
@@ -5238,7 +5127,6 @@ var Switch = function ($) {
    * jQuery
    * ------------------------------------------------------------------------
    */
-
 
   $.fn[JQUERY_NAME] = Switch._jQueryInterface;
   $.fn[JQUERY_NAME].Constructor = Switch;
@@ -5314,7 +5202,6 @@ var Text = function ($) {
 
       // ------------------------------------------------------------------------
       // static
-
     }, {
       key: "_jQueryInterface",
       value: function _jQueryInterface(config) {
@@ -5337,7 +5224,6 @@ var Text = function ($) {
    * jQuery
    * ------------------------------------------------------------------------
    */
-
 
   $.fn[JQUERY_NAME] = Text._jQueryInterface;
   $.fn[JQUERY_NAME].Constructor = Text;
@@ -5411,7 +5297,6 @@ var Textarea = function ($) {
 
       // ------------------------------------------------------------------------
       // static
-
     }, {
       key: "_jQueryInterface",
       value: function _jQueryInterface(config) {
@@ -5434,7 +5319,6 @@ var Textarea = function ($) {
    * jQuery
    * ------------------------------------------------------------------------
    */
-
 
   $.fn[JQUERY_NAME] = Textarea._jQueryInterface;
   $.fn[JQUERY_NAME].Constructor = Textarea;
@@ -5461,7 +5345,6 @@ var Textarea = function ($) {
  */
 
 var Dropdown = function ($) {
-
   /**
    * Check for Popper dependency
    * Popper - https://popper.js.org
@@ -5543,7 +5426,6 @@ var Dropdown = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Dropdown = function () {
     function Dropdown(element, config) {
@@ -5562,7 +5444,6 @@ var Dropdown = function ($) {
 
     createClass(Dropdown, [{
       key: 'toggle',
-
 
       // public
 
@@ -5643,7 +5524,6 @@ var Dropdown = function ($) {
       }
 
       // private
-
     }, {
       key: '_addEventListeners',
       value: function _addEventListeners() {
@@ -5724,7 +5604,6 @@ var Dropdown = function ($) {
       }
 
       // static
-
     }], [{
       key: '_jQueryInterface',
       value: function _jQueryInterface(config) {
@@ -5833,7 +5712,6 @@ var Dropdown = function ($) {
         var isActive = $(parent).hasClass(ClassName.SHOW);
 
         if (!isActive && (event.which !== ESCAPE_KEYCODE || event.which !== SPACE_KEYCODE) || isActive && (event.which === ESCAPE_KEYCODE || event.which === SPACE_KEYCODE)) {
-
           if (event.which === ESCAPE_KEYCODE) {
             var toggle = $(parent).find(Selector.DATA_TOGGLE)[0];
             $(toggle).trigger('focus');
@@ -5975,7 +5853,6 @@ var BaseLayout = function ($) {
       // protected
 
       // Will wrap container in bmd-layout-canvas if necessary
-
     }, {
       key: "resolveCanvas",
       value: function resolveCanvas() {
@@ -5992,7 +5869,6 @@ var BaseLayout = function ($) {
       }
 
       // Find closest bmd-layout-container based on the given context
-
     }, {
       key: "findCanvas",
       value: function findCanvas() {
@@ -6007,7 +5883,6 @@ var BaseLayout = function ($) {
       }
 
       // Will add bmd-layout-backdrop to bmd-layout-container if necessary
-
     }, {
       key: "resolveBackdrop",
       value: function resolveBackdrop() {
@@ -6024,7 +5899,6 @@ var BaseLayout = function ($) {
       }
 
       // Find closest bmd-layout-container based on the given context
-
     }, {
       key: "findBackdrop",
       value: function findBackdrop() {
@@ -6039,7 +5913,6 @@ var BaseLayout = function ($) {
       }
 
       // Find closest bmd-layout-container based on the given context
-
     }, {
       key: "findContainer",
       value: function findContainer() {
@@ -6058,7 +5931,6 @@ var BaseLayout = function ($) {
 
       // ------------------------------------------------------------------------
       // static
-
     }]);
     return BaseLayout;
   }(Base);
@@ -6191,7 +6063,6 @@ var Drawer = function ($) {
 
       // ------------------------------------------------------------------------
       // private
-
     }, {
       key: "_isOpen",
       value: function _isOpen() {
@@ -6216,7 +6087,6 @@ var Drawer = function ($) {
 
       // ------------------------------------------------------------------------
       // static
-
     }], [{
       key: "_jQueryInterface",
       value: function _jQueryInterface(config) {
@@ -6239,7 +6109,6 @@ var Drawer = function ($) {
    * jQuery
    * ------------------------------------------------------------------------
    */
-
 
   $.fn[JQUERY_NAME] = Drawer._jQueryInterface;
   $.fn[JQUERY_NAME].Constructor = Drawer;
@@ -6322,7 +6191,6 @@ var Ripples = function ($) {
 
       // ------------------------------------------------------------------------
       // private
-
     }, {
       key: "_onStartRipple",
       value: function _onStartRipple(event) {
@@ -6389,7 +6257,6 @@ var Ripples = function ($) {
       }
 
       // Make sure the ripple has the styles applied (ugly hack but it works)
-
     }, {
       key: "_forceStyleApplication",
       value: function _forceStyleApplication() {
@@ -6399,7 +6266,6 @@ var Ripples = function ($) {
       /**
        * Get the relX
        */
-
     }, {
       key: "_getRelX",
       value: function _getRelX(event) {
@@ -6427,7 +6293,6 @@ var Ripples = function ($) {
       /**
        * Get the relY
        */
-
     }, {
       key: "_getRelY",
       value: function _getRelY(event) {
@@ -6459,7 +6324,6 @@ var Ripples = function ($) {
       /**
        * Get the ripple color
        */
-
     }, {
       key: "_getRipplesColor",
       value: function _getRipplesColor() {
@@ -6470,7 +6334,6 @@ var Ripples = function ($) {
       /**
        * Verify if the client is using a mobile device
        */
-
     }, {
       key: "_isTouch",
       value: function _isTouch() {
@@ -6480,7 +6343,6 @@ var Ripples = function ($) {
       /**
        * End the animation of the ripple
        */
-
     }, {
       key: "rippleEnd",
       value: function rippleEnd() {
@@ -6497,7 +6359,6 @@ var Ripples = function ($) {
       /**
        * Turn off the ripple effect
        */
-
     }, {
       key: "rippleOut",
       value: function rippleOut() {
@@ -6524,7 +6385,6 @@ var Ripples = function ($) {
       /**
        * Turn on the ripple effect
        */
-
     }, {
       key: "rippleOn",
       value: function rippleOn() {
@@ -6555,7 +6415,6 @@ var Ripples = function ($) {
       /**
        * Get the new size based on the element height/width and the ripple width
        */
-
     }, {
       key: "_getNewSize",
       value: function _getNewSize() {
@@ -6564,7 +6423,6 @@ var Ripples = function ($) {
 
       // ------------------------------------------------------------------------
       // static
-
     }], [{
       key: "_jQueryInterface",
       value: function _jQueryInterface(config) {
@@ -6587,7 +6445,6 @@ var Ripples = function ($) {
    * jQuery
    * ------------------------------------------------------------------------
    */
-
 
   $.fn[JQUERY_NAME] = Ripples._jQueryInterface;
   $.fn[JQUERY_NAME].Constructor = Ripples;
@@ -6639,7 +6496,6 @@ var Autofill = function ($) {
 
       // ------------------------------------------------------------------------
       // private
-
     }, {
       key: "_watchLoading",
       value: function _watchLoading() {
@@ -6652,7 +6508,6 @@ var Autofill = function ($) {
       }
 
       // This part of code will detect autofill when the page is loading (username and password inputs for example)
-
     }, {
       key: "_onLoading",
       value: function _onLoading() {
@@ -6688,7 +6543,6 @@ var Autofill = function ($) {
 
       // ------------------------------------------------------------------------
       // static
-
     }], [{
       key: "_jQueryInterface",
       value: function _jQueryInterface(config) {
@@ -6711,7 +6565,6 @@ var Autofill = function ($) {
    * jQuery
    * ------------------------------------------------------------------------
    */
-
 
   $.fn[JQUERY_NAME] = Autofill._jQueryInterface;
   $.fn[JQUERY_NAME].Constructor = Autofill;
@@ -6899,7 +6752,6 @@ var BootstrapMaterialDesign = function ($) {
 
       // ------------------------------------------------------------------------
       // private
-
     }, {
       key: "_resolveSelector",
       value: function _resolveSelector(componentConfig) {
@@ -6913,7 +6765,6 @@ var BootstrapMaterialDesign = function ($) {
 
       // ------------------------------------------------------------------------
       // static
-
     }], [{
       key: "_jQueryInterface",
       value: function _jQueryInterface(config) {
@@ -6937,7 +6788,6 @@ var BootstrapMaterialDesign = function ($) {
    * ------------------------------------------------------------------------
    */
 
-
   $.fn[JQUERY_NAME] = BootstrapMaterialDesign._jQueryInterface;
   $.fn[JQUERY_NAME].Constructor = BootstrapMaterialDesign;
   $.fn[JQUERY_NAME].noConflict = function () {
@@ -6958,6 +6808,5 @@ var BootstrapMaterialDesign = function ($) {
 
 // Bootstrap components
 // invalidComponentMatches is currently disabled due to https://github.com/rollup/rollup/issues/428#issuecomment-170066452
-
 }());
 //# sourceMappingURL=bootstrap-material-design.js.map

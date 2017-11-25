@@ -1,20 +1,21 @@
-﻿using System;
+﻿using ArktinMonitor.Data.ExtensionMethods;
+using ArktinMonitor.Data.Models;
+using ArktinMonitor.Helpers;
+using Microsoft.Win32;
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using ArktinMonitor.Data.Models;
-using ArktinMonitor.Helpers;
-using Microsoft.Win32;
-using ArktinMonitor.Data.ExtensionMethods;
 
 namespace ArktinMonitor.DesktopApp.ViewModel
 {
     internal class EditorViewModel : ViewModelTemplate
     {
         private static readonly JsonLocalDatabase Db = JsonLocalDatabase.Instance;
+
         public EditorViewModel()
         {
             Users = new ObservableCollection<ComputerUserDesktop>();
@@ -99,8 +100,8 @@ namespace ArktinMonitor.DesktopApp.ViewModel
             }
         }
 
-
         public ICommand AddNewBlockedAppCommand => new DelegateCommand(AddNewBlockedApp);
+
         public void AddNewBlockedApp()
         {
             var dialog = new OpenFileDialog
@@ -129,12 +130,14 @@ namespace ArktinMonitor.DesktopApp.ViewModel
         }
 
         public ICommand RemoveBlockedAppCommand => new DelegateCommand(RemoveBlockedApp);
+
         public void RemoveBlockedApp()
         {
             User.BlockedApplications.Remove(Application);
         }
 
         public ICommand EditBlockedAppCommand => new DelegateCommand(EditBlockedApp);
+
         public void EditBlockedApp()
         {
             var dialog = new OpenFileDialog
@@ -162,7 +165,6 @@ namespace ArktinMonitor.DesktopApp.ViewModel
             Application.Name = System.IO.Path.GetFileNameWithoutExtension(dialog.SafeFileName);
             Application.FilePath = dialog.FileName;
         }
-
 
         private void UsersOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -202,8 +204,8 @@ namespace ArktinMonitor.DesktopApp.ViewModel
             }
         }
 
-
         public ICommand RefreshCommand => new DelegateCommand(RefreshUsers);
+
         public void RefreshUsers()
         {
             var computer = Db.Computer;
@@ -220,6 +222,5 @@ namespace ArktinMonitor.DesktopApp.ViewModel
             }
             User = Users.FirstOrDefault();
         }
-
     }
 }

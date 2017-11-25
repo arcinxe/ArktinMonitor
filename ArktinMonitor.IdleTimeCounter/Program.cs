@@ -1,8 +1,6 @@
-﻿using System;
-using System.Diagnostics;
+﻿using ArktinMonitor.Helpers;
+using System;
 using System.IO;
-using System.Threading;
-using ArktinMonitor.Helpers;
 
 namespace ArktinMonitor.IdleTimeCounter
 {
@@ -13,7 +11,7 @@ namespace ArktinMonitor.IdleTimeCounter
             try
             {
                 var dataStoragePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Arktin");
-                LocalLogger.LogStoragePath = dataStoragePath;
+                LocalLogger.StoragePath = dataStoragePath;
                 LocalLogger.FileName = "IdleTimeCounter.log";
                 Directory.CreateDirectory(dataStoragePath);
 

@@ -385,10 +385,6 @@ var createClass = function () {
   };
 }();
 
-
-
-
-
 var defineProperty = function (obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -2367,7 +2363,6 @@ var Popper = function () {
   // We can't use class properties because they don't get listed in the
   // class prototype and break stuff like Sinon stubs
 
-
   createClass(Popper, [{
     key: 'update',
     value: function update$$1() {
@@ -2395,7 +2390,6 @@ var Popper = function () {
      * @memberof Popper
      */
 
-
     /**
      * Collection of utilities useful when writing custom modifiers.
      * Starting from version 1.7, this method is available only if you
@@ -2412,7 +2406,6 @@ var Popper = function () {
      * @member Utils
      * @memberof Popper
      */
-
   }]);
   return Popper;
 }();
@@ -2437,12 +2430,10 @@ var Popper = function () {
  * An ES6 getter that will return the height of the virtual reference element.
  */
 
-
 Popper.Utils = (typeof window !== 'undefined' ? window : global).PopperUtils;
 Popper.placements = placements;
 Popper.Defaults = Defaults;
 
 return Popper;
-
 })));
 //# sourceMappingURL=popper.js.map

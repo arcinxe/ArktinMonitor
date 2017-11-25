@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
 
 namespace ArktinMonitor.Helpers
 {
@@ -12,11 +12,12 @@ namespace ArktinMonitor.Helpers
         /// <summary>
         /// Target directory to store log file. By default location of the executable.
         /// </summary>
-       public static string LogStoragePath = Environment.UserInteractive
-            ? Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)
-            : AppDomain.CurrentDomain.BaseDirectory;
+        public static string StoragePath = Environment.UserInteractive
+             ? Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)
+             : AppDomain.CurrentDomain.BaseDirectory;
 
         private static readonly object Locker = new object();
+
         /// <summary>
         /// Name for log file
         /// </summary>
@@ -46,6 +47,7 @@ namespace ArktinMonitor.Helpers
 
         public static void Log(object obj)
         {
+            //Log(obj.Dump());
             Log(JsonConvert.SerializeObject(obj, Formatting.Indented));
         }
 
@@ -54,6 +56,7 @@ namespace ArktinMonitor.Helpers
             if (!Enabled) return;
             LogException(sender, exception);
         }
+
         private static void LogText(string data)
         {
             // For better formating when used without parameter.
@@ -67,10 +70,10 @@ namespace ArktinMonitor.Helpers
                     Console.WriteLine(Format(data, separator));
                 }
 
-                if(!SaveOnDisk) return;
+                if (!SaveOnDisk) return;
                 if (Append)
                 {
-                    using (var sw = new StreamWriter(Path.Combine(LogStoragePath, FileName), true))
+                    using (var sw = new StreamWriter(Path.Combine(StoragePath, FileName), true))
                     {
                         sw.WriteLine(Format(data, separator));
                     }
@@ -80,7 +83,7 @@ namespace ArktinMonitor.Helpers
                     var currentContent = new StringBuilder();
                     try
                     {
-                        var rawList = File.ReadAllLines(Path.Combine(LogStoragePath, FileName)).ToList();
+                        var rawList = File.ReadAllLines(Path.Combine(StoragePath, FileName)).ToList();
                         foreach (var item in rawList)
                         {
                             currentContent.Append(item + Environment.NewLine);
@@ -90,11 +93,9 @@ namespace ArktinMonitor.Helpers
                     {
                         // ignored (file does not exist)
                     }
-                    File.WriteAllText(Path.Combine(LogStoragePath, FileName), Format(data, separator) + Environment.NewLine + currentContent);
+                    File.WriteAllText(Path.Combine(StoragePath, FileName), Format(data, separator) + Environment.NewLine + currentContent);
                 }
             }
-
-
         }
 
         private static void LogException(string sender, Exception e)

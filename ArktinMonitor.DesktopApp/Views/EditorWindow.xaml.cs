@@ -1,9 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using ArktinMonitor.DesktopApp.ViewModel;
-using MaterialDesignThemes.Wpf;
 
 namespace ArktinMonitor.DesktopApp.Views
 {

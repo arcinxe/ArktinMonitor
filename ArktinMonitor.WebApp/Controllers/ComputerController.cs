@@ -1,8 +1,9 @@
-﻿using System.Linq;
-using System.Web.Http;
-using ArktinMonitor.Data;
+﻿using ArktinMonitor.Data;
 using ArktinMonitor.Data.ExtensionMethods;
 using ArktinMonitor.Data.Models;
+using System.Data.Entity;
+using System.Linq;
+using System.Web.Http;
 
 namespace ArktinMonitor.WebApp.Controllers
 {
@@ -22,12 +23,11 @@ namespace ArktinMonitor.WebApp.Controllers
             return Ok(computers);
         }
 
-        [Route("Computers", Name = "PostComputer")]
+        [Route("Computers")]
         [HttpPost]
-        public IHttpActionResult AddComputer(ComputerResourceModel computer)
+        public IHttpActionResult UpdateComputer(ComputerResourceModel computer)
         {
             var exist = computer.ComputerId != 0 && _db.Computers.Any(c => c.ComputerId == computer.ComputerId);
-            if (exist) return Ok();
 
             var computerModel = computer.ToModel();
             var account = _db.WebAccounts
@@ -35,9 +35,16 @@ namespace ArktinMonitor.WebApp.Controllers
             if (account == null) return NotFound();
 
             computerModel.WebAccountId = account.WebAccountId;
-            _db.Computers.Add(computerModel);
+            if (exist)
+            {
+                _db.Entry(computerModel).State = EntityState.Modified;
+            }
+            else
+            {
+                _db.Computers.Add(computerModel);
+            }
             _db.SaveChanges();
-            return CreatedAtRoute("PostComputer", new { id = computerModel.ComputerId }, computerModel);
+            return Ok(computerModel.ComputerId);
         }
     }
 }

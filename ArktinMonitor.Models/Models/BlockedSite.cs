@@ -4,7 +4,6 @@
     {
         public int BlockedSiteId { get; set; }
 
-
         public int ComputerUserId { get; set; }
 
         public virtual ComputerUser ComputerUser { get; set; }

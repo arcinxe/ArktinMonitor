@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using ArktinMonitor.Data.Models;
+﻿using ArktinMonitor.Data.Models;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace ArktinMonitor.Helpers
 {
@@ -14,6 +13,7 @@ namespace ArktinMonitor.Helpers
 
         private static readonly string DataStoragePath =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Arktin");
+
         public ComputerLocal Computer
         {
             get
@@ -53,7 +53,6 @@ namespace ArktinMonitor.Helpers
             {
                 try
                 {
-
                     if (value == null) throw new ArgumentNullException(nameof(value));
                     var logTimeIntervalsFile = JsonConvert.SerializeObject(value.LogTimeIntervals, Formatting.Indented);
                     using (var streamWriter = new StreamWriter(Path.Combine(DataStoragePath, "LogTimeIntervals.json")))
@@ -66,17 +65,17 @@ namespace ArktinMonitor.Helpers
                     {
                         streamWriter.WriteLine(jsonFile);
                     }
-
                 }
                 catch (Exception e)
                 {
                     LocalLogger.Log(nameof(JsonLocalDatabase), e);
                 }
             }
-
         }
 
-        private JsonLocalDatabase() { }
+        private JsonLocalDatabase()
+        {
+        }
 
         public static JsonLocalDatabase Instance
         {

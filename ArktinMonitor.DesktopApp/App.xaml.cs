@@ -1,8 +1,8 @@
-﻿using System.IO;
-using System.Windows;
-using ArktinMonitor.DesktopApp.Helpers;
+﻿using ArktinMonitor.DesktopApp.Helpers;
 using ArktinMonitor.DesktopApp.Views;
 using ArktinMonitor.Helpers;
+using System.IO;
+using System.Windows;
 
 namespace ArktinMonitor.DesktopApp
 {
@@ -28,7 +28,7 @@ namespace ArktinMonitor.DesktopApp
 
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
-            ConfigFileManager.PrepareConfigDataFile(Settings.ApiUrl,Path.Combine(Settings.DataStoragePath, "ArktinMonitorData.an"));
+            ConfigFileManager.PrepareConfigDataFile(Settings.ApiUrl, Path.Combine(Settings.DataStoragePath, "ArktinMonitorData.an"));
             //CredentialsManager.PurgePassword();
             //if (CredentialsManager.AreCredentialsStored())
             if (CredentialsManager.CheckWebApiAccess(Settings.ApiUrl, Settings.DataStoragePath))

@@ -1,13 +1,10 @@
-﻿using System;
+﻿using ArktinMonitor.Helpers;
+using ArktinMonitor.ServiceApp.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Management;
-using System.Text;
-using System.Threading.Tasks;
-using ArktinMonitor.Data.Models;
-using ArktinMonitor.Helpers;
-using ArktinMonitor.ServiceApp.Helpers;
 
 namespace ArktinMonitor.ServiceApp.Services
 {

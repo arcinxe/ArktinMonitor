@@ -1,14 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using ArktinMonitor.Data.Annotations;
 
 namespace ArktinMonitor.Data.Models
 {
     public class BlockedApplication : BasicBlockedApplication
     {
         public int BlockedApplicationId { get; set; }
-
 
         public int ComputerUserId { get; set; }
 
@@ -25,6 +22,7 @@ namespace ArktinMonitor.Data.Models
     public class BlockedApplicationDesktop : INotifyPropertyChanged
     {
         private int _blockedApplicationId;
+
         public int BlockedApplicationId
         {
             get { return _blockedApplicationId; }
@@ -36,7 +34,9 @@ namespace ArktinMonitor.Data.Models
         }
 
         private string _name;
-        public string Name {
+
+        public string Name
+        {
             get { return _name; }
             set
             {
@@ -46,7 +46,9 @@ namespace ArktinMonitor.Data.Models
         }
 
         private string _filePath;
-        public string FilePath {
+
+        public string FilePath
+        {
             get { return _filePath; }
             set
             {
@@ -56,6 +58,7 @@ namespace ArktinMonitor.Data.Models
         }
 
         private string _tempfilePath;
+
         public string TempFilePath
         {
             get { return _tempfilePath; }
@@ -67,7 +70,9 @@ namespace ArktinMonitor.Data.Models
         }
 
         private bool _active;
-        public bool Active {
+
+        public bool Active
+        {
             get { return _active; }
             set
             {
@@ -77,6 +82,7 @@ namespace ArktinMonitor.Data.Models
         }
 
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
+
         protected void RaisePropertyChangedEvent(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -103,7 +109,7 @@ namespace ArktinMonitor.Data.Models
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((BasicBlockedApplication) obj);
+            return Equals((BasicBlockedApplication)obj);
         }
 
         public override int GetHashCode()

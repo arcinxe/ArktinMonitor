@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ArktinMonitor.Data.Models;
+﻿using ArktinMonitor.Data.Models;
+using System;
 
 namespace ArktinMonitor.Data.ExtensionMethods
 {
@@ -13,11 +9,38 @@ namespace ArktinMonitor.Data.ExtensionMethods
         {
             return new DiskResourceModel()
             {
-              Computer = disk.Computer.ToResourceModel(),
-              Name = disk.Name,
-              TotalSpaceInGigaBytes = disk.TotalSpaceInGigaBytes,
-              Letter = disk.Letter,
-              FreeSpaceInGigaBytes = disk.FreeSpaceInGigaBytes
+                ComputerId = disk.ComputerId,
+                Name = disk.Name,
+                TotalSpaceInGigaBytes = disk.TotalSpaceInGigaBytes,
+                Letter = disk.Letter,
+                FreeSpaceInGigaBytes = disk.FreeSpaceInGigaBytes,
+                DiskId = disk.DiskId
+            };
+        }
+
+        public static DiskResourceModel ToResourceModel(this DiskLocal disk, int computerId)
+        {
+            return new DiskResourceModel()
+            {
+                ComputerId = computerId,
+                Name = disk.Name,
+                TotalSpaceInGigaBytes = disk.TotalSpaceInGigaBytes,
+                Letter = disk.Letter,
+                FreeSpaceInGigaBytes = disk.FreeSpaceInGigaBytes,
+                DiskId = disk.DiskId
+            };
+        }
+
+        public static DiskLocal ToLocal(this DiskResourceModel disk)
+        {
+            return new DiskLocal()
+            {
+                Name = disk.Name,
+                TotalSpaceInGigaBytes = disk.TotalSpaceInGigaBytes,
+                Letter = disk.Letter,
+                FreeSpaceInGigaBytes = disk.FreeSpaceInGigaBytes,
+                DiskId = disk.DiskId,
+                Synced = true
             };
         }
 
@@ -28,10 +51,11 @@ namespace ArktinMonitor.Data.ExtensionMethods
                 Name = disk.Name,
                 TotalSpaceInGigaBytes = disk.TotalSpaceInGigaBytes,
                 Letter = disk.Letter,
-                FreeSpaceInGigaBytes = disk.FreeSpaceInGigaBytes
+                FreeSpaceInGigaBytes = disk.FreeSpaceInGigaBytes,
+                ComputerId = disk.ComputerId,
+                DiskId = disk.DiskId
             };
         }
-
 
         public static bool NeedsUpdate(this DiskLocal oldDisk, DiskLocal newDisk)
         {

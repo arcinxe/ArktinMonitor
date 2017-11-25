@@ -1,9 +1,10 @@
-﻿using System.Web.Http;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
+using System.Web.Http;
 
 [assembly: OwinStartupAttribute(typeof(ArktinMonitor.WebApp.Startup))]
+
 namespace ArktinMonitor.WebApp
 {
     public partial class Startup

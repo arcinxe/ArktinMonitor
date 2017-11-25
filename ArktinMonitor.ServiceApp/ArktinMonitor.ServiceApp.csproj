@@ -83,7 +83,7 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\RunHelper.cs" />
+    <Compile Include="Helpers\RunHelper.cs" />
     <Compile Include="Services\Scheduler.cs" />
     <Compile Include="Services\SendingManager.cs" />
     <Compile Include="Services\Authorization.cs" />

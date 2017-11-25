@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ArktinMonitor.Data;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Routing;
-using ArktinMonitor.Data;
 
 namespace ArktinMonitor.WebApp.Controllers
 {
@@ -20,7 +17,7 @@ namespace ArktinMonitor.WebApp.Controllers
             var userEmail = "";
             if (User.Identity.IsAuthenticated)
             {
-                 userEmail = User.Identity.Name;
+                userEmail = User.Identity.Name;
             }
             return Request.CreateResponse(HttpStatusCode.OK, $"Hello {userEmail}");
         }
@@ -31,7 +28,6 @@ namespace ArktinMonitor.WebApp.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, "Hello");
         }
-
 
         [Route("Computer")]
         [HttpGet]

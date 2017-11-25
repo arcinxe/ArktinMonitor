@@ -5,14 +5,16 @@ namespace ArktinMonitor.Data.Models
     public class Disk : BasicDisk
     {
         public int DiskId { get; set; }
-        
+
         public int ComputerId { get; set; }
         public virtual Computer Computer { get; set; }
     }
 
     public class DiskResourceModel : BasicDisk
     {
-        public ComputerResourceModel Computer { get; set; }
+        public int DiskId { get; set; }
+
+        public int ComputerId { get; set; }
     }
 
     public class DiskLocal : BasicDisk, IEquatable<DiskLocal>
@@ -20,6 +22,7 @@ namespace ArktinMonitor.Data.Models
         public int DiskId { get; set; }
 
         public bool Synced { get; set; }
+
         public bool Equals(DiskLocal other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -32,7 +35,7 @@ namespace ArktinMonitor.Data.Models
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((DiskLocal) obj);
+            return Equals((DiskLocal)obj);
         }
 
         public override int GetHashCode()
@@ -66,7 +69,7 @@ namespace ArktinMonitor.Data.Models
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((BasicDisk) obj);
+            return Equals((BasicDisk)obj);
         }
 
         public override int GetHashCode()

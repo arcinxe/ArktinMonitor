@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ArktinMonitor.Data.Models;
+using ArktinMonitor.Helpers;
+using System;
 using System.Diagnostics;
 using System.IO;
-using ArktinMonitor.Data.Models;
-using ArktinMonitor.Helpers;
 
 namespace ArktinMonitor.DesktopApp
 {
@@ -13,13 +13,11 @@ namespace ArktinMonitor.DesktopApp
             ? Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)
             : AppDomain.CurrentDomain.BaseDirectory;
 
-
         public static readonly string DataStoragePath =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Arktin");
 
         //public const string ApiUrl = "http://arktin.ml/";
         public static readonly string ApiUrl = JsonHelper.DeserializeJson<ConfigData>(Path.Combine(DataStoragePath, "ArktinMonitorData.an"))?.ApiUrl
             ?? "http://arktin.ml/";
-
     }
 }

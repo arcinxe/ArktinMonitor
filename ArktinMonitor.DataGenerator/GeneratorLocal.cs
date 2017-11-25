@@ -1,11 +1,9 @@
-﻿using System;
+﻿using ArktinMonitor.Data.Models;
+using ArktinMonitor.Helpers;
+using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using ArktinMonitor.Data;
-using ArktinMonitor.Data.Models;
-using ArktinMonitor.Helpers;
 
 namespace ArktinMonitor.DataGenerator
 {
@@ -13,7 +11,6 @@ namespace ArktinMonitor.DataGenerator
     {
         private static readonly Random Rand = new Random();
         private static readonly GeneratorData Samples = JsonHelper.DeserializeJson<GeneratorData>(Path.Combine(Settings.LocalStoragePath, "samples.json"));
-
 
         public static ComputerLocal GenerateComputer()
         {
@@ -108,6 +105,7 @@ namespace ArktinMonitor.DataGenerator
             }
             return names;
         }
+
         private static void GenerateLogTimeIntervals(ComputerLocal computer)
         {
             var now = DateTime.Now;
@@ -154,7 +152,7 @@ namespace ArktinMonitor.DataGenerator
                     Name = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(url.ToLower()),
                     UrlAddress = url
                 };
-               user.BlockedSites.Add(site);
+                user.BlockedSites.Add(site);
             }
         }
 
@@ -163,10 +161,7 @@ namespace ArktinMonitor.DataGenerator
         /// </summary>
         public static void PurgeAll()
         {
-
         }
-
-
 
         #region Extension methods
 
@@ -190,6 +185,7 @@ namespace ArktinMonitor.DataGenerator
         {
             return Rand.Next(min, max + min);
         }
+
         /// <summary>
         /// Returns random double between min value and this number.
         /// </summary>
@@ -211,6 +207,6 @@ namespace ArktinMonitor.DataGenerator
         //    dbSet.RemoveRange(dbSet);
         //}
 
-        #endregion
+        #endregion Extension methods
     }
 }

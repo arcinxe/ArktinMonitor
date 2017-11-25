@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Claims;
-using ArktinMonitor.Data.ExtensionMethods;
-using ArktinMonitor.Data.Models;
+﻿using ArktinMonitor.Data.ExtensionMethods;
 using ArktinMonitor.Helpers;
 using ArktinMonitor.ServiceApp.Helpers;
+using System;
+using System.Linq;
 
 namespace ArktinMonitor.ServiceApp.Services
 {
@@ -22,17 +18,16 @@ namespace ArktinMonitor.ServiceApp.Services
                 var db = JsonLocalDatabase.Instance;
                 var computer = db.Computer;
                 var needsUpdate = computer.NeedsUpdate(newComputer);
-                if (needsUpdate)
-                {
-                    computer.Name = newComputer.Name;
-                    computer.Cpu = newComputer.Cpu;
-                    computer.Gpu = newComputer.Gpu;
-                    computer.Ram = newComputer.Ram;
-                    computer.MacAddress = newComputer.MacAddress;
-                    computer.OperatingSystem = newComputer.OperatingSystem;
+                if (!needsUpdate) return;
+                computer.Name = newComputer.Name;
+                computer.Cpu = newComputer.Cpu;
+                computer.Gpu = newComputer.Gpu;
+                computer.Ram = newComputer.Ram;
+                computer.MacAddress = newComputer.MacAddress;
+                computer.OperatingSystem = newComputer.OperatingSystem;
+                computer.Synced = false;
 
-                    db.Computer = computer;
-                }
+                db.Computer = computer;
             }
             catch (Exception e)
             {

@@ -1,10 +1,6 @@
-﻿using System;
+﻿using ArktinMonitor.Data.Models;
+using System;
 using System.Collections.Generic;
-using System.Data.OleDb;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ArktinMonitor.Data.Models;
 
 namespace ArktinMonitor.Data.ExtensionMethods
 {
@@ -56,6 +52,20 @@ namespace ArktinMonitor.Data.ExtensionMethods
             };
         }
 
+        public static ComputerResourceModel ToResourceModel(this ComputerLocal computer)
+        {
+            return new ComputerResourceModel()
+            {
+                Name = computer.Name,
+                Cpu = computer.Cpu,
+                Gpu = computer.Gpu,
+                Ram = computer.Ram,
+                OperatingSystem = computer.OperatingSystem,
+                MacAddress = computer.MacAddress,
+                ComputerId = computer.ComputerId
+            };
+        }
+
         public static Computer ToModel(this ComputerResourceModel computer)
         {
             return new Computer()
@@ -69,7 +79,7 @@ namespace ArktinMonitor.Data.ExtensionMethods
                 MacAddress = computer.MacAddress
             };
         }
-        
+
         public static bool NeedsUpdate(this ComputerLocal oldComputer, ComputerLocal newComputer)
         {
             if (oldComputer == null || newComputer == null)
@@ -81,7 +91,7 @@ namespace ArktinMonitor.Data.ExtensionMethods
                               && Math.Abs(oldComputer.Ram - newComputer.Ram) < 0.10
                               && oldComputer.OperatingSystem == newComputer.OperatingSystem
                               && oldComputer.MacAddress == newComputer.MacAddress);
-                
+
             return isDifferent;
         }
     }

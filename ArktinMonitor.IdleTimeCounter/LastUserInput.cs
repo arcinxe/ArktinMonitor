@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArktinMonitor.IdleTimeCounter
 {
@@ -15,6 +11,7 @@ namespace ArktinMonitor.IdleTimeCounter
             public uint CbSize;
             public uint DwTime;
         }
+
         private static LastInputInfo lastInPutNfo;
 
         static LastUserInput()
@@ -22,6 +19,7 @@ namespace ArktinMonitor.IdleTimeCounter
             lastInPutNfo = new LastInputInfo();
             lastInPutNfo.CbSize = (uint)Marshal.SizeOf(lastInPutNfo);
         }
+
         [DllImport("User32.dll")]
         private static extern bool GetLastInputInfo(ref LastInputInfo plii);
 
@@ -33,6 +31,7 @@ namespace ArktinMonitor.IdleTimeCounter
         {
             return ((uint)Environment.TickCount - GetLastInputTime());
         }
+
         /// <summary>
         /// Last input time in ticks
         /// </summary>

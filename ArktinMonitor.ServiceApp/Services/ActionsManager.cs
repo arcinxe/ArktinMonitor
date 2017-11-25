@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ArktinMonitor.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using ArktinMonitor.Helpers;
 
 namespace ArktinMonitor.ServiceApp.Services
 {

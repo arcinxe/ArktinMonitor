@@ -48,7 +48,6 @@
             <helpers:BoolToDayTimeIcon x:Key="BoolToDayTimeIcon" />
             <materialDesignConverters:BooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" TrueValue="Collapsed" FalseValue="Visible" />
         </ResourceDictionary>
-
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -62,11 +61,11 @@
         </Grid.RowDefinitions>
 
         <!--Labels-->
-        <TextBlock Text="Users"  
-                   Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="15,0,0,0" 
+        <TextBlock Text="Users"
+                   Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="15,0,0,0"
                    Style="{StaticResource MaterialDesignTitleTextBlock}" />
-        <TextBlock Text="Blocked apps" 
-                   Grid.Column="2" Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}" 
+        <TextBlock Text="Blocked apps"
+                   Grid.Column="2" Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}"
                    VerticalAlignment="Center" Margin="15,0,0,0" />
 
         <!--Buttons-->
@@ -76,8 +75,8 @@
             <Button Style="{StaticResource MaterialDesignFlatButton}" Height="24"
                     HorizontalAlignment="Right" Command="{Binding RefreshCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="All the changes are saved instantly " FontWeight="Light" Foreground="{StaticResource PrimaryHueLightBrush}"/>
-                    <materialDesign:PackIcon Kind="Refresh" Foreground="{StaticResource PrimaryHueLightBrush}"/>
+                    <TextBlock Text="All the changes are saved instantly " FontWeight="Light" Foreground="{StaticResource PrimaryHueLightBrush}" />
+                    <materialDesign:PackIcon Kind="Refresh" Foreground="{StaticResource PrimaryHueLightBrush}" />
                 </StackPanel>
             </Button>
 
@@ -86,9 +85,8 @@
                           Click="ButtonBase_OnClick" Style="{StaticResource MaterialDesignSwitchToggleButton}"
                           HorizontalAlignment="Right"
                           ToolTip="Enable or disable dark theme">
-                <materialDesign:PackIcon Kind="{Binding ElementName=ThemeToggle, Path=IsChecked, Converter={StaticResource BoolToDayTimeIcon}}"/>
+                <materialDesign:PackIcon Kind="{Binding ElementName=ThemeToggle, Path=IsChecked, Converter={StaticResource BoolToDayTimeIcon}}" />
             </ToggleButton>
-
         </StackPanel>
 
         <!--Users list-->
@@ -114,18 +112,18 @@
                 SelectedItem="{Binding Application, Mode=TwoWay, NotifyOnTargetUpdated=True,NotifyOnSourceUpdated=True}"
                 AutoGenerateColumns="False" SelectionMode="Single" IsHitTestVisible="True" CanUserAddRows="False">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Active" MinWidth="40" >
+                    <DataGridTemplateColumn Header="Active" MinWidth="40">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding Active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Blocks or unblocks the app" />
+                                <ToggleButton IsChecked="{Binding Active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Blocks or unblocks the app" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Actions" MinWidth="40" >
+                    <DataGridTemplateColumn Header="Actions" MinWidth="40">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button 
+                                    <Button
                                         Width="24" Height="24" Padding="0" Margin="0,0,4,0" ToolTip="Edit app"
                                         Style="{StaticResource MaterialDesignFlatButton}"
                                         Command="{Binding DataContext.EditBlockedAppCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
@@ -158,13 +156,13 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        
+
         <!--Add new app button-->
         <Button Command="{Binding AddNewBlockedAppCommand}"
                 HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="24" ToolTip="Block new app"
                 Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                 Grid.Column="2" Grid.Row="1" Width="50" Height="50">
-            <materialDesign:PackIcon Kind="Plus" Width="32" Height="32" SnapsToDevicePixels="True"/>
+            <materialDesign:PackIcon Kind="Plus" Width="32" Height="32" SnapsToDevicePixels="True" />
         </Button>
     </Grid>
 </Window>

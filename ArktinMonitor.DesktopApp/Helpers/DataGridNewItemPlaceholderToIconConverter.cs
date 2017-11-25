@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
 
 namespace ArktinMonitor.DesktopApp.Helpers
@@ -9,12 +8,12 @@ namespace ArktinMonitor.DesktopApp.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null && value.ToString()=="{DataGrid.NewItemPlaceholder}"  ? "Plus" : "Pencil";
+            return value != null && value.ToString() == "{DataGrid.NewItemPlaceholder}" ? "Plus" : "Pencil";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null && (bool) value;
+            return value != null && (bool)value;
         }
     }
 

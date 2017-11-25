@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using ArktinMonitor.DesktopApp.Views;
+using ArktinMonitor.Helpers;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using ArktinMonitor.DesktopApp.Views;
-using ArktinMonitor.Helpers;
 
 namespace ArktinMonitor.DesktopApp.ViewModel
 {
@@ -10,6 +10,7 @@ namespace ArktinMonitor.DesktopApp.ViewModel
     {
         public Visibility WindowVisibility { get; set; } = Visibility.Visible;
         private string _email = "marcinxe@gmail.com";
+
         public string Email
         {
             get { return _email; }
@@ -21,6 +22,7 @@ namespace ArktinMonitor.DesktopApp.ViewModel
         }
 
         private string _password = "[REDACTED]";
+
         public string Password
         {
             get { return _password; }
@@ -32,6 +34,7 @@ namespace ArktinMonitor.DesktopApp.ViewModel
         }
 
         private bool _busy = false;
+
         public bool Busy
         {
             get { return _busy; }
@@ -43,6 +46,7 @@ namespace ArktinMonitor.DesktopApp.ViewModel
         }
 
         private string _authorizationStatus;
+
         public string AuthorizationStatus
         {
             get { return _authorizationStatus; }

@@ -1,7 +1,6 @@
-﻿using System;
+﻿using ArktinMonitor.Data.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
-using ArktinMonitor.Data.Models;
 
 namespace ArktinMonitor.Data.ExtensionMethods
 {
@@ -26,12 +25,11 @@ namespace ArktinMonitor.Data.ExtensionMethods
                 Name = computerUser.Name,
                 FullName = computerUser.FullName,
                 PrivilegeLevel = computerUser.PrivilegeLevel,
-                VisibleName = computerUser.FullName == string.Empty ? computerUser.Name:computerUser.FullName,
+                VisibleName = computerUser.FullName == string.Empty ? computerUser.Name : computerUser.FullName,
                 Removed = computerUser.Removed,
                 BlockedApplications = new ObservableCollection<BlockedApplicationDesktop>(blockedApps)
             };
         }
-
 
         public static ComputerUserLocal ToLocalModel(this ComputerUserDesktop computerUser)
         {

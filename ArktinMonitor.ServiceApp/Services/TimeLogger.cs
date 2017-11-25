@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ArktinMonitor.ServiceApp
+﻿namespace ArktinMonitor.ServiceApp
 {
-    class TimeLogger
+    internal class TimeLogger
     {
     }
 }

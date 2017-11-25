@@ -1,13 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.Data", "ArktinMonitor.Models\ArktinMonitor.Data.csproj", "{2C7A4512-1A9B-40A8-9653-D11FD8AC5247}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.WebApp", "ArktinMonitor.WebApp\ArktinMonitor.WebApp.csproj", "{52E33C48-212B-4F6D-947F-2D99DDCC2B91}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.ServiceApp", "ArktinMonitor.ServiceApp\ArktinMonitor.ServiceApp.csproj", "{BF7FC115-8A01-4AA3-B4E0-49C9C12DF5F7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{52E33C48-212B-4F6D-947F-2D99DDCC2B91} = {52E33C48-212B-4F6D-947F-2D99DDCC2B91}
+	EndProjectSection
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ArktinMonitor.Setup", "ArktinMonitor.Setup\ArktinMonitor.Setup.vdproj", "{05B493D3-87B4-4D24-8D01-BD69FA3F0F93}"
 EndProject

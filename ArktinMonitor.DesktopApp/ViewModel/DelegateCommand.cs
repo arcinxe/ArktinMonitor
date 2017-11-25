@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace ArktinMonitor.DesktopApp.ViewModel
 {
-    class DelegateCommand : ICommand
+    internal class DelegateCommand : ICommand
     {
         private readonly Action _action;
 
@@ -21,8 +21,11 @@ namespace ArktinMonitor.DesktopApp.ViewModel
         {
             _action = action;
         }
+
 #pragma warning disable 67
+
         public event EventHandler CanExecuteChanged;
+
 #pragma warning restore 67
     }
 }

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ArktinMonitor.Helpers;
 using ArktinMonitor.ServiceApp.Helpers;
+using System;
 using System.Diagnostics;
 using System.IO;
-using ArktinMonitor.Helpers;
 
 namespace ArktinMonitor.ServiceApp.Services
 {
@@ -56,7 +56,7 @@ namespace ArktinMonitor.ServiceApp.Services
                 LocalLogger.Log("IdleTimeCounter", e);
             }
             var idleTimeInMiliSeconds = JsonHelper.DeserializeJson<long>(filePath);
-            var result = new TimeSpan(idleTimeInMiliSeconds*10000);
+            var result = new TimeSpan(idleTimeInMiliSeconds * 10000);
             LocalLogger.Log($"Idle time: {result:mm\\m\\:ss\\s\\:ff\\m\\s}");
             return result;
         }

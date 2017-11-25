@@ -11,7 +11,6 @@ namespace ArktinMonitor.Data.Models
 
         public bool Removed { get; set; }
 
-
         public int ComputerId { get; set; }
 
         public virtual Computer Computer { get; set; }
@@ -63,6 +62,7 @@ namespace ArktinMonitor.Data.Models
         public int ComputerUserId { get; set; }
 
         private string _name;
+
         public string Name
         {
             get { return _name; }
@@ -74,6 +74,7 @@ namespace ArktinMonitor.Data.Models
         }
 
         private string _fullName;
+
         public string FullName
         {
             get { return _fullName; }
@@ -85,6 +86,7 @@ namespace ArktinMonitor.Data.Models
         }
 
         private string _privilegeLevel;
+
         public string PrivilegeLevel
         {
             get { return _privilegeLevel; }
@@ -95,9 +97,10 @@ namespace ArktinMonitor.Data.Models
             }
         }
 
-
         private string _visibleName;
-        public string VisibleName {
+
+        public string VisibleName
+        {
             get { return _visibleName; }
             set
             {
@@ -107,6 +110,7 @@ namespace ArktinMonitor.Data.Models
         }
 
         private bool _enabled;
+
         public bool Enabled
         {
             get { return _enabled; }
@@ -118,6 +122,7 @@ namespace ArktinMonitor.Data.Models
         }
 
         private bool _removed;
+
         public bool Removed
         {
             get { return _removed; }
@@ -130,7 +135,8 @@ namespace ArktinMonitor.Data.Models
 
         private ObservableCollection<BlockedApplicationDesktop> _blockedApplications;
 
-        public ObservableCollection<BlockedApplicationDesktop> BlockedApplications {
+        public ObservableCollection<BlockedApplicationDesktop> BlockedApplications
+        {
             get { return _blockedApplications; }
             set
             {
@@ -140,6 +146,7 @@ namespace ArktinMonitor.Data.Models
         }
 
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
+
         protected void RaisePropertyChangedEvent(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

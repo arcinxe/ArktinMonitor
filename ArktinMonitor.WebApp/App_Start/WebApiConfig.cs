@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.Owin.Security.OAuth;
 using System.Web.Http;
-using Microsoft.Owin.Security.OAuth;
 
 namespace ArktinMonitor.WebApp
 {
