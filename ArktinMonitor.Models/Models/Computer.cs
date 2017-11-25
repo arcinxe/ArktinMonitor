@@ -32,6 +32,7 @@ namespace ArktinMonitor.Data.Models
 
     public class ComputerLocal : BasicComputer
     {
+        public int ComputerId { get; set; }
 
         public bool Synced { get; set; }
 
@@ -39,7 +40,7 @@ namespace ArktinMonitor.Data.Models
 
         public List<ComputerUserLocal> ComputerUsers { get; set; }
 
-        public List<LogTimeInterval> LogTimeIntervals { get; set; }
+        public List<LogTimeIntervalLocal> LogTimeIntervals { get; set; }
     }
 
     public abstract class BasicComputer

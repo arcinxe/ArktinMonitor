@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace ArktinMonitor.Data.Models
 {
-    public class Credentials
+    public class ConfigData
     {
-        public SecureString Token { get; set; }
+        public bool DarkMode { get; set; }
 
-        public string Email { get; set; }
+        public string ApiUrl { get; set; }
     }
 }

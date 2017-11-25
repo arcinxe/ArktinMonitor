@@ -37,6 +37,12 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\ArktinMonitor.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.3\lib\net45\MaterialDesignColors.dll</HintPath>
@@ -72,6 +78,7 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\BoolToStrikethrough.cs" />
     <Compile Include="Helpers\BoolToStringConverters.cs" />
+    <Compile Include="Helpers\ConfigFileManager.cs" />
     <Compile Include="Helpers\DebugDummyConverter.cs" />
     <Compile Include="Helpers\HyperlinkHelper.cs" />
     <Compile Include="Helpers\InvertBooleanConverter.cs" />
@@ -123,6 +130,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

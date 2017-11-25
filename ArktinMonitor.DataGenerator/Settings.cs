@@ -12,7 +12,7 @@ namespace ArktinMonitor.DataGenerator
         public const int MaxAmountOfDisks = 5;
         public const int MaxAmountOfBlockedApps = 4;
         public const int MaxAmountOfBlockedSites = 2;
-        public const int MaxAmountOfLogTimeIntervals = 10;
+        public const int MaxAmountOfLogTimeIntervals = 15;
         
         public static readonly string LocalStoragePath = Environment.UserInteractive
        ? Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)

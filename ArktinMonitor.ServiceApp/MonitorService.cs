@@ -7,15 +7,13 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
+using ArktinMonitor.Helpers;
 using ArktinMonitor.ServiceApp.Services;
 
 namespace ArktinMonitor.ServiceApp
 {
     public partial class MonitorService : ServiceBase
     {
-        private Monitor _monitor;
-        
-
         public MonitorService()
         {
             InitializeComponent();
@@ -24,18 +22,20 @@ namespace ArktinMonitor.ServiceApp
 
         protected override void OnStart(string[] args)
         {
-            _monitor = new Monitor();
-            new System.Threading.Thread(_monitor.Run).Start();
+            Monitor.Run();
         }
 
         protected override void OnStop()
         {
-            _monitor.Stop();
+            Monitor.Stop();
         }
 
         protected override void OnSessionChange(SessionChangeDescription changeDescription)
         {
-            LocalLogger.Log(changeDescription.Reason.ToString());
+            var unlocked = changeDescription.Reason == SessionChangeReason.SessionLogon ||
+                           changeDescription.Reason == SessionChangeReason.SessionUnlock;
+            SessionManager.Unlocked = unlocked;
+            LocalLogger.Log($"{changeDescription.Reason}. Unlocked: {unlocked}");
         }
     }
 }

@@ -5,14 +5,18 @@ using System.Linq;
 using System.Security.Claims;
 using ArktinMonitor.Data.ExtensionMethods;
 using ArktinMonitor.Data.Models;
+using ArktinMonitor.Helpers;
 using ArktinMonitor.ServiceApp.Helpers;
 
 namespace ArktinMonitor.ServiceApp.Services
 {
     internal static class DataUpdateManager
     {
-        public static void UpdateComputer(ComputerLocal newComputer)
+        public static void UpdateComputer()
         {
+            LocalLogger.Log($"Method {nameof(UpdateComputer)} is running");
+
+            var newComputer = ComputerHelper.GetComputer();
             try
             {
                 var db = JsonLocalDatabase.Instance;
@@ -36,8 +40,10 @@ namespace ArktinMonitor.ServiceApp.Services
             }
         }
 
-        public static void UpdateDisks(List<DiskLocal> newDisks)
+        public static void UpdateDisks()
         {
+            LocalLogger.Log($"Method {nameof(UpdateDisks)} is running");
+            var newDisks = ComputerHelper.GetDisks();
             try
             {
                 var db = JsonLocalDatabase.Instance;
@@ -77,15 +83,16 @@ namespace ArktinMonitor.ServiceApp.Services
             }
         }
 
-        public static void UpdateUsers(List<ComputerUserLocal> newComputerUsers)
+        public static void UpdateUsers()
         {
+            LocalLogger.Log($"Method {nameof(UpdateUsers)} is running");
             try
             {
-
+                var newComputerUsers = ComputerUsersHelper.GetComputerUsers();
                 var db = JsonLocalDatabase.Instance;
                 var computer = db.Computer;
                 var equal = db.Computer.ComputerUsers != null && newComputerUsers.All(computer.ComputerUsers.Contains);
-                if (equal) return;
+                if (equal && db.Computer.ComputerUsers.Count == newComputerUsers.Count) return;
                 if (computer.ComputerUsers == null) computer.ComputerUsers = newComputerUsers;
                 foreach (var newComputerUser in newComputerUsers)
                 {
@@ -121,11 +128,6 @@ namespace ArktinMonitor.ServiceApp.Services
             {
                 LocalLogger.Log("UpdateUsers", e);
             }
-        }
-
-        public static void UpdateLogTimeInterval(LogTimeIntervalLocal logTimeInterval)
-        {
-
         }
     }
 }

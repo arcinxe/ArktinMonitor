@@ -4,6 +4,7 @@ using System.Linq;
 using System.Management;
 using System.Security.Principal;
 using ArktinMonitor.Data.Models;
+using ArktinMonitor.Helpers;
 using ArktinMonitor.ServiceApp.Services;
 
 namespace ArktinMonitor.ServiceApp.Helpers
@@ -74,6 +75,10 @@ namespace ArktinMonitor.ServiceApp.Helpers
 
         }
 
+        /// <summary>
+        /// Returns currently logged in username or null if no one is logged in
+        /// </summary>
+        /// <returns>Username if any user is logged in, null otherwise</returns>
         public static string CurrentlyLoggedInUser()
         {
             try
@@ -82,12 +87,11 @@ namespace ArktinMonitor.ServiceApp.Helpers
                 var collection = searcher.Get();
                 var username = (string)collection.Cast<ManagementBaseObject>().First()["UserName"];
                 return username.Split('\\')[1];
-
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                LocalLogger.Log("CurrentlyLoggedInUser", e);
-                return "";
+                //LocalLogger.Log("CurrentlyLoggedInUser", e);
+                return null;
             }
         }
 

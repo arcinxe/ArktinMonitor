@@ -6,27 +6,38 @@ using System.Management;
 using System.Text;
 using System.Threading.Tasks;
 using ArktinMonitor.Data.Models;
+using ArktinMonitor.Helpers;
+using ArktinMonitor.ServiceApp.Helpers;
 
 namespace ArktinMonitor.ServiceApp.Services
 {
     internal static class AppsBlocker
     {
-        public static void StartAppKiller(List<BlockedApplicationLocal> blockedApplications)
+        public static void StartAppKiller()
         {
-            foreach (var process in GetProcesses())
+            LocalLogger.Log($"Method {nameof(StartAppKiller)} is running");
+
+            //if (!SessionManager.Unlocked) return;
+            var user = JsonLocalDatabase.Instance.Computer.ComputerUsers
+                .FirstOrDefault(u => u.Name == ComputerUsersHelper.CurrentlyLoggedInUser());
+            if (user == null) return;
+            var processes = GetProcesses();
+            foreach (var process in processes)
             {
-                if (blockedApplications.Any(app => app.Path == process.Path))
+                if (user.BlockedApplications.Where(a => a.Active).All(app => app.Path != process.Path)) continue;
+                try
                 {
                     Process.GetProcessById(process.ProcessId).Kill();
+                    LocalLogger.Log($"App {process.Path} with PID {process.ProcessId} has been closed!");
+                }
+                catch (Exception e)
+                {
+                    LocalLogger.Log("AppBlocker", e);
                 }
             }
-
-                GetProcesses()
-                    .Where(p => blockedApplications.Any(app => app.Path == p.Path)).ToList()
-                    .ForEach(p => Process.GetProcessById(p.ProcessId));
         }
 
-        private static List<BasicProcess> GetProcesses()
+        private static IEnumerable<BasicProcess> GetProcesses()
         {
             const string wmiQueryString = "SELECT ProcessId, ExecutablePath FROM Win32_Process";
             var searcher = new ManagementObjectSearcher(wmiQueryString);

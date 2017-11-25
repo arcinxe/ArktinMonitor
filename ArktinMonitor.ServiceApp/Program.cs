@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.ServiceProcess;
+using ArktinMonitor.Helpers;
 using ArktinMonitor.ServiceApp.Services;
 
 namespace ArktinMonitor.ServiceApp
@@ -8,10 +10,14 @@ namespace ArktinMonitor.ServiceApp
     {
         private static void Main()
         {
+            Directory.CreateDirectory(Settings.DataStoragePath);
+            LocalLogger.FileName = "service.log";
+            LocalLogger.LogStoragePath = Settings.DataStoragePath;
+            
             if (Environment.UserInteractive)
             {
                 // Start console app
-                new Monitor().Run();
+                Monitor.Run();
                 Console.WriteLine("Press Enter key to exit...");
                 Console.ReadLine();
             }

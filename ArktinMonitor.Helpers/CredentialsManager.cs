@@ -18,16 +18,21 @@ namespace ArktinMonitor.Helpers
             ? Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)
             : AppDomain.CurrentDomain.BaseDirectory;
 
-        //public static TokenResponse JsonWebToken { get; set; }
+        public static bool CheckWebApiAccess(string url, string path)
+        {
+            var jwt = LoadJsonWebToken(path)?.AccessToken ?? string.Empty;
+            return CheckJsonWebToken(url, jwt);
+        }
 
         /// <summary>
-        /// Stores both email and password.
+        /// Stores both email and password in email.an file located in selected path.
         /// </summary>
+        /// <param name="path">path toemail.an file</param>
         /// <param name="email">Email address to save</param>
         /// <param name="password">Password to save</param>
-        public static void StoreCredentials(string email, string password)
+        public static void StoreCredentials(string path, string email, string password)
         {
-            JsonHelper.SerializeToJsonFile(Path.Combine(LocalStoragePath, "email.an"), email);
+            JsonHelper.SerializeToJsonFile(Path.Combine(path, "email.an"), email);
             SavePassword(password);
         }
 
@@ -88,9 +93,9 @@ namespace ArktinMonitor.Helpers
 
             if (jwt != null)
             {
-                CheckJsonWebToken(url,jwt.AccessToken);
+                CheckJsonWebToken(url, jwt.AccessToken);
             }
-             return null;
+            return null;
         }
 
         /// <summary>
@@ -150,7 +155,7 @@ namespace ArktinMonitor.Helpers
         public static bool CheckJsonWebToken(string url, string jsonWebToken)
         {
             var client = new ServerClient();
-            var response = client.GetFromServer(url,"api/checkAccess", jsonWebToken);
+            var response = client.GetFromServer(url, "api/checkAccess", jsonWebToken);
             LocalLogger.Log(response.Content.ReadAsStringAsync().Result);
             return response.Content.ReadAsAsync<bool>().Result;
         }

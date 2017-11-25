@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CredentialsManager.cs" />
+    <Compile Include="DirectoryHelper.cs" />
     <Compile Include="JsonHelper.cs" />
     <Compile Include="JsonLocalDatabase.cs" />
     <Compile Include="LocalLogger.cs" />

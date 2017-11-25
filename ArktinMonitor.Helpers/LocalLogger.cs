@@ -9,12 +9,33 @@ namespace ArktinMonitor.Helpers
 {
     public static class LocalLogger
     {
-        private static readonly string LocalStoragePath = Environment.UserInteractive
+        /// <summary>
+        /// Target directory to store log file. By default location of the executable.
+        /// </summary>
+       public static string LogStoragePath = Environment.UserInteractive
             ? Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)
             : AppDomain.CurrentDomain.BaseDirectory;
 
+        private static readonly object Locker = new object();
+        /// <summary>
+        /// Name for log file
+        /// </summary>
+        public static string FileName = "log.log";
+
+        /// <summary>
+        /// Enables or disables LocalLogger
+        /// </summary>
         public static bool Enabled = true;
+
+        /// <summary>
+        /// Determines whenever newest entries in log file should be at the top or the bottom.
+        /// true appends new records, while false puts them at the top ofthe file, false makes all slower
+        /// </summary>
         public static bool Append = false;
+
+        /// <summary>
+        /// Determines whenever log should be saved on disk or only showed in the console
+        /// </summary>
         public static bool SaveOnDisk = true;
 
         public static void Log(string data = "")
@@ -39,34 +60,38 @@ namespace ArktinMonitor.Helpers
             var separator = data == "" ? "" : "-";
 
             // If isn't running as a service then also writes data to the console.
-            if (Environment.UserInteractive)
+            lock (Locker)
             {
-                Console.WriteLine(Format(data, separator));
-            }
-            if(!SaveOnDisk) return;
-            if (Append)
-            {
-                using (var sw = new StreamWriter(Path.Combine(LocalStoragePath, "log.log"), true))
+                if (Environment.UserInteractive)
                 {
-                    sw.WriteLine(Format(data, separator));
+                    Console.WriteLine(Format(data, separator));
                 }
-            }
-            else
-            {
-                var currentContent = new StringBuilder();
-                try
+
+                if(!SaveOnDisk) return;
+                if (Append)
                 {
-                    var rawList = File.ReadAllLines(Path.Combine(LocalStoragePath, "log.log")).ToList();
-                    foreach (var item in rawList)
+                    using (var sw = new StreamWriter(Path.Combine(LogStoragePath, FileName), true))
                     {
-                        currentContent.Append(item + Environment.NewLine);
+                        sw.WriteLine(Format(data, separator));
                     }
                 }
-                catch (Exception)
+                else
                 {
-                    // ignored (file does not exist)
+                    var currentContent = new StringBuilder();
+                    try
+                    {
+                        var rawList = File.ReadAllLines(Path.Combine(LogStoragePath, FileName)).ToList();
+                        foreach (var item in rawList)
+                        {
+                            currentContent.Append(item + Environment.NewLine);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        // ignored (file does not exist)
+                    }
+                    File.WriteAllText(Path.Combine(LogStoragePath, FileName), Format(data, separator) + Environment.NewLine + currentContent);
                 }
-                File.WriteAllText(Path.Combine(LocalStoragePath, "log.log"), Format(data, separator) + Environment.NewLine + currentContent);
             }
 
 

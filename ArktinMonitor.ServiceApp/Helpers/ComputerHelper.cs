@@ -23,7 +23,7 @@ namespace ArktinMonitor.ServiceApp.Helpers
                 MacAddress = GetMacAddress(),
                 Disks = GetDisks(),
                 ComputerUsers = ComputerUsersHelper.GetComputerUsers(),
-                LogTimeIntervals = new List<LogTimeInterval>()
+                LogTimeIntervals = new List<LogTimeIntervalLocal>()
             };
             return computer;
         }

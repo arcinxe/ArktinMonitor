@@ -66,7 +66,7 @@ namespace ArktinMonitor.DesktopApp.ViewModel
             AuthorizationStatus = _succeded ? "Succes" : "Wrong email or password";
             if (_succeded)
             {
-                CredentialsManager.StoreCredentials(_email, _password);
+                CredentialsManager.StoreCredentials(Settings.DataStoragePath, _email, _password);
                 CredentialsManager.GetJsonWebToken(Settings.ApiUrl);
                 TransferToEditorWindow();
             }
