@@ -1,0 +1,122 @@
+﻿@model IEnumerable<ArktinMonitor.Data.Models.Computer>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Computers</h2>
+<form style="padding: 0" class="navbar-form" role="search">
+    <div class="input-group add-on">
+        <input class="form-control" placeholder="Search" name="srch-term" onkeyup="searchTable()" id="search" type="text">
+        <div class="input-group-btn">
+            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+        </div>
+    </div>
+</form>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table style="width: 100%" id="table" class="table-hover">
+    <tr id="tableHeader">
+        <th>
+            @Html.DisplayNameFor(model => model.WebAccount.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ram)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cpu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gpu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OperatingSystem)
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.WebAccount.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ram)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cpu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gpu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OperatingSystem)
+            </td>
+            <td>
+                <div class="icons container-fluid">
+                    <a href="@Url.Action("Edit", new {id = item.ComputerId})" style="text-decoration: none">
+                        <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
+                            <path fill="#FB9E60" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+                        </svg>
+                    </a>
+                    <a href="@Url.Action("Details", new {id = item.ComputerId})" style="text-decoration: none">
+                        <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
+                            <path fill="#FB9E60" d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                        </svg>
+                    </a>
+                    <a href="@Url.Action("Delete", new {id = item.ComputerId})" style="text-decoration: none">
+                        <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
+                            <path fill="#FB9E60" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                        </svg>
+                    </a>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+@section MyScripts {
+    <script type="text/javascript">
+        @* var $rows = $('#table tr .searchable');
+        $('#search').keyup(function() {
+            var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+
+            $rows.show().filter(function() {
+                var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+                return !~text.indexOf(val);
+            }).hide();
+        });*@
+        function searchTable() {
+            var input, filter, found, table, tr, td, i, j;
+            input = document.getElementById("search");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("table");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td");
+                for (j = 0; j < td.length; j++) {
+                    if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        found = true;
+                    }
+                }
+                if (found) {
+                    tr[i].style.display = "";
+                    found = false;
+                } else {
+                    if (tr[i].id != 'tableHeader'){tr[i].style.display = "none";}
+                }
+            }
+        }
+    </script>
+}

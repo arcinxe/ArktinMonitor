@@ -1,0 +1,58 @@
+﻿@model ArktinMonitor.Data.Models.LogTimeInterval
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LogTimeInterval</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Computer.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Computer.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ComputerUser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ComputerUser)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Duration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Duration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.State)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.State)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LogTimeIntervalId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

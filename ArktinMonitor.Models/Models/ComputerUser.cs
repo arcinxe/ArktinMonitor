@@ -16,6 +16,15 @@ namespace ArktinMonitor.Data.Models
         public virtual Computer Computer { get; set; }
     }
 
+    public class ComputerUserResource : BasicComputerUser
+    {
+        public int ComputerUserId { get; set; }
+
+        public bool Removed { get; set; }
+
+        public int ComputerId { get; set; }
+    }
+
     public class ComputerUserLocal : BasicComputerUser, IEquatable<ComputerUserLocal>
     {
         public int ComputerUserId { get; set; }
@@ -26,7 +35,7 @@ namespace ArktinMonitor.Data.Models
 
         public bool Removed { get; set; }
 
-        public List<BlockedApplicationLocal> BlockedApplications { get; set; }
+        public List<BlockedAppLocal> BlockedApps { get; set; }
 
         public List<BlockedSiteLocal> BlockedSites { get; set; }
 
@@ -34,7 +43,7 @@ namespace ArktinMonitor.Data.Models
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return base.Equals(other) && Enabled == other.Enabled && Removed == other.Removed;
+            return base.Equals(other) && Removed == other.Removed;
         }
 
         public override bool Equals(object obj)
@@ -133,15 +142,15 @@ namespace ArktinMonitor.Data.Models
             }
         }
 
-        private ObservableCollection<BlockedApplicationDesktop> _blockedApplications;
+        private ObservableCollection<BlockedAppDesktop> _blockedApps;
 
-        public ObservableCollection<BlockedApplicationDesktop> BlockedApplications
+        public ObservableCollection<BlockedAppDesktop> BlockedApps
         {
-            get { return _blockedApplications; }
+            get { return _blockedApps; }
             set
             {
-                _blockedApplications = value;
-                RaisePropertyChangedEvent(nameof(BlockedApplications));
+                _blockedApps = value;
+                RaisePropertyChangedEvent(nameof(BlockedApps));
             }
         }
 

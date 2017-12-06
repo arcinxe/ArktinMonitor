@@ -15,22 +15,30 @@ namespace ArktinMonitor.ServiceApp.Services
             LocalLogger.Log($"Method {nameof(StartAppKiller)} is running");
 
             //if (!SessionManager.Unlocked) return;
-            var user = JsonLocalDatabase.Instance.Computer.ComputerUsers
-                .FirstOrDefault(u => u.Name == ComputerUsersHelper.CurrentlyLoggedInUser());
-            if (user == null) return;
-            var processes = GetProcesses();
-            foreach (var process in processes)
+            try
             {
-                if (user.BlockedApplications.Where(a => a.Active).All(app => app.Path != process.Path)) continue;
-                try
+                var user = JsonLocalDatabase.Instance.Computer.ComputerUsers?
+                    .FirstOrDefault(u => u.Name == ComputerUsersHelper.CurrentlyLoggedInUser());
+                if (user?.BlockedApps == null || user.BlockedApps.Count==0) return;
+                var processes = GetProcesses();
+                foreach (var process in processes)
                 {
-                    Process.GetProcessById(process.ProcessId).Kill();
-                    LocalLogger.Log($"App {process.Path} with PID {process.ProcessId} has been closed!");
+                    if (user.BlockedApps.Where(a => a.Active).All(app => app.Path != process.Path)) continue;
+                    try
+                    {
+                        Process.GetProcessById(process.ProcessId).Kill();
+                        LocalLogger.Log($"App {process.Path} with PID {process.ProcessId} has been closed!");
+                    }
+                    catch (Exception e)
+                    {
+                        LocalLogger.Log("AppBlocker", e);
+                    }
                 }
-                catch (Exception e)
-                {
-                    LocalLogger.Log("AppBlocker", e);
-                }
+
+            }
+            catch (Exception e)
+            {
+                LocalLogger.Log("AppBlocker", e);
             }
         }
 

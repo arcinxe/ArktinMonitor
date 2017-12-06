@@ -2,13 +2,16 @@
 
 namespace ArktinMonitor.WebApp.Controllers
 {
+    [RoutePrefix("")]
     public class HomeController : Controller
     {
+        [Route("")]
         public ActionResult Index()
         {
             return View();
         }
 
+        [Route("Contact")]
         [Authorize]
         public ActionResult About()
         {
@@ -16,6 +19,7 @@ namespace ArktinMonitor.WebApp.Controllers
 
             return View();
         }
+        [Route("Contact")]
 
         public ActionResult Contact()
         {

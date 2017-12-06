@@ -1,7 +1,7 @@
 ﻿<Application x:Class="ArktinMonitor.DesktopApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Startup="App_OnStartup">
+             StartupUri="Views/LoginWindow.xaml">
     <!--StartupUri="Views/LoginWindow.xaml"-->
     <Application.Resources>
         <ResourceDictionary>

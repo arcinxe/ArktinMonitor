@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net.Http;
-using ArktinMonitor.Data.Other;
+using ArktinMonitor.Data.Models;
 using ArktinMonitor.Helpers;
 
-namespace ArkitnMonitor.DesktopApp.Helpers
+namespace ArktinMonitor.DesktopApp.Helpers
 {
     public static class Authorization
     {

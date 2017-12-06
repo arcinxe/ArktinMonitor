@@ -16,15 +16,15 @@ namespace ArktinMonitor.WebApp.Controllers
 
         [Route("Disks")]
         [HttpPost]
-        public IHttpActionResult UpdateDisks(List<DiskResourceModel> disks)
+        public IHttpActionResult UpdateDisks(List<DiskResource> disks)
         {
             var disksModel = disks.Select(d => d.ToModel()).ToList();
             var returnDisks = new List<Disk>();
             foreach (var disk in disksModel)
             {
                 returnDisks.Add(disk);
-                var computer = _db.Computers.FirstOrDefault(c => c.ComputerId == disk.ComputerId);
-                if (computer == null || disk == null) return NotFound();
+                var computer = _db.Computers.FirstOrDefault(c => c.WebAccount.Email == User.Identity.Name && c.ComputerId == disk.ComputerId);
+                if (computer == null || disk == null) continue;
 
                 var diskExist = _db.Disks.Any(d => d.DiskId == disk.DiskId);
                 if (diskExist)

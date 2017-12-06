@@ -79,7 +79,7 @@ namespace ArktinMonitor.DataGenerator
                     Name = names.ElementAtOrDefault(i),
                     FullName = 2.Random() == 0 ? names.ElementAtOrDefault(i) : "",
                     PrivilegeLevel = i == 0 ? "Administrator" : (3.Random() == 0 ? "Administrator" : "Standard user"),
-                    BlockedApplications = new List<BlockedApplicationLocal>(),
+                    BlockedApps = new List<BlockedAppLocal>(),
                     BlockedSites = new List<BlockedSiteLocal>()
                 };
                 GenerateBlockedApps(computerUser);
@@ -132,12 +132,12 @@ namespace ArktinMonitor.DataGenerator
             for (var i = 0; i < appsAmount; i++)
             {
                 var path = Samples.BlockedAppsPaths.Random();
-                var app = new BlockedApplicationLocal()
+                var app = new BlockedAppLocal()
                 {
                     Path = path,
                     Name = Path.GetFileNameWithoutExtension(path)
                 };
-                user.BlockedApplications.Add(app);
+                user.BlockedApps.Add(app);
             }
         }
 

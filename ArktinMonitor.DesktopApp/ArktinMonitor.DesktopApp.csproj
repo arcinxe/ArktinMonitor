@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{297F8991-EECD-4886-848B-040F63CA9994}</ProjectGuid>
+    <ProjectGuid>{D7619B51-1FC3-4A35-A3EC-DBB956F0EA5B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>ArktinMonitor.DesktopApp</RootNamespace>
     <AssemblyName>ArktinMonitor.DesktopApp</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,13 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
     <ApplicationIcon>Images\ArktinMonitor.ico</ApplicationIcon>
   </PropertyGroup>
@@ -54,10 +48,12 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -76,31 +72,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\Authorization.cs" />
+    <Compile Include="Helpers\BooleanToInvertedVisibilityConverter.cs" />
     <Compile Include="Helpers\BoolToStrikethrough.cs" />
     <Compile Include="Helpers\BoolToStringConverters.cs" />
     <Compile Include="Helpers\ConfigFileManager.cs" />
+    <Compile Include="Helpers\DataGridNewItemPlaceholderToIconConverter.cs" />
     <Compile Include="Helpers\DebugDummyConverter.cs" />
     <Compile Include="Helpers\HyperlinkHelper.cs" />
-    <Compile Include="Helpers\InvertBooleanConverter.cs" />
     <Compile Include="Helpers\IntToBoolConverter.cs" />
-    <Compile Include="Helpers\DataGridNewItemPlaceholderToIconConverter.cs" />
-    <Compile Include="Helpers\PasswordBoxAssistant.cs" />
-    <Compile Include="ViewModel\DelegateCommand.cs" />
-    <Compile Include="ViewModel\EditorViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelTemplate.cs" />
-    <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="ViewModel\LogInViewModel.cs" />
-    <Compile Include="Helpers\BooleanToInvertedVisibilityConverter.cs" />
+    <Compile Include="Helpers\InvertBooleanConverter.cs" />
     <Compile Include="Helpers\NullToBooleanConverter.cs" />
-    <Page Include="Views\EditorWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\LoginWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Compile Include="Helpers\PasswordBoxAssistant.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="ViewModels\DelegateCommand.cs" />
+    <Compile Include="ViewModels\EditorViewModel.cs" />
+    <Compile Include="ViewModels\LogInViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelTemplate.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -130,9 +118,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="app.manifest">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -145,12 +130,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\ArktinMonitor.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ArktinMonitor.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ArktinMonitor.Helpers\ArktinMonitor.Helpers.csproj">
       <Project>{d4342049-9ee2-41de-8f83-ae638af733c7}</Project>
       <Name>ArktinMonitor.Helpers</Name>
@@ -160,5 +139,22 @@
       <Name>ArktinMonitor.Data</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ArktinMonitor.ico" />
+    <Resource Include="Images\ArktinMonitor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\EditorWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LoginWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rd /s /q "de", "en", "es", "fr", "it", "ja", "ko", "ru", "zh-Hans", "zh-Hant"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

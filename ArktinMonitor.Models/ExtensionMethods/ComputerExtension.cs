@@ -1,6 +1,7 @@
 ﻿using ArktinMonitor.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ArktinMonitor.Data.ExtensionMethods
 {
@@ -31,11 +32,12 @@ namespace ArktinMonitor.Data.ExtensionMethods
                 Cpu = computer.Cpu,
                 Gpu = computer.Gpu,
                 Ram = computer.Ram,
+                ComputerId = computer.ComputerId,
                 OperatingSystem = computer.OperatingSystem,
                 MacAddress = computer.MacAddress,
                 Disks = disks,
                 ComputerUsers = computerUsers,
-                LogTimeIntervals = logTimeIntervals
+                LogTimeIntervals = logTimeIntervals.Select(l => l.ToViewModel()).ToList()
             };
         }
 
@@ -82,12 +84,12 @@ namespace ArktinMonitor.Data.ExtensionMethods
 
         public static bool NeedsUpdate(this ComputerLocal oldComputer, ComputerLocal newComputer)
         {
-            if (oldComputer == null || newComputer == null)
-            {
-                return true;
-            }
+            if (oldComputer == null)return true;
+            if (newComputer == null)return false;
+
             var isDifferent = !(oldComputer.Name == newComputer.Name
-                              && oldComputer.Cpu == newComputer.Gpu
+                              && oldComputer.Cpu == newComputer.Cpu
+                              && oldComputer.Gpu == newComputer.Gpu
                               && Math.Abs(oldComputer.Ram - newComputer.Ram) < 0.10
                               && oldComputer.OperatingSystem == newComputer.OperatingSystem
                               && oldComputer.MacAddress == newComputer.MacAddress);

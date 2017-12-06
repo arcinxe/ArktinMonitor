@@ -7,9 +7,10 @@
         x:Name="LogInWindow"
         Title="Sign in" Height="380" Width="300"
         ResizeMode="CanMinimize"
+        xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
         Icon="/ArktinMonitor.DesktopApp;component/Images/ArktinMonitor.ico"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:viewModel="clr-namespace:ArktinMonitor.DesktopApp.ViewModel"
+        xmlns:viewModel="clr-namespace:ArktinMonitor.DesktopApp.ViewModels"
         xmlns:helpers="clr-namespace:ArktinMonitor.DesktopApp.Helpers"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -19,7 +20,13 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         WindowStartupLocation="CenterScreen"
-        Visibility="{Binding WindowVisibility}">
+        Visibility="{Binding WindowVisibility}"
+        >
+    <intr:Interaction.Triggers>
+        <intr:EventTrigger EventName="Loaded">
+            <intr:InvokeCommandAction Command="{Binding WindowLoadedCommand}"/>
+        </intr:EventTrigger>
+    </intr:Interaction.Triggers>
     <Window.DataContext>
         <viewModel:LogInViewModel />
     </Window.DataContext>
@@ -61,7 +68,11 @@
                          materialDesign:HintAssist.Hint="Password"
                          VerticalAlignment="Center" Width="170"
                          VerticalContentAlignment="Center" Margin="0,10" Height="40"
-                         FontSize="15" />
+                         FontSize="15">
+                <PasswordBox.InputBindings>
+                    <KeyBinding Command="{Binding SignInCommand}" Key="Enter"></KeyBinding>
+                </PasswordBox.InputBindings>
+            </PasswordBox>
         </StackPanel>
 
         <Button Command="{Binding SignInCommand}" CommandParameter="{Binding ElementName=LogInWindow}"

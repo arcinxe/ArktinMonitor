@@ -1,0 +1,58 @@
+﻿@model ArktinMonitor.Data.Models.Disk
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Disk</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Computer.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Computer.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Letter)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Letter)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalSpaceInGigaBytes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalSpaceInGigaBytes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FreeSpaceInGigaBytes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FreeSpaceInGigaBytes)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DiskId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

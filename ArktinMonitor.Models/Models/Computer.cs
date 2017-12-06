@@ -17,11 +17,13 @@ namespace ArktinMonitor.Data.Models
 
     public class ComputerViewModel : BasicComputer
     {
+        public int ComputerId { get; set; }
+
         public List<Disk> Disks { get; set; }
 
         public List<ComputerUser> ComputerUsers { get; set; }
 
-        public List<LogTimeInterval> LogTimeIntervals { get; set; }
+        public List<LogTimeIntervalViewModel> LogTimeIntervals { get; set; }
     }
 
     public class ComputerResourceModel : BasicComputer

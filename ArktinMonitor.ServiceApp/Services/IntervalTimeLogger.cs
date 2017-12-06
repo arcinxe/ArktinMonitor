@@ -30,11 +30,11 @@ namespace ArktinMonitor.ServiceApp.Services
             var username = SessionManager.GetActive();
             var interval = intervals.LastOrDefault();
             var currentDateTime = DateTime.Now;
-            var state = SessionManager.GetIdleTime().TotalSeconds < Settings.LogTimeIntervalInSeconds * 0.9 ? "Active" : "Idle";
+            var state = SessionManager.GetIdleTime().TotalSeconds < 120 ? "Active" : "Idle";
             if (interval == null) interval = new LogTimeIntervalLocal() { StartTime = currentDateTime };
             var timeDifference = (currentDateTime - (interval.StartTime + interval.Duration));
             LocalLogger.Log($"TimeDifferenceInSeconds: {timeDifference}");
-            // Usernames and state must be the same.
+            // User names and state must be the same.
             // Also time difference between previous and current interval must be less than 2 minutes.
             var isIntervalUpToDate = interval.ComputerUser == username
                                     && interval.State == state
@@ -44,6 +44,7 @@ namespace ArktinMonitor.ServiceApp.Services
                 // Update the current interval
                 LocalLogger.Log("Update the current interval");
                 interval.Duration += timeDifference;
+                interval.Synced = false;
             }
             else
             {
@@ -55,6 +56,7 @@ namespace ArktinMonitor.ServiceApp.Services
                     Duration = new TimeSpan(0, 0, 1),// interval starts with 0 minutes
                     StartTime = currentDateTime,
                     State = state,
+                    Synced = false
                 });
             }
             computer.LogTimeIntervals = intervals;

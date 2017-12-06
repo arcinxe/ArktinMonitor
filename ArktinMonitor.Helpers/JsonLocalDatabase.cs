@@ -11,8 +11,7 @@ namespace ArktinMonitor.Helpers
         private static volatile JsonLocalDatabase _instance;
         private static readonly object SyncRoot = new object();
 
-        private static readonly string DataStoragePath =
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Arktin");
+        private static readonly string DataStoragePath =Settings.ProgramDataPath;
 
         public ComputerLocal Computer
         {

@@ -78,10 +78,21 @@ namespace ArktinMonitor.ServiceApp.Helpers
 
         public static string GetMacAddress()
         {
-            return NetworkInterface.GetAllNetworkInterfaces()
-                .Where(nic => nic.OperationalStatus == OperationalStatus.Up)
-                .Select(nic => nic.GetPhysicalAddress()
-                .ToString()).FirstOrDefault();
+            var mac = NetworkInterface.GetAllNetworkInterfaces()
+             .Where(nic => nic.OperationalStatus == OperationalStatus.Up)
+             .Select(nic => nic.GetPhysicalAddress()
+             .ToString()).FirstOrDefault();
+
+            var macAddress = string.Empty;
+            if (mac == null) return macAddress;
+
+            for (var i = 0; i < mac.Length; i++)
+            {
+                if (i % 2 == 0 && i != 0) macAddress += ':';
+                var character = mac[i];
+                macAddress += character;
+            }
+            return macAddress;
         }
 
         public static List<DiskLocal> GetDisks()

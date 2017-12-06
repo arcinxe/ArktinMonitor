@@ -1,0 +1,20 @@
+﻿@model ArktinMonitor.Data.ArktinMonitorDataAccess
+@{
+    ViewBag.Title = "Bs";
+}
+
+<h2>DB Tables</h2>
+<div class="row">
+    <div class="col-md-3">
+        <div class="list-group">
+            <a href="@Url.Action("Index", "TempWebAccounts")" class="list-group-item">Web accounts<span class="badge">@Model.WebAccounts.Count()</span></a>
+            <a href="@Url.Action("Index", "TempComputers")" class="list-group-item">Computers<span class="badge">@Model.Computers.Count()</span></a>
+            <a href="@Url.Action("Index", "TempDisks")" class="list-group-item">Disks<span class="badge">@Model.Disks.Count()</span></a>
+            <a href="@Url.Action("Index", "TempComputerUsers")" class="list-group-item">Computer users<span class="badge">@Model.ComputerUsers.Count()</span></a>
+            <a href="@Url.Action("Index", "TempLogTimeIntervals")" class="list-group-item">Logs<span class="badge">@Model.LogTimeIntervals.Count()</span></a>
+            <a href="@Url.Action("Index", "TempBlockedApps")" class="list-group-item">Blocked apps<span class="badge">@Model.BlockedApps.Count()</span></a>
+            <a href="@Url.Action("Index", "TempBlockedSites")" class="list-group-item">Blocked sites<span class="badge">@Model.BlicBlockedSites.Count()</span></a>
+        </div>
+    </div>
+</div>
+

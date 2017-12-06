@@ -5,9 +5,9 @@ namespace ArktinMonitor.Data.ExtensionMethods
 {
     public static class DiskExtension
     {
-        public static DiskResourceModel ToResourceModel(this Disk disk)
+        public static DiskResource ToResourceModel(this Disk disk)
         {
-            return new DiskResourceModel()
+            return new DiskResource()
             {
                 ComputerId = disk.ComputerId,
                 Name = disk.Name,
@@ -18,9 +18,9 @@ namespace ArktinMonitor.Data.ExtensionMethods
             };
         }
 
-        public static DiskResourceModel ToResourceModel(this DiskLocal disk, int computerId)
+        public static DiskResource ToResourceModel(this DiskLocal disk, int computerId)
         {
-            return new DiskResourceModel()
+            return new DiskResource()
             {
                 ComputerId = computerId,
                 Name = disk.Name,
@@ -31,7 +31,7 @@ namespace ArktinMonitor.Data.ExtensionMethods
             };
         }
 
-        public static DiskLocal ToLocal(this DiskResourceModel disk)
+        public static DiskLocal ToLocal(this DiskResource disk)
         {
             return new DiskLocal()
             {
@@ -44,7 +44,7 @@ namespace ArktinMonitor.Data.ExtensionMethods
             };
         }
 
-        public static Disk ToModel(this DiskResourceModel disk)
+        public static Disk ToModel(this DiskResource disk)
         {
             return new Disk()
             {

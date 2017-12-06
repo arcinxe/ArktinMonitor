@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         xmlns:helpers="clr-namespace:ArktinMonitor.DesktopApp.Helpers"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:viewModel="clr-namespace:ArktinMonitor.DesktopApp.ViewModel"
+        xmlns:viewModel="clr-namespace:ArktinMonitor.DesktopApp.ViewModels"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
@@ -108,8 +108,8 @@
 
         <!--Blocked apps list-->
         <Grid Grid.Column="2" Grid.Row="1">
-            <DataGrid ItemsSource="{Binding User.BlockedApplications, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                SelectedItem="{Binding Application, Mode=TwoWay, NotifyOnTargetUpdated=True,NotifyOnSourceUpdated=True}"
+            <DataGrid ItemsSource="{Binding User.BlockedApps, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                SelectedItem="{Binding App, Mode=TwoWay, NotifyOnTargetUpdated=True,NotifyOnSourceUpdated=True}"
                 AutoGenerateColumns="False" SelectionMode="Single" IsHitTestVisible="True" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Active" MinWidth="40">

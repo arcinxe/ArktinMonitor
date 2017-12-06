@@ -220,12 +220,23 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ComputerController.cs" />
+    <Compile Include="Controllers\BlockedAppsController.cs" />
     <Compile Include="Controllers\ComputerUsersController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\LogTimeIntervalController.cs" />
     <Compile Include="Controllers\DiskController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MyComputersController.cs" />
     <Compile Include="Controllers\TempController.cs" />
+    <Compile Include="Controllers\TempControllers\BsController.cs" />
+    <Compile Include="Controllers\TempControllers\TempBlockedAppsController.cs" />
+    <Compile Include="Controllers\TempControllers\TempBlockedSitesController.cs" />
+    <Compile Include="Controllers\TempControllers\TempComputersController.cs" />
+    <Compile Include="Controllers\TempControllers\TempComputerUsersController.cs" />
+    <Compile Include="Controllers\TempControllers\TempDisksController.cs" />
+    <Compile Include="Controllers\TempControllers\TempLogTimeIntervalsController.cs" />
+    <Compile Include="Controllers\TempControllers\TempWebAccountsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\WebAccountController.cs" />
     <Compile Include="Global.asax.cs">
@@ -239,6 +250,7 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\MyComputersViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ArktinMonitor.ico" />
@@ -261,13 +273,16 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <None Include="Properties\PublishProfiles\Arktin - Web Deploy.pubxml" />
+    <Content Include="Images\ArktinMonitor.svg" />
+    <Content Include="Images\ArktinMonitorSplash.png" />
+    <Content Include="Images\ArktinMonitorWhiteShadow.png" />
+    <Content Include="Images\ArktinMonitorWhiteShadowWithPadding.png" />
+    <Content Include="Images\pArktinMonitorWhite.png" />
+    <Content Include="Scripts\arktin\graph.js" />
     <Content Include="Scripts\bootstrap-material-design.js" />
     <Content Include="Scripts\bootstrap-material-design.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -277,6 +292,11 @@
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
     <Content Include="Scripts\bootstrap-material-design.js.map" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Properties\PublishProfiles\Arktin - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\index.d.ts" />
     <Content Include="Scripts\jquery-3.0.0.js" />
@@ -296,6 +316,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -318,7 +342,9 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\MyComputers\Details.cshtml" />
+    <Content Include="Views\Bs\Index.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml.rekt" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -352,10 +378,48 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\MyComputers\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\TempWebAccounts\Create.cshtml" />
+    <Content Include="Views\TempWebAccounts\Delete.cshtml" />
+    <Content Include="Views\TempWebAccounts\Details.cshtml" />
+    <Content Include="Views\TempWebAccounts\Edit.cshtml" />
+    <Content Include="Views\TempWebAccounts\Index.cshtml" />
+    <Content Include="Views\TempComputers\Create.cshtml" />
+    <Content Include="Views\TempComputers\Delete.cshtml" />
+    <Content Include="Views\TempComputers\Details.cshtml" />
+    <Content Include="Views\TempComputers\Edit.cshtml" />
+    <Content Include="Views\TempComputers\Index.cshtml" />
+    <Content Include="Views\TempComputerUsers\Create.cshtml" />
+    <Content Include="Views\TempComputerUsers\Delete.cshtml" />
+    <Content Include="Views\TempComputerUsers\Details.cshtml" />
+    <Content Include="Views\TempComputerUsers\Edit.cshtml" />
+    <Content Include="Views\TempComputerUsers\Index.cshtml" />
+    <Content Include="Views\TempLogTimeIntervals\Create.cshtml" />
+    <Content Include="Views\TempLogTimeIntervals\Delete.cshtml" />
+    <Content Include="Views\TempLogTimeIntervals\Details.cshtml" />
+    <Content Include="Views\TempLogTimeIntervals\Edit.cshtml" />
+    <Content Include="Views\TempLogTimeIntervals\Index.cshtml" />
+    <Content Include="Views\TempDisks\Create.cshtml" />
+    <Content Include="Views\TempDisks\Delete.cshtml" />
+    <Content Include="Views\TempDisks\Details.cshtml" />
+    <Content Include="Views\TempDisks\Edit.cshtml" />
+    <Content Include="Views\TempDisks\Index.cshtml" />
+    <Content Include="Views\TempBlockedApps\Create.cshtml" />
+    <Content Include="Views\TempBlockedApps\Delete.cshtml" />
+    <Content Include="Views\TempBlockedApps\Details.cshtml" />
+    <Content Include="Views\TempBlockedApps\Edit.cshtml" />
+    <Content Include="Views\TempBlockedApps\Index.cshtml" />
+    <Content Include="Views\TempBlockedSites\Create.cshtml" />
+    <Content Include="Views\TempBlockedSites\Delete.cshtml" />
+    <Content Include="Views\TempBlockedSites\Details.cshtml" />
+    <Content Include="Views\TempBlockedSites\Edit.cshtml" />
+    <Content Include="Views\TempBlockedSites\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Services\" />
+    <Folder Include="Views\TestComputers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

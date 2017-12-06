@@ -1,5 +1,6 @@
 ﻿using MaterialDesignThemes.Wpf;
 using System.Windows;
+using ArktinMonitor.DesktopApp.ViewModels;
 
 namespace ArktinMonitor.DesktopApp.Views
 {
@@ -10,12 +11,12 @@ namespace ArktinMonitor.DesktopApp.Views
     {
         public EditorWindow()
         {
-            //var viewModel = new EditorViewModel();
-            //this.DataContext = viewModel;
-            //viewModel.ClosingRequest += (sender, e) => Close();
+            InitializeComponent();
+            var viewModel = new EditorViewModel();
+            this.DataContext = viewModel;
+            viewModel.ClosingRequest += (sender, e) => Close();
             //this.DataContext.ClosingRequest += (sender, e) => Close();
             //(EditorViewModel)this.DataContext.ClosingRequest
-            InitializeComponent();
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)

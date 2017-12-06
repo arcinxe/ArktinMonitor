@@ -1,0 +1,59 @@
+﻿@using Newtonsoft.Json
+@model ArktinMonitor.Data.Models.ComputerViewModel
+@{
+    ViewBag.Title = "My computers";
+}
+
+<h2 id="details-header">Details</h2>
+
+<div class="row">
+    <div class="col-md-5">
+
+        <div class="card-dark">
+            <h3 class="arktinHeader">@Model.Name</h3>
+            <p>@Model.OperatingSystem</p>
+            <p>@Model.Cpu</p>
+            <p>@Model.Ram GB</p>
+            <p>@Model.Gpu</p>
+            <p>@Model.MacAddress</p>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card-dark">
+            <h4 class="arktinHeader">Users</h4>
+            @foreach (var user in Model.ComputerUsers)
+            {
+                <p>@user.Name - @user.PrivilegeLevel </p>
+                @*<p/>@disk.FreeSpaceInGigaBytes.ToString("0.00") GB free of @disk.TotalSpaceInGigaBytes.ToString("0") GB</p>*@
+            }
+        </div>
+    </div>
+    <div class="col-md-4">
+
+        <div class="card-dark">
+            <h4 class="arktinHeader">Disks</h4>
+            @foreach (var disk in Model.Disks)
+            {
+                <p>
+                    @disk.Name (@disk.Letter.Replace("\\", ""))
+                    @disk.FreeSpaceInGigaBytes.ToString("0.00") GB free of @disk.TotalSpaceInGigaBytes.ToString("0") GB
+                </p>
+            }
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div id="div-graph" class="card-dark">
+
+            <canvas id="graph" width="400"
+                    style="border: 1px solid #d3d3d3;">
+                Your browser does not support the HTML5 canvas tag.
+            </canvas>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var logs = @Html.Raw(JsonConvert.SerializeObject(Model.LogTimeIntervals, Formatting.Indented,
+                       new JsonSerializerSettings{DateFormatHandling = DateFormatHandling.IsoDateFormat}));
+    </script>
+    <script src="/Scripts/arktin/graph.js" type="text/javascript"></script>
+</div>

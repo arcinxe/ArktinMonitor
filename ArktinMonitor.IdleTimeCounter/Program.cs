@@ -10,14 +10,13 @@ namespace ArktinMonitor.IdleTimeCounter
         {
             try
             {
-                var dataStoragePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Arktin");
-                LocalLogger.StoragePath = dataStoragePath;
+                LocalLogger.StoragePath = Settings.UserRelatedStoragePath;
                 LocalLogger.FileName = "IdleTimeCounter.log";
-                Directory.CreateDirectory(dataStoragePath);
-
+                Directory.CreateDirectory(Settings.UserRelatedStoragePath);
+                var path = Path.Combine(Settings.UserRelatedStoragePath, "IdleTime.an");
                 var idleTickCount = LastUserInput.GetIdleTickCount();
-                LocalLogger.Log($"Idle time: {idleTickCount / 10000}");
-                using (var streamWriter = new StreamWriter(Path.Combine(dataStoragePath, "IdleTime.an"), false))
+                LocalLogger.Log($"Idle time: {idleTickCount / 10000}, path: {path}");
+                using (var streamWriter = new StreamWriter(path, false))
                 {
                     streamWriter.WriteLine(idleTickCount);
                 }

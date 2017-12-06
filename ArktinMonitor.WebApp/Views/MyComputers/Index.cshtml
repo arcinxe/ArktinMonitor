@@ -1,0 +1,25 @@
+﻿@model List<ArktinMonitor.Data.Models.ComputerViewModel>
+@{
+    ViewBag.Title = "My computers";
+}
+
+<h2>My computers</h2>
+
+
+    <div class="row display-flex">
+        @foreach (var computer in @Model)
+        {
+            <div class="col-md-4 col-xs-12">
+                <div class="card-dark">
+                    <a href="@Url.Action("Details", new {id = computer.ComputerId})" style="text-decoration: none">
+                        <h3>@computer.Name</h3>
+                        @*<svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
+                                <path fill="#FB9E60" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+                            </svg>*@
+                    </a>
+                    <p>@computer.OperatingSystem</p>
+
+                </div>
+            </div>
+        }
+    </div>

@@ -1,4 +1,5 @@
-﻿using ArktinMonitor.Data.Models;
+﻿using System.Collections.Generic;
+using ArktinMonitor.Data.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -9,13 +10,13 @@ namespace ArktinMonitor.Data.ExtensionMethods
         public static ComputerUserDesktop ToDesktopModel(this ComputerUserLocal computerUser)
         {
             var blockedApps =
-                computerUser.BlockedApplications.Select(
+                computerUser.BlockedApps?.Select(
                     ba =>
-                        new BlockedApplicationDesktop
+                        new BlockedAppDesktop
                         {
                             Active = ba.Active,
                             Name = ba.Name,
-                            BlockedApplicationId = ba.BlockedApplicationId,
+                            BlockedAppId = ba.BlockedAppId,
                             FilePath = ba.Path,
                             TempFilePath = ba.Path
                         });
@@ -27,20 +28,20 @@ namespace ArktinMonitor.Data.ExtensionMethods
                 PrivilegeLevel = computerUser.PrivilegeLevel,
                 VisibleName = computerUser.FullName == string.Empty ? computerUser.Name : computerUser.FullName,
                 Removed = computerUser.Removed,
-                BlockedApplications = new ObservableCollection<BlockedApplicationDesktop>(blockedApps)
+                BlockedApps = new ObservableCollection<BlockedAppDesktop>(blockedApps ?? new List<BlockedAppDesktop>())
             };
         }
 
-        public static ComputerUserLocal ToLocalModel(this ComputerUserDesktop computerUser)
+        public static ComputerUserLocal ToLocal(this ComputerUserDesktop computerUser)
         {
             var blockedApps =
-                computerUser.BlockedApplications.Select(
+                computerUser.BlockedApps.Select(
                     ba =>
-                        new BlockedApplicationLocal()
+                        new BlockedAppLocal()
                         {
                             Active = ba.Active,
                             Name = ba.Name,
-                            BlockedApplicationId = ba.BlockedApplicationId,
+                            BlockedAppId = ba.BlockedAppId,
                             Path = ba.FilePath
                         });
             return new ComputerUserLocal()
@@ -50,7 +51,61 @@ namespace ArktinMonitor.Data.ExtensionMethods
                 FullName = computerUser.FullName,
                 PrivilegeLevel = computerUser.PrivilegeLevel,
                 Removed = computerUser.Removed,
-                BlockedApplications = blockedApps.ToList()
+                BlockedApps = blockedApps.ToList()
+            };
+        }
+
+        public static ComputerUserResource ToResource(this ComputerUserLocal computerUser, int computerId)
+        {
+            return new ComputerUserResource()
+            {
+                Name = computerUser.Name,
+                FullName = computerUser.FullName,
+                PrivilegeLevel = computerUser.PrivilegeLevel,
+                Removed = computerUser.Removed,
+                ComputerUserId = computerUser.ComputerUserId,
+                ComputerId = computerId
+            };
+        }
+
+        public static ComputerUser ToModel(this ComputerUserResource computerUser)
+        {
+            return new ComputerUser()
+            {
+                Name = computerUser.Name,
+                FullName = computerUser.FullName,
+                PrivilegeLevel = computerUser.PrivilegeLevel,
+                Removed = computerUser.Removed,
+                ComputerUserId = computerUser.ComputerUserId,
+                ComputerId = computerUser.ComputerId
+            };
+        }
+
+        public static ComputerUserResource ToResource(this ComputerUser computerUser)
+        {
+            return new ComputerUserResource()
+            {
+                Name = computerUser.Name,
+                FullName = computerUser.FullName,
+                PrivilegeLevel = computerUser.PrivilegeLevel,
+                Removed = computerUser.Removed,
+                ComputerUserId = computerUser.ComputerUserId,
+                ComputerId = computerUser.ComputerId
+            };
+        }
+
+
+        public static ComputerUserLocal ToLocal(this ComputerUserResource computerUser)
+        {
+            return new ComputerUserLocal()
+            {
+                Name = computerUser.Name,
+                FullName = computerUser.FullName,
+                PrivilegeLevel = computerUser.PrivilegeLevel,
+                Removed = computerUser.Removed,
+                ComputerUserId = computerUser.ComputerUserId,
+                Enabled = true,
+                Synced = true
             };
         }
     }

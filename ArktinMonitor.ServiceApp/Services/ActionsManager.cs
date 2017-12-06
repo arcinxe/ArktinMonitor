@@ -44,6 +44,7 @@ namespace ArktinMonitor.ServiceApp.Services
         {
             while (_active)
             {
+                Thread.Sleep(1000);
                 if (ActionsQueue.Count <= 0) continue;
                 try
                 {
@@ -52,10 +53,9 @@ namespace ArktinMonitor.ServiceApp.Services
                 }
                 catch (Exception e)
                 {
-                    LocalLogger.Log(nameof(InvokeActions), e);
+                    LocalLogger.Log($"{nameof(ActionsManager)} > {nameof(InvokeActions)}", e);
                     _active = false;
                 }
-                Thread.Sleep(1000);
             }
         }
     }

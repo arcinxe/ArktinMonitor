@@ -56,6 +56,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArktinMonitorDataAccess.cs" />
+    <Compile Include="ExtensionMethods\BlockedAppExtension.cs" />
+    <Compile Include="ExtensionMethods\LogTimeIntervalExtension.cs" />
     <Compile Include="ExtensionMethods\ComputerExtension.cs" />
     <Compile Include="ExtensionMethods\ComputerUserExtension.cs" />
     <Compile Include="ExtensionMethods\DiskExtension.cs" />
@@ -74,7 +76,9 @@
     <Compile Include="Models\WebAccount.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

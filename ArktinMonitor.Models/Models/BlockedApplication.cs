@@ -3,33 +3,40 @@ using System.ComponentModel;
 
 namespace ArktinMonitor.Data.Models
 {
-    public class BlockedApplication : BasicBlockedApplication
+    public class BlockedApp : BasicBlockedApp
     {
-        public int BlockedApplicationId { get; set; }
+        public int BlockedAppId { get; set; }
 
         public int ComputerUserId { get; set; }
 
         public virtual ComputerUser ComputerUser { get; set; }
     }
 
-    public class BlockedApplicationLocal : BasicBlockedApplication
+    public class BlockedAppLocal : BasicBlockedApp
     {
-        public int BlockedApplicationId { get; set; }
+        public int BlockedAppId { get; set; }
 
         public bool Synced { get; set; }
     }
 
-    public class BlockedApplicationDesktop : INotifyPropertyChanged
+    public class BlockedAppResource:BasicBlockedApp
     {
-        private int _blockedApplicationId;
+        public int BlockedAppId { get; set; }
 
-        public int BlockedApplicationId
+        public int ComputerUserId { get; set; }
+    }
+
+    public class BlockedAppDesktop : INotifyPropertyChanged
+    {
+        private int _blockedAppId;
+
+        public int BlockedAppId
         {
-            get { return _blockedApplicationId; }
+            get { return _blockedAppId; }
             set
             {
-                _blockedApplicationId = value;
-                RaisePropertyChangedEvent(nameof(BlockedApplicationId));
+                _blockedAppId = value;
+                RaisePropertyChangedEvent(nameof(BlockedAppId));
             }
         }
 
@@ -89,7 +96,7 @@ namespace ArktinMonitor.Data.Models
         }
     }
 
-    public abstract class BasicBlockedApplication : IEquatable<BasicBlockedApplication>
+    public abstract class BasicBlockedApp : IEquatable<BasicBlockedApp>
     {
         public string Name { get; set; }
 
@@ -97,7 +104,7 @@ namespace ArktinMonitor.Data.Models
 
         public bool Active { get; set; }
 
-        public bool Equals(BasicBlockedApplication other)
+        public bool Equals(BasicBlockedApp other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -109,7 +116,7 @@ namespace ArktinMonitor.Data.Models
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((BasicBlockedApplication)obj);
+            return Equals((BasicBlockedApp)obj);
         }
 
         public override int GetHashCode()

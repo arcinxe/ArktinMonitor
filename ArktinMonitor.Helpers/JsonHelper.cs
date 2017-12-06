@@ -23,11 +23,12 @@ namespace ArktinMonitor.Helpers
         {
             try
             {
-                return JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
+                var result = JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
+                return result;
             }
             catch (Exception)
             {
-                LocalLogger.Log($"[Deserializer] Path [{path}] not found");
+                //LocalLogger.Log($"[Deserializer] Path [{path}] not found");
                 return default(T);
             }
         }

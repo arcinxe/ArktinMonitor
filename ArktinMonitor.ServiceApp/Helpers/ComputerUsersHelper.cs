@@ -41,7 +41,7 @@ namespace ArktinMonitor.ServiceApp.Helpers
                         PrivilegeLevel = userGroups.Where(g => g.User == account.GetPropertyValue("Name").ToString()).Any(g => g.Group == AdministratorsGroupName)
                         ? "Administrator" : "Standard user",
                         BlockedSites = new List<BlockedSiteLocal>(),
-                        BlockedApplications = new List<BlockedApplicationLocal>()
+                        BlockedApps = new List<BlockedAppLocal>()
                     });
                 }
             }

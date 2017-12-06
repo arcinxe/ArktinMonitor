@@ -33,42 +33,42 @@ namespace ArktinMonitor.ServiceApp.Services
             while (_active)
             {
                 Thread.Sleep(1000);
-                //if (seconds % Settings.LogTimeIntervalInSeconds == 0)
-                //{
-                //    ActionsManager.EnqueuNewAction(IntervalTimeLogger.Run);
-                //}
+                if (seconds % Settings.LogTimeIntervalInSeconds == 0)
+                {
+                    ActionsManager.EnqueuNewAction(IntervalTimeLogger.Run);
+                }
 
-                //if (seconds % Settings.HardwareUpdateIntervalInSeconds == 0)
-                //{
-                //    ActionsManager.EnqueuNewAction(DataUpdateManager.UpdateComputer);
-                //}
+                if (seconds % Settings.HardwareUpdateIntervalInSeconds == 0)
+                {
+                    ActionsManager.EnqueuNewAction(DataUpdateManager.UpdateComputer);
+                }
 
-                //if (seconds % Settings.DisksUpdateIntervalInSeconds == 0)
-                //{
-                //    ActionsManager.EnqueuNewAction(DataUpdateManager.UpdateDisks);
-                //}
+                if (seconds % Settings.DisksUpdateIntervalInSeconds == 0)
+                {
+                    ActionsManager.EnqueuNewAction(DataUpdateManager.UpdateDisks);
+                }
 
-                //if (seconds % Settings.ComputerUserChangesUpdaterIntervalInSeconds == 0)
-                //{
-                //    ActionsManager.EnqueuNewAction(DataUpdateManager.UpdateUsers);
-                //}
+                if (seconds % Settings.UserChangesUpdaterIntervalInSeconds == 0)
+                {
+                    ActionsManager.EnqueuNewAction(DataUpdateManager.UpdateUsers);
+                }
 
-                //if (seconds % Settings.AppKillIntervalInSeconds == 0)
-                //{
-                //    ActionsManager.EnqueuNewAction(AppsBlocker.StartAppKiller);
-                //}
+                if (seconds % Settings.AppKillIntervalInSeconds == 0 && !Settings.PortableMode)
+                {
+                    ActionsManager.EnqueuNewAction(AppsBlocker.StartAppKiller);
+                }
 
-                //if (seconds % Settings.SiteBlockerUpdaterIntervalInSeconds == 0)
-                //{
-                //    ActionsManager.EnqueuNewAction(SitesBlocker.BlockSites);
-                //}
+                if (seconds % Settings.SiteBlockerUpdaterIntervalInSeconds == 0 && !Settings.PortableMode)
+                {
+                    ActionsManager.EnqueuNewAction(SitesBlocker.BlockSites);
+                }
 
                 if (seconds % Settings.SyncIntervalInSeconds == 0)
                 {
                     ActionsManager.EnqueuNewAction(SyncManager.SyncData);
                 }
 
-                LocalLogger.Log();
+                //LocalLogger.Log();
                 seconds++;
                 // TEMP
                 //ActionsManager.EnqueuNewAction(() => LocalLogger.Log( ComputerUsersHelper.CurrentlyLoggedInUser()));

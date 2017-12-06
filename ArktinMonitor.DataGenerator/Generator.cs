@@ -116,9 +116,9 @@ namespace ArktinMonitor.DataGenerator
             return letters;
         }
 
-        private static List<int?> GenerateComputerUsers(int computerId)
+        private static List<string> GenerateComputerUsers(int computerId)
         {
-            var computerUsersIds = new List<int?>();
+            var userNames = new List<string>();
             var userAmount = Settings.MaxAmountOfComputerUsers.Random(1);
             var names = GenerateUniqueUserNames(userAmount);
             for (var i = 0; i < userAmount; i++)
@@ -138,9 +138,9 @@ namespace ArktinMonitor.DataGenerator
                 GenerateBlockedSites(computerUser.ComputerUserId);
                 LocalLogger.Log();
                 _computerUsersCounter++;
-                computerUsersIds.Add(computerUser.ComputerUserId);
+                userNames.Add(computerUser.Name);
             }
-            return computerUsersIds;
+            return userNames;
         }
 
         private static List<string> GenerateUniqueUserNames(int amount)
@@ -161,27 +161,28 @@ namespace ArktinMonitor.DataGenerator
             return names;
         }
 
-        private static void GenerateLogTimeIntervals(int computerId, List<int?> usersIds)
+        private static void GenerateLogTimeIntervals(int computerId, List<string> usersNames)
         {
             var now = DateTime.Now;
             var dateTime = new DateTime(now.Year, now.Month, now.Day, 2.Random(), 60.Random(), 0);
-            usersIds.Add(null);
+            usersNames.Add(null);
             for (var i = 0; i < Settings.MaxAmountOfLogTimeIntervals.Random(2); i++)
             {
                 var timeSpan = new TimeSpan(2.Random(), 57.Random(), 0);
-                var userId = usersIds.Random();
+                var userName = usersNames.Random();
                 var log = new LogTimeInterval
                 {
                     LogTimeIntervalId = 0,
                     ComputerId = computerId,
                     StartTime = dateTime,
                     Duration = timeSpan,
-                    ComputerUserId = userId,
-                    State = userId == null ? "Idle" : (2.Random() == 0 ? "Idle" : "Active")
+                    //ComputerUserId = userId,
+                    ComputerUser = userName,
+                    State = userName == null ? "Idle" : (2.Random() == 0 ? "Idle" : "Active")
                 };
                 Db.LogTimeIntervals.Add(log);
                 Db.SaveChanges();
-                var name = Db.ComputerUsers.FirstOrDefault(cu => cu.ComputerUserId == log.ComputerUserId.Value)?.Name ?? "";
+                var name = Db.ComputerUsers.FirstOrDefault(cu => cu.Name == log.ComputerUser)?.Name ?? "";
                 LocalLogger.Log($"              LogTimeInterval Starting at {log.StartTime:g} and lasting {log.Duration:g} added");
                 LocalLogger.Log($"              User name: {name}, state: {log.State}");
                 dateTime += timeSpan;
@@ -194,13 +195,13 @@ namespace ArktinMonitor.DataGenerator
             for (var i = 0; i < appsAmount; i++)
             {
                 var path = Samples.BlockedAppsPaths.Random();
-                var app = new BlockedApplication
+                var app = new BlockedApp
                 {
                     ComputerUserId = computerUserId,
                     Path = path,
                     Name = Path.GetFileNameWithoutExtension(path)
                 };
-                Db.BlockedApplications.Add(app);
+                Db.BlockedApps.Add(app);
                 Db.SaveChanges();
                 LocalLogger.Log($"                      App {app.Name} has been blocked.");
                 //LocalLogger.Log($"                      FilePath {app.FilePath}");
@@ -241,7 +242,7 @@ namespace ArktinMonitor.DataGenerator
             Db.SaveChanges();
             LocalLogger.Log("Table BlockedSites has been purged!");
             LocalLogger.Log("Purging BlockedApplications...");
-            Db.BlockedApplications.Clear();
+            Db.BlockedApps.Clear();
             Db.SaveChanges();
             LocalLogger.Log("Table BlockedApplications has been purged!");
             LocalLogger.Log("Purging LogTimeIntervals...");
@@ -260,9 +261,9 @@ namespace ArktinMonitor.DataGenerator
             Db.Computers.Clear();
             Db.SaveChanges();
             LocalLogger.Log("Table Computers has been purged!");
-            LocalLogger.Log("Purging WebAccounts...");
-            Db.WebAccounts.Clear();
-            Db.SaveChanges();
+            //LocalLogger.Log("Purging WebAccounts...");
+            //Db.WebAccounts.Clear();
+            //Db.SaveChanges();
             LocalLogger.Log("Table WebAccounts has been purged!");
             LocalLogger.Log("All clean!");
             LocalLogger.Log($"Finished in {DateTime.Now - startTime:mm\\m\\:ss\\s\\:ff\\m\\s}");

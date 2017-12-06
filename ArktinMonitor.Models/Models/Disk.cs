@@ -10,7 +10,7 @@ namespace ArktinMonitor.Data.Models
         public virtual Computer Computer { get; set; }
     }
 
-    public class DiskResourceModel : BasicDisk
+    public class DiskResource : BasicDisk
     {
         public int DiskId { get; set; }
 

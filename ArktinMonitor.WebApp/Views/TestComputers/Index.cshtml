@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ArktinMonitor.Data.Models.Computer>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.WebAccount.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+       
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.WebAccount.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <div class="icons container-fluid">
+                    <a href="@Url.Action("Edit", new {id = item.ComputerId})" style="text-decoration: none">
+                        <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
+                            <path fill="#FB9E60" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+                        </svg>
+                    </a>
+                    <a href="@Url.Action("Details", new {id = item.ComputerId})" style="text-decoration: none">
+                        <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
+                            <path fill="#FB9E60" d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                        </svg>
+                    </a>
+                    <a href="@Url.Action("Delete", new {id = item.ComputerId})" style="text-decoration: none">
+                        <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
+                            <path fill="#FB9E60" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                        </svg>
+                    </a>
+                </div>
+                @*@Html.ActionLink("Edit", "Edit", new {id = item.ComputerId}) |
+                    @Html.ActionLink("Details", "Details", new {id = item.ComputerId}) |
+                    @Html.ActionLink("Delete", "Delete", new {id = item.ComputerId})*@
+            </td>
+        </tr>
+    }
+
+</table>

@@ -10,9 +10,16 @@ namespace ArktinMonitor.ServiceApp
     {
         private static void Main()
         {
-            Directory.CreateDirectory(Settings.DataStoragePath);
+            if (!UacHelper.IsElevated() && !Settings.PortableMode)
+            {
+                Console.WriteLine("This app needs elevation in order to work!");
+                Console.ReadLine();
+                return;
+            }
+            Directory.CreateDirectory(Settings.SystemRelatedStoragePath);
+            LocalLogger.Append = true;
             LocalLogger.FileName = "service.log";
-            LocalLogger.StoragePath = Settings.DataStoragePath;
+            LocalLogger.StoragePath = Settings.SystemRelatedStoragePath;
 
             if (Environment.UserInteractive)
             {
