@@ -50,8 +50,8 @@ namespace ArktinMonitor.Data.ExtensionMethods
             return new LogTimeIntervalViewModel()
             {
                 User = log.ComputerUser,
-                StartTime = log.StartTime,
-                Duration = log.Duration,
+                StartTime = log.StartTime.Subtract(new DateTime(1900,1,1)).TotalMilliseconds,
+                Duration = (int) log.Duration.TotalSeconds,
                 State =log.State
             };
         }

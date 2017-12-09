@@ -37,11 +37,24 @@ namespace ArktinMonitor.WebApp.Controllers
             var viewModel = computer.ToViewModel(
                 db.Disks.Where(d => d.ComputerId == computer.ComputerId).ToList(),
                  db.ComputerUsers.Where(u => u.ComputerId == computer.ComputerId).ToList(),
-                 db.LogTimeIntervals.Where(l => l.ComputerId == computer.ComputerId).ToList());
+                 db.LogTimeIntervals.Where(l => l.ComputerId == computer.ComputerId && l.StartTime.Day==DateTime.Now.Day && l.StartTime.Month == DateTime.Now.Month && l.StartTime.Year == DateTime.Now.Year).ToList());
 
             if (computer == null) return View("Error");
 
             return View(viewModel);
+        }
+
+        [AllowAnonymous]
+        [Route("Temp")]
+        public ActionResult TempAction()
+        {
+            return View();
+        }
+
+        [Route("Chat")]
+        public ActionResult Chat()
+        {
+            return View();
         }
     }
 }

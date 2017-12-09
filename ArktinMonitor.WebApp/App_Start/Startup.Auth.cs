@@ -37,7 +37,8 @@ namespace ArktinMonitor.WebApp
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
-                }
+                },
+                CookieName = "ArktinMonitorCookie"
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
@@ -49,7 +50,7 @@ namespace ArktinMonitor.WebApp
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(2),//TODO: Change value later
-                AllowInsecureHttp = true //Don't do this in production
+                AllowInsecureHttp = true //TODO: change to https later
             };
 
             // Enable the application to use bearer tokens to authenticate users

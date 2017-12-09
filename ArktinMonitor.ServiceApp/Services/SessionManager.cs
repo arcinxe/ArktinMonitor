@@ -33,7 +33,9 @@ namespace ArktinMonitor.ServiceApp.Services
         public static TimeSpan GetIdleTime()
         {
             var username = GetActive();
-            var filePath = username == null ? null : $@"C:\Users\{username}\AppData\Local\Arktin\IdleTime.an";
+            var filePath = Settings.PortableMode 
+                ? Path.Combine(Settings.ExecutablesPath, "IdleTime.an") 
+                : username == null ? null : $@"C:\Users\{username}\AppData\Local\Arktin\IdleTime.an";
             try
             {
                 if (Environment.UserInteractive)

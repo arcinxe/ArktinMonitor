@@ -25,6 +25,11 @@ namespace ArktinMonitor.Data.Models
     public class LogTimeIntervalViewModel : BasicLogTimeInterval
     {
         public string User { get; set; }
+
+        public new double StartTime { get; set; }
+
+        public new int Duration { get; set; }
+
     }
 
     public class LogTimeIntervalResource : BasicLogTimeInterval

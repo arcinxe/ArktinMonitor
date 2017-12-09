@@ -65,7 +65,7 @@ function drawGraph() {
         ctx.fillText("window.devicePixelRatio: " + window.devicePixelRatio, width / 2, 25);
         ctx.fillText("canvas.style.width: " + canvas.style.width, width / 2, 40);
         ctx.textBaseline = "bottom";
-        // Draws grid with timestamps
+        // Draws grid with timestamps.
         for (var i = 0; i < 24; i++) {
             var latitude = Math.floor(width / 24 * i);
             var hour = i < 10 ? "0" + i : i;
@@ -77,9 +77,18 @@ function drawGraph() {
             if (width < 300) ctx.font = "8px Roboto, sans-serif";
             ctx.fillText(hour, latitude, Math.floor(height * 0.98));
         }
+        //debugger;
         logs.forEach(function (log) {
             console.log(log.User);
-
+            ctx.fillStyle = "rgba(250,101,33,0.3)";
+            var startTime = new Date(log.StartTime);
+            console.log(startTime.getHours() + " : " + startTime.getMinutes());
+            var startDrawingPosition = (((startTime.getHours() * 60 * 60)
+                + startTime.getMinutes() * 60)
+                + startTime.getSeconds()) / 86400 * canvas.width;
+            var widthOfLog =
+                (log.Duration / 86400) * canvas.width;
+            ctx.fillRect(startDrawingPosition, 10, widthOfLog, 50);
         });
         ctx.stroke();
     }

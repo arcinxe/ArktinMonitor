@@ -1,6 +1,7 @@
 ﻿using ArktinMonitor.Helpers;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNet.SignalR.Client;
 
 namespace ArktinMonitor.ServiceApp.Services
 {
@@ -71,6 +72,12 @@ namespace ArktinMonitor.ServiceApp.Services
                 //LocalLogger.Log();
                 seconds++;
                 // TEMP
+                if (seconds % 5 == 0)
+                {
+                   
+
+
+                }
                 //ActionsManager.EnqueuNewAction(() => LocalLogger.Log( ComputerUsersHelper.CurrentlyLoggedInUser()));
                 //LocalLogger.Log($"Scheduler is running. Seconds: {seconds}. {DateTime.Now-start:ss\\s\\:fff\\m\\s}");
             }

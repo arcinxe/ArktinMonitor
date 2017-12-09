@@ -46,5 +46,9 @@ namespace ArktinMonitor.Data
         public DbSet<BlockedApp> BlockedApps { get; set; }
         public DbSet<BlockedSite> BlicBlockedSites { get; set; }
         public DbSet<LogTimeInterval> LogTimeIntervals { get; set; }
+
+        // Debug
+        public DbSet<DebugLog> DebugLogs { get; set; }
+        
     }
 }

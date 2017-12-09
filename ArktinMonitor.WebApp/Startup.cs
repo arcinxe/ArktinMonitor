@@ -2,6 +2,8 @@
 using Microsoft.Owin.Cors;
 using Owin;
 using System.Web.Http;
+using Microsoft.AspNet.SignalR;
+using Microsoft.Owin.Security.OAuth;
 
 [assembly: OwinStartupAttribute(typeof(ArktinMonitor.WebApp.Startup))]
 
@@ -18,6 +20,22 @@ namespace ArktinMonitor.WebApp
             ConfigureAuth(app);
             app.UseCors(CorsOptions.AllowAll);
             app.UseWebApi(config);
+            app.MapSignalR();
+            //app.Map("/signalr", map =>
+            //{
+            //    map.UseCors(CorsOptions.AllowAll);
+
+            //    map.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions()
+            //    {
+            //        Provider = new QueryStringOAuthBearerProvider()
+            //    });
+
+            //    var hubConfiguration = new HubConfiguration
+            //    {
+            //        Resolver = GlobalHost.DependencyResolver,
+            //    };
+            //    map.RunSignalR(hubConfiguration);
+            //});
         }
     }
 }

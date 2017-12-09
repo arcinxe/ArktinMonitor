@@ -68,6 +68,7 @@
     <Compile Include="Models\ConfigData.cs" />
     <Compile Include="Models\Disk.cs" />
     <Compile Include="Models\GeneratorData.cs" />
+    <Compile Include="Models\DebugLog.cs" />
     <Compile Include="Models\LogTimeInterval.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\TokenResponse.cs" />
