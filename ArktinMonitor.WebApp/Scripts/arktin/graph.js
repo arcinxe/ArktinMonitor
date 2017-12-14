@@ -1,6 +1,6 @@
 ﻿var log = logs[0];
 var graph = document.getElementById("graph");
-var date = new Date(log.StartTime);
+//var date = new Date(log.StartTime);
 window.onload = drawGraph;
 //canvasContext = graph.getContext("2d");
 //canvasContext.moveTo(0, 0);

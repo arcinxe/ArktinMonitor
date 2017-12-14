@@ -17,7 +17,7 @@ namespace ArktinMonitor.WebApp.Controllers
         public ActionResult Index()
         {
             var db = new ArktinMonitorDataAccess();
-            var computers = db.Computers.Where(c => c.WebAccount.Email == User.Identity.Name).ToList();
+            var computers = db.Computers/*.Where(c => c.WebAccount.Email == User.Identity.Name)*/.ToList();
 
             var viewModel = computers
                 .Select(c => c.ToViewModel(
@@ -33,7 +33,7 @@ namespace ArktinMonitor.WebApp.Controllers
         public ActionResult Details(int computerId)
         {
             var db = new ArktinMonitorDataAccess();
-            var computer = db.Computers.FirstOrDefault(c => c.ComputerId == computerId && c.WebAccount.Email == User.Identity.Name);
+            var computer = db.Computers.FirstOrDefault(c => c.ComputerId == computerId /*&& c.WebAccount.Email == User.Identity.Name*/);
             var viewModel = computer.ToViewModel(
                 db.Disks.Where(d => d.ComputerId == computer.ComputerId).ToList(),
                  db.ComputerUsers.Where(u => u.ComputerId == computer.ComputerId).ToList(),

@@ -28,7 +28,13 @@ namespace ArktinMonitor.WebApp.Controllers
         public IHttpActionResult UpdateComputer(ComputerResourceModel computer)
         {
             var exist = computer.ComputerId != 0 && _db.Computers.Any(c => c.ComputerId == computer.ComputerId);
-
+            var oldComputer =
+                _db.Computers.FirstOrDefault(c => c.Name == computer.Name && c.MacAddress == computer.MacAddress && c.WebAccount.Email==User.Identity.Name);
+            if (oldComputer != null)
+            {
+                exist = true;
+                computer.ComputerId = oldComputer.ComputerId;
+            }
             var computerModel = computer.ToModel();
             var account = _db.WebAccounts
                 .FirstOrDefault(wa => wa.Email == User.Identity.Name);

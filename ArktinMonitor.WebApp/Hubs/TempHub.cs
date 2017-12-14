@@ -4,11 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using ArktinMonitor.Data.Models;
+using ArktinMonitor.WebApp.Providers;
 using Microsoft.AspNet.SignalR;
 
 namespace ArktinMonitor.WebApp.Hubs
 {
-    //[Authorize]
+    [Authorize]
     public class TempHub : Hub
     {
         public void Hello()
@@ -16,7 +17,8 @@ namespace ArktinMonitor.WebApp.Hubs
             Clients.All.hello();
         }
 
-        //[Authorize]
+        //[SwitchableAuthorization]
+        [Authorize]
         public void Send(string name, string message)
         {
             // Call the addNewMessageToPage method to update clients.

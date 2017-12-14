@@ -7,6 +7,10 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
+using System.Diagnostics;
+using System.Web;
+using Microsoft.AspNet.SignalR;
+using Microsoft.Owin.Cors;
 
 namespace ArktinMonitor.WebApp
 {
@@ -55,6 +59,48 @@ namespace ArktinMonitor.WebApp
 
             // Enable the application to use bearer tokens to authenticate users
             app.UseOAuthBearerTokens(OAuthOptions);
+
+            // https://stackoverflow.com/questions/26657296/signalr-authentication-with-webapi-bearer-token
+            app.Map("/signalr", map =>
+            {
+                map.UseCors(CorsOptions.AllowAll);
+
+                map.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions()
+                {
+                    Provider = new QueryStringOAuthBearerProvider()
+                });
+
+                var hubConfiguration = new HubConfiguration
+                {
+                    Resolver = GlobalHost.DependencyResolver,
+                };
+                map.RunSignalR(hubConfiguration);
+            });
+
+            //app.Use(async (context, next) =>
+            //{
+            //    if (context.Request.QueryString.HasValue)
+            //    {
+            //        foreach (var header in context.Request.Headers)
+            //        {
+            //            Debug.WriteLine($"Header: {header.Key}");
+            //            foreach (var value in header.Value)
+            //            {
+            //                Debug.WriteLine($"Value: {value}");
+            //            }
+            //        }
+            //        if (string.IsNullOrWhiteSpace(context.Request.Headers.Get("Authorization")))
+            //        {
+            //            var queryString = HttpUtility.ParseQueryString(context.Request.QueryString.Value);
+            //            string token = queryString.Get("access_token");
+            //            if (!string.IsNullOrWhiteSpace(token))
+            //            {
+            //                context.Request.Headers.Add("Authorization", new[] { $"Bearer {token}" });
+            //            }
+            //        }
+            //    }
+            //    await next.Invoke();
+            //});
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
             app.UseTwoFactorSignInCookie(DefaultAuthenticationTypes.TwoFactorCookie, TimeSpan.FromMinutes(5));
