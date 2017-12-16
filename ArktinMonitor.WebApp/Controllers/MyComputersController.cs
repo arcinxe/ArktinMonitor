@@ -34,11 +34,13 @@ namespace ArktinMonitor.WebApp.Controllers
         {
             var db = new ArktinMonitorDataAccess();
             var computer = db.Computers.FirstOrDefault(c => c.ComputerId == computerId /*&& c.WebAccount.Email == User.Identity.Name*/);
+            var today = DateTime.Today;
+            var endTime = DateTime.Today.AddDays(1).AddTicks(-1);
             var viewModel = computer.ToViewModel(
                 db.Disks.Where(d => d.ComputerId == computer.ComputerId).ToList(),
                  db.ComputerUsers.Where(u => u.ComputerId == computer.ComputerId).ToList(),
-                 db.LogTimeIntervals.Where(l => l.ComputerId == computer.ComputerId && l.StartTime.Day==DateTime.Now.Day && l.StartTime.Month == DateTime.Now.Month && l.StartTime.Year == DateTime.Now.Year).ToList());
-
+                 db.LogTimeIntervals.Where(l => l.ComputerId == computer.ComputerId && l.StartTime >=today && l.StartTime <= endTime).ToList());
+            //l.StartTime.Day == DateTime.Now.Day && l.StartTime.Month == DateTime.Now.Month && l.StartTime.Year == DateTime.Now.Year
             if (computer == null) return View("Error");
 
             return View(viewModel);

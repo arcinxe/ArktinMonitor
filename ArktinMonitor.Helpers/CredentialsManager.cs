@@ -157,7 +157,7 @@ namespace ArktinMonitor.Helpers
         /// Loads Json Web Token from the target location.
         /// </summary>
         /// <returns>Json Web Token</returns>
-        private TokenResponse LoadJsonWebToken()
+        public TokenResponse LoadJsonWebToken()
         {
             return JsonHelper.DeserializeJson<TokenResponse>(Path.Combine(_systemRelatedPath, "arktin.an"));
         }

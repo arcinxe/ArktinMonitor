@@ -57,6 +57,13 @@ html {
     box-shadow: #0d0d0d47 0 0 9px, #0d0d0da8 0px 3px 8px;
     border-radius: 2px;
 }
+
+.prog {
+    display: flex;
+}
+.username-over-progress {
+    margin: 10px 0px 0px 0px;
+}
 #graph {
     /*width: 100%;*/
     /*height: 200px;*/

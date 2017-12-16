@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ArktinMonitor.Data.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -73,7 +74,7 @@ namespace ArktinMonitor.Data.ExtensionMethods
             return new ComputerUser()
             {
                 Name = computerUser.Name,
-                FullName = computerUser.FullName,
+                FullName = computerUser.FullName == String.Empty ? computerUser.Name : computerUser.FullName,
                 PrivilegeLevel = computerUser.PrivilegeLevel,
                 Removed = computerUser.Removed,
                 ComputerUserId = computerUser.ComputerUserId,

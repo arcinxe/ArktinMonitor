@@ -127,7 +127,7 @@ namespace ArktinMonitor.DataGenerator
                 {
                     ComputerId = computerId,
                     Name = names.ElementAtOrDefault(i),
-                    FullName = 2.Random() == 0 ? names.ElementAtOrDefault(i) : "",
+                    FullName = names.ElementAtOrDefault(i),
                     PrivilegeLevel = i == 0 ? "Administrator" : (3.Random() == 0 ? "Administrator" : "Standard user")
                 };
                 Db.ComputerUsers.Add(computerUser);
@@ -166,7 +166,7 @@ namespace ArktinMonitor.DataGenerator
             var now = DateTime.Now;
             var dateTime = new DateTime(now.Year, now.Month, now.Day, 2.Random(), 60.Random(), 0);
             usersNames.Add(null);
-            for (var i = 0; i < Settings.MaxAmountOfLogTimeIntervals.Random(2); i++)
+            for (var i = 0; i < Settings.MaxAmountOfLogTimeIntervals.Random(5); i++)
             {
                 var timeSpan = new TimeSpan(2.Random(), 57.Random(), 0);
                 var userName = usersNames.Random();
@@ -185,7 +185,7 @@ namespace ArktinMonitor.DataGenerator
                 var name = Db.ComputerUsers.FirstOrDefault(cu => cu.Name == log.ComputerUser)?.Name ?? "";
                 LocalLogger.Log($"              LogTimeInterval Starting at {log.StartTime:g} and lasting {log.Duration:g} added");
                 LocalLogger.Log($"              User name: {name}, state: {log.State}");
-                dateTime += timeSpan;
+                dateTime += timeSpan+ new TimeSpan(0,20.Random(),50.Random());
             }
         }
 
