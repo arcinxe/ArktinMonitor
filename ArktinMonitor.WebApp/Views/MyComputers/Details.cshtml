@@ -29,10 +29,13 @@
             <h4 class="arktinHeader">Users</h4>
             @foreach (var user in Model.ComputerUsers)
             {
-                <p class="username-over-progress">@user.FullName - @user.PrivilegeLevel </p>
-                <div class="prog">
-                    <div class="user-@user.Name.ToLower()" style="width: 80%; height: 3px;background: orange"></div>
-                    <div class="user-@user.Name.ToLower()" style="width: 20%; height: 3px;background: coral"></div>
+                <div class="user" id="user-@user.Name.ToLower()">
+                    <p class="username-over-progress" data-toggle="tooltip" title="No data">@user.FullName</p>
+                    <div class="my-progress">
+                        <div class="progress-active" style="width: 0%; background: orange" data-toggle="tooltip" title="fuck"></div>
+                        <div class="progress-idle" style="width: 0%; background: coral" data-toggle="tooltip" title="fuck"></div>
+                        <div class="progress-background" style="width: 100%; background: #393939"></div>
+                    </div>
                 </div>
             }
         </div>
@@ -114,5 +117,10 @@
                 });
             });
         });
+        //$(document).ready(updateToolTips());
+
+        function updateToolTips() {
+            $('[data-toggle="tooltip"]').tooltip(); 
+        }
     </script>
 }

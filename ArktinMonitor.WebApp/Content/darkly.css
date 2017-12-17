@@ -58,12 +58,30 @@ html {
     border-radius: 2px;
 }
 
-.prog {
+.my-progress {
     display: flex;
+    height: 6px;
 }
 .username-over-progress {
     margin: 10px 0px 0px 0px;
+    display: inline-block;
 }
+
+span.span-active-time {
+    font-size: 0.6em;
+    float: right;
+}
+
+span.span-idle-time {
+    font-size: 0.6em;
+    float: right;
+}
+
+span.span-total-time {
+    font-size: 0.6em;
+    float: right;
+}
+
 #graph {
     /*width: 100%;*/
     /*height: 200px;*/

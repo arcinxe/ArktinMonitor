@@ -119,7 +119,7 @@ namespace ArktinMonitor.DataGenerator
         private static List<string> GenerateComputerUsers(int computerId)
         {
             var userNames = new List<string>();
-            var userAmount = Settings.MaxAmountOfComputerUsers.Random(1);
+            var userAmount = Settings.MaxAmountOfComputerUsers.Random(3);
             var names = GenerateUniqueUserNames(userAmount);
             for (var i = 0; i < userAmount; i++)
             {
@@ -166,7 +166,7 @@ namespace ArktinMonitor.DataGenerator
             var now = DateTime.Now;
             var dateTime = new DateTime(now.Year, now.Month, now.Day, 2.Random(), 60.Random(), 0);
             usersNames.Add(null);
-            for (var i = 0; i < Settings.MaxAmountOfLogTimeIntervals.Random(5); i++)
+            for (var i = 0; i < Settings.MaxAmountOfLogTimeIntervals.Random(10); i++)
             {
                 var timeSpan = new TimeSpan(2.Random(), 57.Random(), 0);
                 var userName = usersNames.Random();
