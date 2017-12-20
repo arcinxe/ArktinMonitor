@@ -69,13 +69,18 @@ namespace ArktinMonitor.ServiceApp.Services
                     ActionsManager.EnqueuNewAction(SyncManager.SyncData);
                 }
 
+                if (!HubService.IsRunning() && seconds % Settings.HubStateCheckIntervalInSeconds == 0)
+                {
+                    LocalLogger.Log("StartHub enqueued");
+                    ActionsManager.EnqueuNewAction(HubService.Start);
+                }
                 //LocalLogger.Log();
                 seconds++;
                 // TEMP
-                if (seconds % 5 == 0)
+                if (seconds % 60 == 0)
                 {
                    
-
+                    LocalLogger.Log($"{nameof(HubService.IsRunning)}: {HubService.IsRunning()}");
 
                 }
                 //ActionsManager.EnqueuNewAction(() => LocalLogger.Log( ComputerUsersHelper.CurrentlyLoggedInUser()));

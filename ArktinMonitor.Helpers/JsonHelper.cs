@@ -12,9 +12,17 @@ namespace ArktinMonitor.Helpers
             lock (obj)
             {
                 var jsonFile = JsonConvert.SerializeObject(obj, Formatting.Indented);
-                using (var streamWriter = new StreamWriter(path, false))
+                try
                 {
-                    streamWriter.WriteLine(jsonFile);
+                    using (var streamWriter = new StreamWriter(path, false))
+                    {
+                        streamWriter.WriteLine(jsonFile);
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    LocalLogger.Log(nameof(SerializeToJsonFile),e);
                 }
             }
         }

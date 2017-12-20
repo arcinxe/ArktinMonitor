@@ -71,29 +71,43 @@ namespace ArktinMonitor.Helpers
                 }
 
                 if (!SaveOnDisk) return;
-                if (Append)
+                try
                 {
-                    using (var sw = new StreamWriter(Path.Combine(StoragePath, FileName), true))
+                    if (Append)
                     {
-                        sw.WriteLine(Format(data, separator));
-                    }
-                }
-                else
-                {
-                    var currentContent = new StringBuilder();
-                    try
-                    {
-                        var rawList = File.ReadAllLines(Path.Combine(StoragePath, FileName)).ToList();
-                        foreach (var item in rawList)
+                        using (var sw = new StreamWriter(Path.Combine(StoragePath, FileName), true))
                         {
-                            currentContent.Append(item + Environment.NewLine);
+                            sw.WriteLine(Format(data, separator));
                         }
                     }
-                    catch (Exception)
+                    else
                     {
-                        // ignored (file does not exist)
+                        var currentContent = new StringBuilder();
+                        try
+                        {
+                            var rawList = File.ReadAllLines(Path.Combine(StoragePath, FileName)).ToList();
+                            foreach (var item in rawList)
+                            {
+                                currentContent.Append(item + Environment.NewLine);
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            // ignored (file does not exist)
+                        }
+                        if (!Directory.Exists(StoragePath)) Directory.CreateDirectory(StoragePath);
+                        File.WriteAllText(Path.Combine(StoragePath, FileName), Format(data, separator) + Environment.NewLine + currentContent);
                     }
-                    File.WriteAllText(Path.Combine(StoragePath, FileName), Format(data, separator) + Environment.NewLine + currentContent);
+
+                }
+                catch (Exception e)
+                {
+                    using (EventLog eventLog = new EventLog("Application"))
+                    {
+                        eventLog.Source = "Application";
+
+                        eventLog.WriteEntry($"LocalLogger: {data}\n{e}", EventLogEntryType.Information, 101, 1);
+                    }
                 }
             }
         }

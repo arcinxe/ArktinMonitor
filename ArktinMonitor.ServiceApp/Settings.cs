@@ -27,5 +27,6 @@ namespace ArktinMonitor.ServiceApp
         public static readonly int SiteBlockerUpdaterIntervalInSeconds = Convert.ToInt32(ConfigurationManager.AppSettings["SiteBlockerUpdaterIntervalInSeconds"]);
         public static readonly int SyncIntervalInSeconds = Convert.ToInt32(ConfigurationManager.AppSettings["SyncIntervalInSeconds"]);
         public static readonly int LogTimeIntervalInSeconds = Convert.ToInt32(ConfigurationManager.AppSettings["LogTimeIntervalInSeconds"]);
+        public static readonly int HubStateCheckIntervalInSeconds = Convert.ToInt32(ConfigurationManager.AppSettings["HubStateCheckIntervalInSeconds"]);
     }
 }

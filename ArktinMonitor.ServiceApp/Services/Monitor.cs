@@ -11,8 +11,7 @@ namespace ArktinMonitor.ServiceApp.Services
 
             ActionsManager.Start();
             Scheduler.Start();
-            HubService.Start();
-        }
+           }
 
         public static void Stop()
         {

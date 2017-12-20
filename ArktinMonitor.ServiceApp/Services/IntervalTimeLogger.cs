@@ -37,8 +37,9 @@ namespace ArktinMonitor.ServiceApp.Services
             // User names and state must be the same.
             // Also time difference between previous and current interval must be less than 2 minutes.
             var isIntervalUpToDate = interval.ComputerUser == username
-                                    && interval.State == state
-                                    && timeDifference.TotalSeconds < 120;
+                                     && interval.State == state
+                                     && timeDifference.TotalSeconds < 120
+                                     && interval.StartTime.Day == currentDateTime.Day;
             if (isIntervalUpToDate)
             {
                 // Update the current interval

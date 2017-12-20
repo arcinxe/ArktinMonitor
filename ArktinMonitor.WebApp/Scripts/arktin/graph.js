@@ -71,7 +71,7 @@ function drawGraph() {
         $(userId + " p").attr("title", timeFormat("Total time: ", user.totalTime));
         var highestTime = users[0].totalTime;
 
-        var activeWidth = (user.activeTime / highestTime * 100);
+        var activeWidth = user.activeTime / highestTime * 100;
         var activeProgress = $(".user:eq(" + count + ") .my-progress .progress-active");
         activeProgress.css("background", "hsla(" + hslColors[count] + ",0.6)");
         activeProgress.width(activeWidth + "%");
@@ -103,8 +103,8 @@ function drawGraph() {
     function resizeCanvas() {
 
         //canvas.width = div.clientWidth - 20;// Minus padding
-        canvas.width = (div.clientWidth * window.devicePixelRatio) - 20;
-        canvas.height = (150 * window.devicePixelRatio);
+        canvas.width = div.clientWidth * window.devicePixelRatio - 20;
+        canvas.height = (130 * window.devicePixelRatio);
         canvas.style.width = div.clientWidth - 20 + "px";
         //canvas.style.height = 150+"px";
         // canvas.height = div.clientHeight;
@@ -155,7 +155,7 @@ function drawGraph() {
             if (width > 900) hour += ":00";
             if (width < 400) ctx.font = "10px Roboto, sans-serif";
             if (width < 300) ctx.font = "8px Roboto, sans-serif";
-            ctx.fillText(hour, latitude, Math.floor(height * 0.97));
+            ctx.fillText(hour, latitude, Math.floor(height * 0.95));
         }
 
         // Drawing logs.
@@ -164,7 +164,7 @@ function drawGraph() {
                 return el.name === log.User;
             });
             var index = users.indexOf(user);
-            if (user == undefined) {
+            if (user === undefined) {
                 ctx.fillStyle = "hsla(0,0%,80%,0.5)";
             } else {
                 var opacity = log.State === "Active" ? 0.6 : 0.2;

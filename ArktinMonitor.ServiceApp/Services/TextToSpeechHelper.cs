@@ -4,6 +4,7 @@ using System.Linq;
 using System.Speech.Synthesis;
 using System.Text;
 using System.Threading.Tasks;
+using ArktinMonitor.Helpers;
 
 namespace ArktinMonitor.ServiceApp.Services
 {
@@ -18,7 +19,7 @@ namespace ArktinMonitor.ServiceApp.Services
             if (voice != null) synth.SelectVoice(voice.VoiceInfo.Name);
             // Configure the audio output. 
             synth.SetOutputToDefaultAudioDevice();
-            Console.WriteLine($"Speaking: {text}");
+            LocalLogger.Log($"Speaking: {text}");
             // Speak a string.
             synth.Speak(text);
         }

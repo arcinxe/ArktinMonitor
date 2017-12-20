@@ -42,7 +42,12 @@ namespace ArktinMonitor.ServiceApp.Services
             if (_computer.Synced) return;
             var client = new ServerClient();
             var response = client.PostToServer(Settings.ApiUrl, "api/Computers", _computer.ToResourceModel(), _jsonWebToken);
-            if (!response.IsSuccessStatusCode) return;
+            if (!response.IsSuccessStatusCode)
+            {
+                LocalLogger.Log(response.Content.ReadAsStringAsync());
+                return;
+            }
+
             var computerId = response.Content.ReadAsAsync<int>().Result;
             _computer.Synced = true;
             _computer.ComputerId = computerId;

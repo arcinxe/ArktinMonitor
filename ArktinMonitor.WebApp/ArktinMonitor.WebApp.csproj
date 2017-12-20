@@ -268,6 +268,7 @@
     <Compile Include="Providers\SwitchableAutorization.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ComputerUsersViewModel.cs" />
     <Compile Include="ViewModels\MyComputersViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -366,6 +367,7 @@
     <Content Include="Views\Bs\Index.cshtml" />
     <Content Include="Views\MyComputers\TempAction.cshtml" />
     <Content Include="Views\MyComputers\Chat.cshtml" />
+    <Content Include="Views\MyComputers\Users.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml.rekt" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />

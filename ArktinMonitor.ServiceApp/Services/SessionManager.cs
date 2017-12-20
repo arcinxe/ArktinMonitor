@@ -50,7 +50,7 @@ namespace ArktinMonitor.ServiceApp.Services
                 }
                 else
                 {
-                    ExecuteHelper.StartProcessAsCurrentUser($"{Path.Combine(Settings.ExecutablesPath, "ArktinMonitor.IdleTimeCounter.exe")}");
+                    //ExecuteHelper.StartProcessAsCurrentUser($"{Path.Combine(Settings.ExecutablesPath, "ArktinMonitor.IdleTimeCounter.exe")}");
                 }
             }
             catch (Exception e)
