@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using ArktinMonitor.Data;
 using ArktinMonitor.Data.ExtensionMethods;
 using ArktinMonitor.Data.Models;
 using ArktinMonitor.WebApp.ViewModels;
+using IdentityModel.Client;
+using Newtonsoft.Json.Linq;
 
 namespace ArktinMonitor.WebApp.Controllers
 {
@@ -36,6 +40,7 @@ namespace ArktinMonitor.WebApp.Controllers
         {
             var db = new ArktinMonitorDataAccess();
             var computer = db.Computers.FirstOrDefault(c => c.ComputerId == computerId /*&& c.WebAccount.Email == User.Identity.Name*/);
+            if (computer == null) return View("Error");
             var today = DateTime.Today.AddHours(-1);
             var endTime = DateTime.Today.AddDays(1).AddTicks(-1).AddHours(-1);
 
@@ -44,7 +49,7 @@ namespace ArktinMonitor.WebApp.Controllers
                  db.ComputerUsers.Where(u => u.ComputerId == computer.ComputerId).ToList(),
                  db.LogTimeIntervals.Where(l => l.ComputerId == computer.ComputerId && l.StartTime >= today && l.StartTime <= endTime).ToList());
 
-            if (computer == null) return View("Error");
+            ViewBag.ComputerUserId = new SelectList(db.ComputerUsers, "ComputerUserId", "Name");
             return View(viewModel);
         }
 
@@ -61,18 +66,8 @@ namespace ArktinMonitor.WebApp.Controllers
             return View();
         }
 
-        [Route("Users/{computerId}")]
-        public ActionResult Users(int computerId)
-        {
-           var db = new  ArktinMonitorDataAccess();
-            var computer = db.Computers.FirstOrDefault(c => c.ComputerId == computerId /*&& c.WebAccount.Email == User.Identity.Name*/);
-            var viewModel = new ComputerUsersViewModel
-            {
-                Users = db.ComputerUsers.Where(u => u.ComputerId == computer.ComputerId).ToList(),
-                ComputerName = computer?.Name
-            };
-            if (computer == null) return View("Error");
-            return View(viewModel);
-        }
+
+
+
     }
 }

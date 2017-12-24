@@ -9,6 +9,12 @@
         public virtual ComputerUser ComputerUser { get; set; }
     }
 
+    public class BlockedSiteResource : BasicBlockedSite
+    {
+        public int BlockedSiteId { get; set; }
+
+        public int ComputerUserId { get; set; }
+    }
     public class BlockedSiteLocal : BasicBlockedSite
     {
         public int BlockedSiteId { get; set; }

@@ -7,18 +7,18 @@ namespace ArktinMonitor.ServiceApp.Services
     {
         public static void Run()
         {
-            //IntervalTimeLogger.Start();
-
+            LocalLogger.Log("Service has been started!");
             ActionsManager.Start();
             Scheduler.Start();
            }
 
         public static void Stop()
         {
-            //IntervalTimeLogger.Stop();
-            HubService.Stop();
+            LocalLogger.Log("Stopping service");
             Scheduler.Stop();
             ActionsManager.Stop();
+            HubService.Stop();
+            LocalLogger.Log("Service has been stopped!");
         }
     }
 }

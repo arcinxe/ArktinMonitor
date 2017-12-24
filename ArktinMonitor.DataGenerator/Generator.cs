@@ -222,7 +222,7 @@ namespace ArktinMonitor.DataGenerator
                     Name = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(url.ToLower()),
                     UrlAddress = url
                 };
-                Db.BlicBlockedSites.Add(site);
+                Db.BlockedSites.Add(site);
                 Db.SaveChanges();
                 LocalLogger.Log($"                      Site {site.UrlAddress} has been blocked");
                 //LocalLogger.Log();
@@ -238,7 +238,7 @@ namespace ArktinMonitor.DataGenerator
             LocalLogger.Log("The purge has been started!");
             var startTime = DateTime.Now;
             LocalLogger.Log("Purging BlockedSites...");
-            Db.BlicBlockedSites.Clear();
+            Db.BlockedSites.Clear();
             Db.SaveChanges();
             LocalLogger.Log("Table BlockedSites has been purged!");
             LocalLogger.Log("Purging BlockedApplications...");

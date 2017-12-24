@@ -26,7 +26,7 @@
 
     <div class="col-md-3">
         <div id="users" class="card-dark">
-            <h4 class="arktinHeader">@Html.ActionLink("Users", "Users", "MyComputers")</h4>
+            <h4 class="arktinHeader">@Html.ActionLink("Users", "Users", "Users")</h4>
             @foreach (var user in Model.ComputerUsers)
             {
                 <div class="user" id="user-@user.Name.ToLower()">

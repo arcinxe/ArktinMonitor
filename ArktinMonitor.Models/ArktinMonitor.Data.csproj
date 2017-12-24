@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="ArktinMonitorDataAccess.cs" />
     <Compile Include="ExtensionMethods\BlockedAppExtension.cs" />
+    <Compile Include="ExtensionMethods\BlockedSiteExtension.cs" />
     <Compile Include="ExtensionMethods\LogTimeIntervalExtension.cs" />
     <Compile Include="ExtensionMethods\ComputerExtension.cs" />
     <Compile Include="ExtensionMethods\ComputerUserExtension.cs" />

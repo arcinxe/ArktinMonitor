@@ -15,7 +15,7 @@ namespace ArktinMonitor.ServiceApp.Helpers
         {
             var computer = new ComputerLocal()
             {
-                Cpu = GetCpuName(),
+                Cpu = GetCpuName().Replace("(tm)", "™").Replace("(R)", "®").Replace("(TM)", "™").Replace("(C)", "©"),
                 Gpu = GetGpuName(),
                 Name = Environment.MachineName,
                 Ram = GetTotalRamInGigaBytes(),

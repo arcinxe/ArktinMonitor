@@ -19,7 +19,7 @@ namespace ArktinMonitor.WebApp.Controllers.TempControllers
         // GET: TempBlockedSites
         public ActionResult Index()
         {
-            var blicBlockedSites = db.BlicBlockedSites.Include(b => b.ComputerUser);
+            var blicBlockedSites = db.BlockedSites.Include(b => b.ComputerUser);
             return View(blicBlockedSites.ToList());
         }
 
@@ -30,7 +30,7 @@ namespace ArktinMonitor.WebApp.Controllers.TempControllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BlockedSite blockedSite = db.BlicBlockedSites.Find(id);
+            BlockedSite blockedSite = db.BlockedSites.Find(id);
             if (blockedSite == null)
             {
                 return HttpNotFound();
@@ -54,7 +54,7 @@ namespace ArktinMonitor.WebApp.Controllers.TempControllers
         {
             if (ModelState.IsValid)
             {
-                db.BlicBlockedSites.Add(blockedSite);
+                db.BlockedSites.Add(blockedSite);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -70,7 +70,7 @@ namespace ArktinMonitor.WebApp.Controllers.TempControllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BlockedSite blockedSite = db.BlicBlockedSites.Find(id);
+            BlockedSite blockedSite = db.BlockedSites.Find(id);
             if (blockedSite == null)
             {
                 return HttpNotFound();
@@ -103,7 +103,7 @@ namespace ArktinMonitor.WebApp.Controllers.TempControllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BlockedSite blockedSite = db.BlicBlockedSites.Find(id);
+            BlockedSite blockedSite = db.BlockedSites.Find(id);
             if (blockedSite == null)
             {
                 return HttpNotFound();
@@ -116,8 +116,8 @@ namespace ArktinMonitor.WebApp.Controllers.TempControllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            BlockedSite blockedSite = db.BlicBlockedSites.Find(id);
-            db.BlicBlockedSites.Remove(blockedSite);
+            BlockedSite blockedSite = db.BlockedSites.Find(id);
+            db.BlockedSites.Remove(blockedSite);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

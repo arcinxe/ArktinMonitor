@@ -1,0 +1,83 @@
+﻿@model ArktinMonitor.WebApp.ViewModels.ComputerUsersViewModel
+
+@{
+    ViewBag.Title = "Users of " + Model.ComputerName;
+}
+
+
+<h2 id="details-header">Users of @Model.ComputerName</h2>
+@Html.ActionLink("Block new site", "Create", new{ computerId = Model.ComputerId})
+
+<div class="row">
+    @foreach (var user in Model.Users)
+    {
+        <div class="col-md-3">
+
+            <div id="computer-details" class="card-dark">
+                <h3 class="arktinHeader">@user.Details.FullName</h3>
+                <p>@user.Details.PrivilegeLevel</p>
+                <div>
+                    @if (user.BlockedApps.Any())
+                    {
+                        <h5>Blocked apps</h5>
+                    }
+                    @foreach (var app in user.BlockedApps)
+                    {
+                        <div>
+                            <h6 style="display: inline-block">@app.Name</h6>
+                            @*<h6>@app.Path</h6>*@
+                            <div class="icons ">
+                                @*<a href="@Url.Action("Edit", new {siteId = .BlockedSiteId})" style="text-decoration: none">
+                                    <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
+                                        <path fill="#FB9E60" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+                                    </svg>
+                                </a>*@
+                                @*<a href="@Url.Action("Details", new {id = item.BlockedSiteId})" style="text-decoration: none">
+                                    <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
+                                        <path fill="#FB9E60" d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                                    </svg>
+                                </a>
+                                <a href="@Url.Action("Delete", new {id = item.BlockedSiteId})" style="text-decoration: none">
+                                    <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
+                                        <path fill="#FB9E60" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                                    </svg>
+                                </a>*@
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div>
+                    @if (user.BlockedSites.Any())
+                    {
+                        <h5>Blocked sites</h5>
+                    }
+
+                    @foreach (var site in user.BlockedSites)
+                    {
+                        <div class="temper">
+                            <h6 class="blocked-site" style="display: inline-block">@site.Name</h6>
+                            @*<h6>@site.UrlAddress</h6>*@
+                            <div class="icons" style="float: right">
+                                <a href="@Url.Action("Edit", new {siteId = site.BlockedSiteId})" style="text-decoration: none">
+                                    <svg style="width: 14px; height: 14px" viewBox="0 0 24 24">
+                                        <path fill="#FB9E60" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+                                    </svg>
+                                </a>
+                                <a href="@Url.Action("Details", new {siteId = site.BlockedSiteId})" style="text-decoration: none">
+                                    <svg style="width: 14px; height: 14px" viewBox="0 0 24 24">
+                                        <path fill="#FB9E60" d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                                    </svg>
+                                </a>
+                                <a href="@Url.Action("Delete", new {siteId = site.BlockedSiteId})" style="text-decoration: none">
+                                    <svg style="width: 14px; height: 14px" viewBox="0 0 24 24">
+                                        <path fill="#FB9E60" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -97,6 +97,14 @@ span.span-total-time {
     display: flex;
     flex-direction: column;
 }
+
+.blocked-site {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+
+
 .longShadow{
     color:#fff;
     text-shadow:1px 1px rgba(0,0,0,0.01),

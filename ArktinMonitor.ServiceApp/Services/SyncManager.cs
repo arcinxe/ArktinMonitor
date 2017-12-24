@@ -28,12 +28,29 @@ namespace ArktinMonitor.ServiceApp.Services
                 SyncUsers();
                 SyncIntervalTimeLogs();
                 SyncBlockedApps();
+                SyncBlockedSites();
             }
             catch (Exception e)
             {
                 LocalLogger.Log($"{nameof(SyncManager)} > {nameof(Credentials.GetJsonWebToken)}", e);
             }
             LocalLogger.Log($"Method {nameof(SyncData)} completed");
+        }
+
+        private static void SyncBlockedSites()
+        {
+            _computer = JsonLocalDatabase.Instance.Computer;
+            var client = new ServerClient();
+            var response = client.GetFromServer(Settings.ApiUrl, $"api/BlockedSites/{_computer.ComputerId}", _jsonWebToken);
+            var returnSites = response.Content.ReadAsAsync<List<BlockedSiteResource>>().Result.ToList();
+            foreach (var user in _computer.ComputerUsers)
+            {
+                user.BlockedSites.Clear();
+                var userSites = returnSites.Where(rs => rs.ComputerUserId == user.ComputerUserId)
+                    .Select(s => s.ToLocal());
+                user.BlockedSites.AddRange(userSites);
+            }
+            JsonLocalDatabase.Instance.Computer = _computer;
         }
 
         private static void SyncComputer()
@@ -98,33 +115,81 @@ namespace ArktinMonitor.ServiceApp.Services
         {
             _computer = JsonLocalDatabase.Instance.Computer;
             var users = _computer.ComputerUsers?
-                .Where(u => u.Synced && u.Enabled && u.ComputerUserId > 0).ToList();
-            if (users == null || users.Count == 0) return;
-            var apps = new List<BlockedAppLocal>();
-            var appsResource = new List<BlockedAppResource>();
-            foreach (var user in users)
-            {
-                apps.AddRange(user.BlockedApps.Where(a => !a.Synced));
-                appsResource.AddRange(user.BlockedApps.Where(a => !a.Synced).Select(a => a.ToResource(user.ComputerUserId)));
-            }
-            if (apps.Count == 0) return;
-            LocalLogger.Log($"Syncing {apps.Count} {(apps.Count > 1 ? "apps" : "app")}.");
+                .Where(u => u.Synced && u.Enabled && u.ComputerUserId > 0 && u.BlockedApps.Any(a => !a.Synced)).ToList();
             var client = new ServerClient();
-            var response = client.PostToServer(Settings.ApiUrl, "api/BlockedApps", appsResource, _jsonWebToken);
-            var returnApps = response.Content.ReadAsAsync<List<BlockedAppResource>>().Result.ToList();
-            if (!response.IsSuccessStatusCode) return;
-            foreach (var user in users)
+            if (users != null && users.Count > 0)
             {
-                if (user.BlockedApps == null) continue;
-                foreach (var app in user.BlockedApps)
+                var apps = new List<BlockedAppLocal>();
+                var appsResource = new List<BlockedAppResource>();
+                foreach (var user in users)
                 {
-                    var tempApp = returnApps.FirstOrDefault(a => a.Path == app.Path && a.ComputerUserId == user.ComputerUserId);
-                    if (tempApp == null) continue;
-                    app.BlockedAppId = tempApp.BlockedAppId;
-                    app.Synced = true;
+                    apps.AddRange(user.BlockedApps.Where(a => !a.Synced));
+                    appsResource.AddRange(user.BlockedApps.Where(a => !a.Synced).Select(a => a.ToResource(user.ComputerUserId)));
+                }
+                if (apps.Count == 0) return;
+                LocalLogger.Log($"Syncing {apps.Count} {(apps.Count == 1 ? "app" : "apps")}.");
+                var response = client.PostToServer(Settings.ApiUrl, $"api/BlockedApps/{_computer.ComputerId}", appsResource, _jsonWebToken);
+                var returnApps = response.Content.ReadAsAsync<List<BlockedAppResource>>().Result.ToList();
+                if (!response.IsSuccessStatusCode) return;
+                foreach (var user in users)
+                {
+                    if (user.BlockedApps == null) continue;
+                    foreach (var app in user.BlockedApps)
+                    {
+                        var tempApp = returnApps.FirstOrDefault(a => a.Path == app.Path && a.ComputerUserId == user.ComputerUserId);
+                        if (tempApp == null) continue;
+                        app.BlockedAppId = tempApp.BlockedAppId;
+                        app.Synced = true;
+                    }
                 }
             }
-            LocalLogger.Log(returnApps);
+
+            var syncResponse = client.GetFromServer(Settings.ApiUrl, $"api/BlockedApps/{_computer.ComputerId}", _jsonWebToken);
+            var allLocalApps = new List<BlockedAppLocal>();
+            if (_computer.ComputerUsers != null)
+                foreach (var user in _computer.ComputerUsers)
+                {
+                    allLocalApps.AddRange(user.BlockedApps.Where(a => a.Synced));
+                }
+            var allApps = syncResponse.Content.ReadAsAsync<List<BlockedAppResource>>().Result.ToList();
+            //LocalLogger.Log(allApps);
+            var removedAppsIds = allLocalApps.Select(a => a.BlockedAppId).ToList();
+            foreach (var app in allApps)
+            {
+                var user = _computer.ComputerUsers?.FirstOrDefault(u => u.ComputerUserId == app.ComputerUserId);
+                if (user == null) continue;
+                if (user.BlockedApps.All(a => a.Path != app.Path))
+                {
+                    user.BlockedApps.Add(new BlockedAppLocal
+                    {
+                        Active = app.Active,
+                        BlockedAppId = app.BlockedAppId,
+                        Name = app.Name,
+                        Path = app.Path,
+                        Synced = true
+                    });
+                }
+                else
+                {
+                    var oldApp = user.BlockedApps.FirstOrDefault(a => a.Path == app.Path);
+                    if (oldApp == null) continue;
+                    oldApp.Name = app.Name;
+                    oldApp.Path = app.Path;
+                    oldApp.Active = app.Active;
+                    oldApp.Synced = true;
+                    oldApp.BlockedAppId = app.BlockedAppId;
+                }
+                removedAppsIds.RemoveAll(i => i == app.BlockedAppId);
+            }
+
+            // Removes locally all blocked apps removed via web app.
+            if (_computer.ComputerUsers != null)
+                foreach (var user in _computer.ComputerUsers)
+                {
+                    user.BlockedApps.RemoveAll(a => removedAppsIds.Contains(a.BlockedAppId));
+                }
+
+            //LocalLogger.Log(returnApps);
             JsonLocalDatabase.Instance.Computer = _computer;
         }
 

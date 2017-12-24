@@ -77,7 +77,7 @@ namespace ArktinMonitor.WebApp.Hubs
 
         private class ComputerGroups
         {
-            private List<ComputerGroup> Groups { get; set; } = new List<ComputerGroup>();
+            public List<ComputerGroup> Groups { get; set; } = new List<ComputerGroup>();
 
             public string GetGroupName(string connectionId)
             {
@@ -100,14 +100,14 @@ namespace ArktinMonitor.WebApp.Hubs
                 group?.Users.RemoveAll(g => g.ConnectionId == connectionId);
                 if (group?.Users.Count == 0) Groups.Remove(group);
             }
-            private class ComputerGroupUser
+            public class ComputerGroupUser
             {
                 public string ConnectionId { get; set; }
                 public string GroupName { get; set; }
                 public string Role { get; set; }
             }
 
-            private class ComputerGroup
+            internal class ComputerGroup
             {
                 public string Name { get; set; }
 
