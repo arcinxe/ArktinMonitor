@@ -33,24 +33,34 @@ namespace ArktinMonitor.ServiceApp.Services
         public static TimeSpan GetIdleTime()
         {
             var username = GetActive();
-            var filePath = Settings.PortableMode 
-                ? Path.Combine(Settings.ExecutablesPath, "IdleTime.an") 
+            var filePath = Settings.PortableMode
+                ? Path.Combine(Settings.ExecutablesPath, "IdleTime.an")
                 : username == null ? null : $@"C:\Users\{username}\AppData\Local\Arktin\IdleTime.an";
             try
             {
-                if (Environment.UserInteractive)
+                var processes = Process.GetProcessesByName("ArktinMonitor.IdleTimeCounter");
+
+                if (processes.Length != 1)
                 {
-                    using (var p = new Process())
+                    foreach (var process in processes)
                     {
-                        p.StartInfo = new ProcessStartInfo(Path.Combine(Settings.ExecutablesPath,
-                            "ArktinMonitor.IdleTimeCounter.exe")) /*{Verb = "runas"}*/;
-                        p.Start();
-                        p.WaitForExit();
+                        process.Kill();
                     }
-                }
-                else
-                {
-                    //ExecuteHelper.StartProcessAsCurrentUser($"{Path.Combine(Settings.ExecutablesPath, "ArktinMonitor.IdleTimeCounter.exe")}");
+
+                    if (Environment.UserInteractive)
+                    {
+                        using (var p = new Process())
+                        {
+                            p.StartInfo = new ProcessStartInfo(Path.Combine(Settings.ExecutablesPath,
+                                "ArktinMonitor.IdleTimeCounter.exe")) /*{Verb = "runas"}*/;
+                            p.Start();
+                            //p.WaitForExit();
+                        }
+                    }
+                    else
+                    {
+                        ExecuteHelper.StartProcessAsCurrentUser($"{Path.Combine(Settings.ExecutablesPath, "ArktinMonitor.IdleTimeCounter.exe")}");
+                    }
                 }
             }
             catch (Exception e)
@@ -61,6 +71,15 @@ namespace ArktinMonitor.ServiceApp.Services
             var result = new TimeSpan(idleTimeInMiliSeconds * 10000);
             LocalLogger.Log($"Idle time: {result:mm\\m\\:ss\\s\\:ff\\m\\s}");
             return result;
+        }
+
+        public static void KillIdleTimeCounters()
+        {
+            var processes = Process.GetProcessesByName("ArktinMonitor.IdleTimeCounter");
+            foreach (var process in processes)
+            {
+                process.Kill();
+            }
         }
     }
 }

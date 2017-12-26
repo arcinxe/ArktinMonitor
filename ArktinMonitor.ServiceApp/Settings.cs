@@ -11,7 +11,7 @@ namespace ArktinMonitor.ServiceApp
             ? Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)
             : AppDomain.CurrentDomain.BaseDirectory;
 
-        public static readonly bool PortableMode = bool.Parse(ConfigurationManager.AppSettings["PortableMode"]);
+        public static readonly bool PortableMode = false;/*bool.Parse(ConfigurationManager.AppSettings["PortableMode"]);*/
 
         public static readonly string UserRelatedStoragePath = PortableMode ? ExecutablesPath : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Arktin");
 

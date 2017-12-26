@@ -39,6 +39,7 @@
             // 
             // serviceInstaller
             // 
+            this.serviceInstaller.DelayedAutoStart = true;
             this.serviceInstaller.Description = "Collects computer data, blocks defined apps and websites.";
             this.serviceInstaller.DisplayName = "Arktin Monitor";
             this.serviceInstaller.ServiceName = "ArktinMonitor";

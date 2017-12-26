@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using ArktinMonitor.Helpers;
 using Microsoft.AspNet.SignalR.Client;
-using System.Speech.Synthesis;
 
 namespace ArktinMonitor.ServiceApp.Services
 {
@@ -40,6 +35,7 @@ namespace ArktinMonitor.ServiceApp.Services
                 }
 
                 _myHubProxy = HubConnection.CreateHubProxy("MyComputerHub");
+                HubConnection.Reconnected += () => { LocalLogger.Log("Reconnected to hub"); };
 
                 _myHubProxy.On<string, string>("addNewMessageToPage",
                     (name, message) => LocalLogger.Log($"{name} - {message}\n"));

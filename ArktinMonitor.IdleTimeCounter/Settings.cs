@@ -13,6 +13,6 @@ namespace ArktinMonitor.IdleTimeCounter
 
         public static readonly bool PortableMode = bool.Parse(ConfigurationManager.AppSettings["PortableMode"]);
 
-        public static readonly string UserRelatedStoragePath = PortableMode ? ExecutablesPath : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Arktin");
+        public static readonly string UserRelatedStoragePath = /*PortableMode ? ExecutablesPath : */Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Arktin");
     }
 }

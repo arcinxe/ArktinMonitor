@@ -448,10 +448,14 @@
     <Content Include="Views\TempBlockedSites\Details.cshtml" />
     <Content Include="Views\TempBlockedSites\Edit.cshtml" />
     <Content Include="Views\TempBlockedSites\Index.cshtml" />
-    <Content Include="Views\Users\Create.cshtml" />
-    <Content Include="Views\Users\Edit.cshtml" />
-    <Content Include="Views\Users\Details.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\AddSite.cshtml" />
+    <Content Include="Views\Users\EditSite.cshtml" />
+    <Content Include="Views\Users\SiteDetails.cshtml" />
+    <Content Include="Views\Users\DeleteSite.cshtml" />
+    <Content Include="Views\Users\AddApp.cshtml" />
+    <Content Include="Views\Users\DeleteApp.cshtml" />
+    <Content Include="Views\Users\AppDetails.cshtml" />
+    <Content Include="Views\Users\EditApp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

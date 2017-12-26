@@ -43,7 +43,7 @@ namespace ArktinMonitor.WebApp.Controllers
 
         // GET: TempBlockedSites/Create
         [Route("Users/{computerId}/AddSite")]
-        public ActionResult Create(int computerId)
+        public ActionResult AddSite(int computerId)
         {
             ViewBag.ComputerUserId = new SelectList(_db.ComputerUsers.Where(u => u.ComputerId == computerId), "ComputerUserId", "Name");
             //ViewBag.ComputerUserId = new SelectList(_db.ComputerUsers, "ComputerUserId", "Name");
@@ -57,7 +57,7 @@ namespace ArktinMonitor.WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Users/{computerId}/AddSite")]
-        public ActionResult Create([Bind(Include = "BlockedSiteId,ComputerUserId,Name,UrlAddress,Active")] BlockedSite blockedSite)
+        public ActionResult AddSite([Bind(Include = "BlockedSiteId,ComputerUserId,Name,UrlAddress,Active")] BlockedSite blockedSite)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +74,7 @@ namespace ArktinMonitor.WebApp.Controllers
 
         // GET: TempBlockedSites/Edit/5
         [Route("Users/{siteId}/EditSite")]
-        public ActionResult Edit(int? siteId)
+        public ActionResult EditSite(int? siteId)
         {
             if (siteId == null)
             {
@@ -96,7 +96,7 @@ namespace ArktinMonitor.WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Users/{siteId}/EditSite")]
-        public ActionResult Edit([Bind(Include = "BlockedSiteId,ComputerUserId,Name,UrlAddress,Active")] BlockedSite blockedSite)
+        public ActionResult EditSite([Bind(Include = "BlockedSiteId,ComputerUserId,Name,UrlAddress,Active")] BlockedSite blockedSite)
         {
             if (ModelState.IsValid)
             {
@@ -112,7 +112,7 @@ namespace ArktinMonitor.WebApp.Controllers
 
         // GET: TempBlockedSites/Delete/5
         [Route("Users/{siteId}/DeleteSite")]
-        public ActionResult Delete(int? siteId)
+        public ActionResult DeleteSite(int? siteId)
         {
             if (siteId == null)
             {
@@ -132,7 +132,7 @@ namespace ArktinMonitor.WebApp.Controllers
         [Route("Users/{siteId}/DeleteSite")]
 
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int siteId)
+        public ActionResult DeleteSiteConfirmed(int siteId)
         {
             BlockedSite blockedSite = _db.BlockedSites.Find(siteId);
             var computerId = blockedSite?.ComputerUser.ComputerId;
@@ -142,8 +142,8 @@ namespace ArktinMonitor.WebApp.Controllers
         }
 
         // GET: TempBlockedSites/Details/5
-        [Route("Users/{siteId}/Details")]
-        public ActionResult Details(int? siteId)
+        [Route("Users/{siteId}/SiteDetails")]
+        public ActionResult SiteDetails(int? siteId)
         {
             if (siteId == null)
             {
@@ -156,6 +156,120 @@ namespace ArktinMonitor.WebApp.Controllers
             }
             ViewBag.ComputerId = blockedSite.ComputerUser.ComputerId;
             return View(blockedSite);
+        }
+
+
+        // GET: TempBlockedApps/Details/5
+        [Route("Users/{appId}/AppDetails")]
+        public ActionResult AppDetails(int? appId)
+        {
+            if (appId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            BlockedApp blockedApp = _db.BlockedApps.Find(appId);
+            if (blockedApp == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ComputerId = _db.BlockedApps.FirstOrDefault(a => a.BlockedAppId == appId).ComputerUser.ComputerId;
+
+            return View(blockedApp);
+        }
+
+        // GET: TempBlockedApps/Create
+        [Route("Users/{computerId}/AddApp")]
+        public ActionResult AddApp(int computerId)
+        {
+            //ViewBag.ComputerUserId = new SelectList(_db.ComputerUsers, "ComputerUserId", "Name");
+            ViewBag.ComputerUserId = new SelectList(_db.ComputerUsers.Where(u => u.ComputerId == computerId), "ComputerUserId", "Name");
+            return View();
+        }
+
+        // POST: TempBlockedApps/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Users/{computerId}/AddApp")]
+        public ActionResult AddApp([Bind(Include = "BlockedAppId,ComputerUserId,Name,Path,Active")] BlockedApp blockedApp)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.BlockedApps.Add(blockedApp);
+                _db.SaveChanges();
+                return RedirectToAction("Users");
+            }
+
+            ViewBag.ComputerUserId = new SelectList(_db.ComputerUsers, "ComputerUserId", "Name", blockedApp.ComputerUserId);
+            return View(blockedApp);
+        }
+
+        // GET: TempBlockedApps/Edit/5
+        [Route("Users/{appId}/EditApp")]
+        public ActionResult EditApp(int? appId)
+        {
+            if (appId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            BlockedApp blockedApp = _db.BlockedApps.Find(appId);
+            if (blockedApp == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ComputerId = blockedApp.ComputerUser.ComputerId;
+            ViewBag.ComputerUserId = new SelectList(_db.ComputerUsers.Where(u => u.ComputerId == blockedApp.ComputerUser.ComputerId), "ComputerUserId", "Name", blockedApp.ComputerUserId);
+            //ViewBag.ComputerUserId = new SelectList(_db.ComputerUsers, "ComputerUserId", "Name", blockedApp.ComputerUserId);
+            return View(blockedApp);
+        }
+
+        // POST: TempBlockedApps/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Users/{appId}/EditApp")]
+        public ActionResult EditApp([Bind(Include = "BlockedAppId,ComputerUserId,Name,Path,Active")] BlockedApp blockedApp)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Entry(blockedApp).State = EntityState.Modified;
+                _db.SaveChanges();
+                return RedirectToAction("Users", "Users", new { computerId = _db.ComputerUsers.FirstOrDefault(u => u.ComputerUserId == blockedApp.ComputerUserId)?.ComputerId });
+            }
+            ViewBag.ComputerUserId = new SelectList(_db.ComputerUsers.Where(u => u.ComputerId == blockedApp.ComputerUser.ComputerId), "ComputerUserId", "Name", blockedApp.ComputerUserId);
+            return View(blockedApp);
+        }
+
+        // GET: TempBlockedApps/Delete/5
+        [Route("Users/{appId}/DeleteApp")]
+        public ActionResult DeleteApp(int? appId)
+        {
+            if (appId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            BlockedApp blockedApp = _db.BlockedApps.Find(appId);
+            if (blockedApp == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ComputerId = blockedApp.ComputerUser.ComputerId;
+
+            return View(blockedApp);
+        }
+
+        // POST: TempBlockedApps/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [Route("Users/{appId}/DeleteApp")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteAppConfirmed(int id)
+        {
+            BlockedApp blockedApp = _db.BlockedApps.Find(id);
+            _db.BlockedApps.Remove(blockedApp);
+            _db.SaveChanges();
+            return RedirectToAction("Users");
         }
 
     }

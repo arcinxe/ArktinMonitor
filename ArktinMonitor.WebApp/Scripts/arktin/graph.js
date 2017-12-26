@@ -138,24 +138,36 @@ function drawGraph() {
         //ctx.fillText("window.devicePixelRatio: " + window.devicePixelRatio, width / 2, 25);
         //ctx.fillText("canvas.style.width: " + canvas.style.width, width / 2, 40);
         //ctx.textBaseline = "bottom";
-        ctx.beginPath();
-        ctx.setLineDash([5, 5]);
-        ctx.strokeStyle = "rgba(255,255,255,0.2)";
-        ctx.lineWidth = 0.5;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "rgba(255,255,255,0.5)";
         // Draws grid with timestamps.
         for (var i = 0; i < 24; i++) {
-            var latitude = Math.floor(width / 24 * i);
+            ctx.beginPath();
+            ctx.setLineDash([5, 5]);
+            ctx.strokeStyle = "rgba(255,255,255,0.2)";
+            ctx.lineWidth = 0.2;
+            var hourLinePosition = Math.floor(width / 24 * i);
             var hour = i < 10 ? "0" + i : i;
-            ctx.moveTo(latitude, 0);
-            ctx.lineTo(latitude, height - 1);
+            ctx.moveTo(hourLinePosition, 0);
+            ctx.lineTo(hourLinePosition, height - 1);
+            ctx.stroke();
+            ctx.beginPath();
+            //ctx.setLineDash([]);
+            ctx.strokeStyle = "rgba(220,220,220,0.2)";
+            ctx.lineWidth = 0.15;
+            for (var l = 1; l < 6; l++) {
+                var tenMinutesLinePosition = Math.floor((width / 24 * i) + width / 144 * l);
+                ctx.moveTo(tenMinutesLinePosition, 0);
+                ctx.lineTo(tenMinutesLinePosition, height - 1);
+            }
+            ctx.stroke();
+
             if (i === 0) continue;
             if (width > 900) hour += ":00";
             if (width < 400) ctx.font = "10px Roboto, sans-serif";
             if (width < 300) ctx.font = "8px Roboto, sans-serif";
-            ctx.fillText(hour, latitude, Math.floor(height * 0.95));
+            ctx.fillText(hour, hourLinePosition, Math.floor(height * 0.95));
         }
 
         // Drawing logs.

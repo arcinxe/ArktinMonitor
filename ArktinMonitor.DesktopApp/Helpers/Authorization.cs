@@ -12,7 +12,7 @@ namespace ArktinMonitor.DesktopApp.Helpers
         public static TokenResponse RenewBearerToken(string username, string password)
         {
             var body = new StringContent($"username={username}&password={password}&grant_type=password");
-            System.Threading.Thread.Sleep(1000); // TODO: Remove later
+            //System.Threading.Thread.Sleep(1000); // TODO: Remove later
             try
             {
 

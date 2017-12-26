@@ -1,4 +1,5 @@
-﻿using ArktinMonitor.Helpers;
+﻿using System;
+using ArktinMonitor.Helpers;
 using ArktinMonitor.ServiceApp.Services;
 using System.ServiceProcess;
 
@@ -14,12 +15,26 @@ namespace ArktinMonitor.ServiceApp
 
         protected override void OnStart(string[] args)
         {
-            Monitor.Run();
+            try
+            {
+                Monitor.Run();
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
         }
 
         protected override void OnStop()
         {
-            Monitor.Stop();
+            try
+            {
+                Monitor.Stop();
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
         }
 
         protected override void OnSessionChange(SessionChangeDescription changeDescription)

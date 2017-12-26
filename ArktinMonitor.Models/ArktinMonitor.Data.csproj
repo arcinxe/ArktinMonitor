@@ -72,6 +72,7 @@
     <Compile Include="Models\DebugLog.cs" />
     <Compile Include="Models\LogTimeInterval.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\DailyTimeLimit.cs" />
     <Compile Include="Models\TokenResponse.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

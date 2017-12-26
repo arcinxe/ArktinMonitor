@@ -1,14 +1,13 @@
-﻿@model ArktinMonitor.Data.Models.BlockedSite
+﻿@model ArktinMonitor.Data.Models.BlockedApp
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Details";
 }
 
-<h2>Delete</h2>
+<h2>Details</h2>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>BlockedSite</h4>
+    <h4>BlockedApp</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -28,11 +27,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.UrlAddress)
+            @Html.DisplayNameFor(model => model.Path)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.UrlAddress)
+            @Html.DisplayFor(model => model.Path)
         </dd>
 
         <dt>
@@ -44,13 +43,8 @@
         </dd>
 
     </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Users", new { computerId = ViewBag.ComputerId })
-        </div>
-    }
 </div>
+<p>
+    @Html.ActionLink("Edit", "EditApp", new {id = Model.BlockedAppId}) |
+    @Html.ActionLink("Back to List", "Users", new {computerId = ViewBag.ComputerId})
+</p>

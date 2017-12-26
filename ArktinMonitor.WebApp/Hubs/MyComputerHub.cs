@@ -14,7 +14,7 @@ namespace ArktinMonitor.WebApp.Hubs
     [Authorize]
     public class MyComputerHub : Hub
     {
-        private readonly ComputerGroups _computerGroups = new ComputerGroups();
+        private static readonly ComputerGroups MyComputerGroups = new ComputerGroups();
         public void Fart(int id, string text, string lang)
         {
             Clients.Group($"{Context.User.Identity.Name}:{id}").fart(text, lang);
@@ -25,9 +25,12 @@ namespace ArktinMonitor.WebApp.Hubs
             try
             {
                 var groupName = $"{Context.User.Identity.Name}:{id}";
-                if (_computerGroups.GetGroupName(Context.ConnectionId) == groupName) return;
+                if (MyComputerGroups.GetGroupName(Context.ConnectionId) == groupName) return;
                 Groups.Add(Context.ConnectionId, groupName);
-                _computerGroups.JoinToGroup(Context.ConnectionId, groupName);
+                MyComputerGroups.JoinToGroup(Context.ConnectionId, groupName);
+                var db = new ArktinMonitorDataAccess();
+                db.DebugLogs.Add(new DebugLog() { Message =MyComputerGroups.GetGroupName(Context.ConnectionId), TimeStamp = DateTime.Now });
+                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -60,8 +63,8 @@ namespace ArktinMonitor.WebApp.Hubs
 
         public override Task OnDisconnected(bool stopCalled)
         {
-            var groupName = _computerGroups.GetGroupName(Context.ConnectionId);
-            _computerGroups.LeaveGroup(Context.ConnectionId, groupName);
+            var groupName = MyComputerGroups.GetGroupName(Context.ConnectionId);
+            MyComputerGroups.LeaveGroup(Context.ConnectionId, groupName);
             Groups.Remove(Context.ConnectionId, groupName);
             Clients.All.addNewMessageToPage(Context.User.Identity.Name, "disconnected");
 
