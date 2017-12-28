@@ -24,6 +24,14 @@ namespace ArktinMonitor.WebApp.Hubs
         //    var existingGroupName = ConnectionsAndGroups.FirstOrDefault(c => c.ConnectionId == Context.ConnectionId)?.GroupName;
         //    Clients.All.addNewMessageToPage(Context.User.Identity.Name, $"GroupName = {existingGroupName}");
         //}
+        public void SendMessageToCurrentUser(string id, string text)
+        {
+             Clients.Group($"{Context.User.Identity.Name}:{id}").sendMessageToCurrentUser(text);
+        }
+        public void PowerAction(int id, string actionName, int delayInSeconds)
+        {
+            Clients.Group($"{Context.User.Identity.Name}:{id}").powerAction(actionName, delayInSeconds);
+            }
         public void JoinToGroup(int id)
         {
 

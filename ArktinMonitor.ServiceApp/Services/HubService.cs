@@ -9,12 +9,15 @@ namespace ArktinMonitor.ServiceApp.Services
     public static class HubService
     {
         private static readonly HubConnection HubConnection = new HubConnection(Settings.ApiUrl);
+
         private static IHubProxy _myHubProxy;
+
         //private static bool _running;
         public static bool IsRunning()
         {
             return HubConnection.State != ConnectionState.Disconnected;
         }
+
         public static void Start()
         {
             LocalLogger.Log($"Method {nameof(HubService)} is running");
@@ -23,10 +26,12 @@ namespace ArktinMonitor.ServiceApp.Services
             try
             {
 
-                var credentialsManager = new CredentialsManager(Settings.ApiUrl, Settings.UserRelatedStoragePath, Settings.SystemRelatedStoragePath, "ArktinMonitor");
+                var credentialsManager = new CredentialsManager(Settings.ApiUrl, Settings.UserRelatedStoragePath,
+                    Settings.SystemRelatedStoragePath, "ArktinMonitor");
 
                 var bearerToken = credentialsManager.LoadJsonWebToken().AccessToken;
-                if (!HubConnection.Headers.TryGetValue("Authorization", out var value) || value != "Bearer " + bearerToken)
+                if (!HubConnection.Headers.TryGetValue("Authorization", out var value) ||
+                    value != "Bearer " + bearerToken)
                 {
                     HubConnection.Headers.Add("Authorization", "Bearer " + bearerToken);
                 }
@@ -34,19 +39,21 @@ namespace ArktinMonitor.ServiceApp.Services
                 if (_myHubProxy == null)
                 {
                     _myHubProxy = HubConnection.CreateHubProxy("MyComputerHub");
-                    HubConnection.Reconnected += () => { LocalLogger.Log("Reconnected to hub"); };
+                    //HubConnection.Reconnected += () => { LocalLogger.Log("Reconnected to hub"); };
                     //HubConnection.Closed += () => { LocalLogger.Log("Connection closed"); };
-                    HubConnection.StateChanged += state => { LocalLogger.Log($"State of connection changed from {state.OldState} to {state.NewState}"); };
+                    HubConnection.StateChanged += state =>
+                    {
+                        LocalLogger.Log(
+                            $"State of connection to hub changed from {state.OldState} to {state.NewState}");
+                    };
 
                     _myHubProxy.On<string, string>("addNewMessageToPage",
                         (name, message) => LocalLogger.Log($"{name} - {message}\n"));
 
-                    _myHubProxy.On<string, string>("fart", (s, s1) =>
-                    {
-                        TextToSpeechHelper.Speak(s, s1);
-                        TempAction(s);
-                    });
-                    _myHubProxy.On<string, int>("PowerAction", PowerAction);
+                    _myHubProxy.On<string, string>("fart", TextToSpeechHelper.Speak);
+                    _myHubProxy.On<string>("getInstalledVoices", GetInstalledVoicesList);
+                    _myHubProxy.On<string>("sendMessageToCurrentUser", SessionManager.SendMessageToCurrentUser);
+                    _myHubProxy.On<string, int>("powerAction", PowerAction);
                     _myHubProxy.On<string>("ping", Pong);
                 }
                 //myHubProxy.On("fart", () => Console.WriteLine("Purrrrrr!"));
@@ -76,6 +83,32 @@ namespace ArktinMonitor.ServiceApp.Services
             };
             //_running = true;
         }
+
+        private static void GetInstalledVoicesList(string connectionId)
+        {
+            try
+            {
+                LocalLogger.Log("Return installed voices");
+                _myHubProxy.Invoke("ShowIntalledVoices", JsonLocalDatabase.Instance.Computer.ComputerId, TextToSpeechHelper.GetInstalledVoicesList())
+                    .ContinueWith(
+                        task =>
+                        {
+                            if (task.IsFaulted)
+                            {
+                                if (task.Exception != null)
+                                    //Console.WriteLine("There was an error opening the connection:{0}",
+                                    //    task.Exception.GetBaseException());
+                                    LocalLogger.Log(nameof(GetInstalledVoicesList), task.Exception);
+                            }
+                        });
+
+            }
+            catch (Exception e)
+            {
+                LocalLogger.Log(nameof(GetInstalledVoicesList), e);
+            }
+        }
+
 
         private static void JoinToGroup()
         {
@@ -190,10 +223,10 @@ namespace ArktinMonitor.ServiceApp.Services
             HubConnection.Start();
         }
 
-        private static void TempAction(string text)
-        {
-            Helpers.ExecuteHelper.StartProcessAsCurrentUser(
-                Path.Combine(Settings.ExecutablesPath, "ArktinMonitor.IdleTimeCounter.exe"), " " + text);
-        }
+        //private static void TempAction(string text)
+        //{
+        //    Helpers.ExecuteHelper.StartProcessAsCurrentUser(
+        //        Path.Combine(Settings.ExecutablesPath, "ArktinMonitor.IdleTimeCounter.exe"), " " + text);
+        //}
     }
 }

@@ -7,7 +7,7 @@
 <h2 id="details-header">Details</h2>
 
 <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-4">
 
         <div id="computer-details" class="card-dark">
             <h3 class="arktinHeader">
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div id="users" class="card-dark">
             <h4 class="arktinHeader">@Html.ActionLink("Users", "Users", "Users")</h4>
             @foreach (var user in Model.ComputerUsers)
@@ -54,9 +54,29 @@
         </div>
     </div>
     <div class="col-md-4">
+        <div id="div-power-options" class="card-dark">
+            <h4 class="arktinHeader">Power actions</h4>
+            <div>
+                <a href="#" id="lock-button">Lock</a> |
+
+                <a href="#" id="logoff-button">Log off</a>
+            </div>
+            <div>
+                <a href="#" id="shutdown-button">Shutdown</a> |
+
+                <a href="#" id="restart-button">Restart</a> |
+
+                <a href="#" id="hibernate-button">Hibernate</a> |
+
+                <a href="#" id="sleep-button">Sleep</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
         <div id="div-tts" class="card-dark">
-            <h4 id="language" title="Click here to change language">Voice message</h4>
-            <input type="text" class="form-control" placeholder="Send TTS message to the computer" id="tts-message">
+            <h4 id="language" title="Click here to change language">Messaging</h4>
+            <input type="text" class="form-control message" placeholder="Send TTS message" id="tts-message">
+            <input type="text" class="form-control message" placeholder="Send text message" id="txt-message">
         </div>
     </div>
     <div class="col-md-12">
@@ -73,9 +93,9 @@
         var logs = @Html.Raw(JsonConvert.SerializeObject(Model.LogTimeIntervals, Formatting.Indented,
                        new JsonSerializerSettings{DateFormatHandling = DateFormatHandling.IsoDateFormat}));
     </script>
-    <script src="/Scripts/arktin/graph.js" type="text/javascript"></script>
 </div>
 @section scripts {
+    <script src="/Scripts/arktin/graph.js" type="text/javascript"></script>
     <!--Script references. -->
     <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
     <!--Reference the SignalR library. -->
@@ -101,7 +121,7 @@
             // Start the connection.
             $.connection.hub.start().done(function () {
                 $("#debug").text($.connection.hub.id);
-                
+
                 $("#computer-details").click(checkSignalrConnection ());
                 checkSignalrConnection();
                 $("#tts-message").keypress(function (e) {
@@ -115,6 +135,45 @@
                         return false;    //<---- Add this line
                     }
                 });
+
+                $("#txt-message").keypress(function (e) {
+                    if (e.which == 13) {
+                        hubConnection.server.sendMessageToCurrentUser(window.location.pathname.split("/").pop(), $("#txt-message").val());
+                        return false;    //<---- Add this line
+                    }
+                });
+                $("#shutdown-button").click(function(e) {
+                    if(confirm("Do you really want to shutdown your pc"))
+                        hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "shutdown", 1);
+                    return false;
+                });
+                $("#restart-button").click(function(e) {
+                    if(confirm("Do you really want to restart your pc"))
+                        hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "restart", 1);
+                    return false;
+                });
+                $("#lock-button").click(function(e) {
+                    if(confirm("Do you really want to lock your pc"))
+                        hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "lock", 1);
+                    return false;
+                });
+                $("#logoff-button").click(function(e) {
+                    if(confirm("Do you really want to log off current user from your pc"))
+                        hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "logoff", 1);
+                    return false;
+                });
+                $("#hibernate-button").click(function(e) {
+                    if(confirm("Do you really want to hibernate your pc"))
+                        hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "hibernate", 1);
+                    return false;
+                });
+                $("#sleep-button").click(function(e) {
+                    if(confirm("Do you really want to put your pc to sleep mode"))
+                        hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "sleep", 1);
+                    return false;
+                });
+
+
 
                 function checkSignalrConnection () {
                     // Call the Send method on the hub.

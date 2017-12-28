@@ -44,7 +44,7 @@ namespace ArktinMonitor.ServiceApp.Services
                 if (timeLeft.TotalSeconds < 0)
                 {
                     LocalLogger.Log($"Logging off user {userName}");
-                    SessionManager.DisconnectCurrentUser();
+                    SessionManager.LogOutCurrentUser();
                 }
             }
             catch (Exception e)

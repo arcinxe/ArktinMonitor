@@ -58,7 +58,7 @@ namespace ArktinMonitor.Helpers
         //}
 
 
-        public static List<string[]> GetInstalledVoucesList()
+        public static List<string[]> GetInstalledVoicesList()
         {
             return Voices.Select(v => new[] { v.VoiceInfo.Name, v.VoiceInfo.Culture.Name }).ToList();
         }

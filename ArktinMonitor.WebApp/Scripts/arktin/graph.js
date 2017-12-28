@@ -196,7 +196,11 @@ function drawGraph() {
         ctx.stroke();
     }
 };
-
+//$("#shutdown-button").click(function (e) {
+//    debugger;
+    
+//    return false;
+//});
 function timeFormat(text, time) {
     var seconds = time % 60;
     var minutes = Math.floor(time % 3600 / 60);

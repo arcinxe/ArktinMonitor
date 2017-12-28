@@ -45,7 +45,7 @@ namespace ArktinMonitor.IdleTimeCounter
                     PowerAndSessionActions.LogOut();
                     break;
                 case "message":
-                    System.Windows.Forms.MessageBox.Show(args[1]);
+                    System.Windows.Forms.MessageBox.Show(args[1], "ArktinMonitor");
                     break;
             }
         }
