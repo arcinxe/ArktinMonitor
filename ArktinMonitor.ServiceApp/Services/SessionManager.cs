@@ -81,5 +81,25 @@ namespace ArktinMonitor.ServiceApp.Services
                 process.Kill();
             }
         }
+
+        public static void LogOutCurrentUser()
+        {
+            CallAppInUsersSession("logout");
+        }
+        public static void DisconnectCurrentUser()
+        {
+            CallAppInUsersSession("lock");
+        }
+
+        public static void SendMessageToCurrentUser(string text)
+        {
+            CallAppInUsersSession($"message \"{text}\"");;
+        }
+
+        private static void CallAppInUsersSession(string parameter)
+        {
+            ExecuteHelper.StartProcessAsCurrentUser(
+                Path.Combine(Settings.ExecutablesPath, "ArktinMonitor.IdleTimeCounter.exe"), " " + parameter);
+        }
     }
 }

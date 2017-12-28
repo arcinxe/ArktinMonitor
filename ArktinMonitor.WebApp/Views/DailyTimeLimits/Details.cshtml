@@ -1,0 +1,42 @@
+﻿@model ArktinMonitor.Data.Models.DailyTimeLimit
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DailyTimeLimit</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ComputerUser.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ComputerUser.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Active)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Active)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DailyTimeLimitId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

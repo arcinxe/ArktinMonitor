@@ -60,7 +60,7 @@
     <Compile Include="JsonHelper.cs" />
     <Compile Include="JsonLocalDatabase.cs" />
     <Compile Include="LocalLogger.cs" />
-    <Compile Include="PowerAndSessions.cs" />
+    <Compile Include="PowerAndSessionActions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SeverClient.cs" />

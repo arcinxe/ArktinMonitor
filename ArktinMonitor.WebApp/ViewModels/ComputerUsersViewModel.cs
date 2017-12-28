@@ -22,6 +22,8 @@ namespace ArktinMonitor.WebApp.ViewModels
         public IEnumerable<BlockedApp> BlockedApps { get; set; }
 
         public IEnumerable<BlockedSite> BlockedSites { get; set; }
+
+        public IEnumerable<DailyTimeLimit> DailyTimeLimits { get; set; }
     }
 
     //public static class ComputerUsersViewModelExtension

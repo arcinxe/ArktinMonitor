@@ -69,6 +69,12 @@ namespace ArktinMonitor.ServiceApp.Services
                     ActionsManager.EnqueuNewAction(SyncManager.SyncData);
                 }
 
+                if (seconds % Settings.TimeLimitCheckIntervalInSeconds == 0)
+                {
+                    ActionsManager.EnqueuNewAction(TimeLimitsManager.Run);
+                }
+
+
                 if (!HubService.IsRunning() && seconds % Settings.HubStateCheckIntervalInSeconds == 0)
                 {
                     ActionsManager.EnqueuNewAction(HubService.Start);
@@ -78,7 +84,7 @@ namespace ArktinMonitor.ServiceApp.Services
                 // TEMP
                 //if (seconds % 60 == 0)
                 //{
-                   
+
                 //    LocalLogger.Log($"{nameof(HubService.IsRunning)}: {HubService.IsRunning()}");
 
                 //}

@@ -238,6 +238,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\TempControllers\DailyTimeLimitsController.cs" />
+    <Compile Include="Controllers\TimeLimitsController.cs" />
     <Compile Include="Controllers\BlockedSItesController.cs" />
     <Compile Include="Controllers\ComputerController.cs" />
     <Compile Include="Controllers\BlockedAppsController.cs" />
@@ -275,6 +277,7 @@
     <Compile Include="Providers\QueryStringOAuthBearerProvider.cs" />
     <Compile Include="Providers\SwitchableAutorization.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="Services\SignalRGroupsHelper.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ComputerUsersViewModel.cs" />
     <Compile Include="ViewModels\MyComputersViewModel.cs" />
@@ -377,6 +380,11 @@
     <Content Include="Views\MyComputers\Chat.cshtml" />
     <Content Include="Views\Users\Users.cshtml" />
     <Content Include="Views\CallApi\ShowApiResult.cshtml" />
+    <Content Include="Views\DailyTimeLimits\Create.cshtml" />
+    <Content Include="Views\DailyTimeLimits\Delete.cshtml" />
+    <Content Include="Views\DailyTimeLimits\Details.cshtml" />
+    <Content Include="Views\DailyTimeLimits\Edit.cshtml" />
+    <Content Include="Views\DailyTimeLimits\Index.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml.rekt" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
@@ -456,10 +464,13 @@
     <Content Include="Views\Users\DeleteApp.cshtml" />
     <Content Include="Views\Users\AppDetails.cshtml" />
     <Content Include="Views\Users\EditApp.cshtml" />
+    <Content Include="Views\Users\AddTimeLimit.cshtml" />
+    <Content Include="Views\Users\DeleteTimeLimit.cshtml" />
+    <Content Include="Views\Users\TimeLimitDetails.cshtml" />
+    <Content Include="Views\Users\EditTimeLimit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Services\" />
     <Folder Include="Views\TestComputers\" />
   </ItemGroup>
   <ItemGroup>

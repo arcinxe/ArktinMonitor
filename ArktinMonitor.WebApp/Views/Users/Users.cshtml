@@ -9,7 +9,8 @@
 
 Actions:
 @Html.ActionLink("Block new site", "AddSite", new { computerId = Model.ComputerId })&nbsp;|&nbsp;
-@Html.ActionLink("Block new app", "AddApp", new { computerId = Model.ComputerId })
+@Html.ActionLink("Block new app", "AddApp", new { computerId = Model.ComputerId })&nbsp;|&nbsp;
+@Html.ActionLink("Set time limit", "AddTimeLimit", new { computerId = Model.ComputerId })
 
 <div class="row">
     @foreach (var user in Model.Users)
@@ -72,6 +73,37 @@ Actions:
                                     </svg>
                                 </a>
                                 <a href="@Url.Action("DeleteSite", new {siteId = site.BlockedSiteId})" style="text-decoration: none">
+                                    <svg style="width: 14px; height: 14px" viewBox="0 0 24 24">
+                                        <path fill="#FB9E60" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div>
+                    @if (user.DailyTimeLimits.Any())
+                    {
+                        <h5>Time limit</h5>
+                    }
+
+                    @foreach (var limit in user.DailyTimeLimits)
+                    {
+                        <div class="temper">
+                            <h6 class="blocked-site" style="display: inline-block @if(!limit.Active){<text>;color: grey</text>}">@limit.TimeAmount.ToString("g")</h6>
+                            @*<h6>@site.UrlAddress</h6>*@
+                            <div class="icons" style="float: right">
+                                <a href="@Url.Action("EditTimeLimit", new {timeLimitId = limit.DailyTimeLimitId})" style="text-decoration: none">
+                                    <svg style="width: 14px; height: 14px" viewBox="0 0 24 24">
+                                        <path fill="#FB9E60" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+                                    </svg>
+                                </a>
+                                <a href="@Url.Action("TimeLimitDetails", new {timeLimitId = limit.DailyTimeLimitId})" style="text-decoration: none">
+                                    <svg style="width: 14px; height: 14px" viewBox="0 0 24 24">
+                                        <path fill="#FB9E60" d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                                    </svg>
+                                </a>
+                                <a href="@Url.Action("DeleteTimeLimit", new { timeLimitId = limit.DailyTimeLimitId})" style="text-decoration: none">
                                     <svg style="width: 14px; height: 14px" viewBox="0 0 24 24">
                                         <path fill="#FB9E60" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
                                     </svg>

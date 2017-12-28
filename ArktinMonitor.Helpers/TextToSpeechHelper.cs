@@ -21,41 +21,41 @@ namespace ArktinMonitor.Helpers
             LocalLogger.Log($"Speaking: {text} using voice: {Synth.Voice.Name}");
             // Speak a string.
             Synth.Speak(text);
-            try
-            {
-                TestActions(text);
-            }
-            catch (Exception e)
-            {
-                LocalLogger.Log(nameof(TestActions), e);
-            }
+            //try
+            //{
+            //    TestActions(text);
+            //}
+            //catch (Exception e)
+            //{
+            //    LocalLogger.Log(nameof(TestActions), e);
+            //}
         }
 
-        private static void TestActions(string text)
-        {
-            switch (text)
-            {
-                case "shutdown":
-                    PowerAndSessions.Shutdown();
-                    break;
-                case "logoff":
-                    PowerAndSessions.LogOut();
-                    break;
-                case "lock":
-                    PowerAndSessions.Lock();
-                    break;
-                case "hibernate":
-                    PowerAndSessions.Hibernate();
-                    break;
-                case "sleep":
-                    PowerAndSessions.Sleep();
-                    break;
-                case "restart":
-                    PowerAndSessions.Restart();
-                    break;
-                default: return;
-            }
-        }
+        //private static void TestActions(string text)
+        //{
+        //    switch (text)
+        //    {
+        //        case "shutdown":
+        //            PowerAndSessionActions.Shutdown();
+        //            break;
+        //        case "logoff":
+        //            PowerAndSessionActions.LogOut();
+        //            break;
+        //        case "lock":
+        //            PowerAndSessionActions.Lock();
+        //            break;
+        //        case "hibernate":
+        //            PowerAndSessionActions.Hibernate();
+        //            break;
+        //        case "sleep":
+        //            PowerAndSessionActions.Sleep();
+        //            break;
+        //        case "restart":
+        //            PowerAndSessionActions.Restart();
+        //            break;
+        //        default: return;
+        //    }
+        //}
 
 
         public static List<string[]> GetInstalledVoucesList()

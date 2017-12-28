@@ -39,6 +39,8 @@ namespace ArktinMonitor.Data.Models
 
         public List<BlockedSiteLocal> BlockedSites { get; set; }
 
+        public List<DailyTimeLimitLocal> DailyTimeLimits { get; set; }
+
         public bool Equals(ComputerUserLocal other)
         {
             if (ReferenceEquals(null, other)) return false;

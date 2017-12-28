@@ -40,9 +40,13 @@ namespace ArktinMonitor.WebApp.Controllers
         {
             var db = new ArktinMonitorDataAccess();
             var computer = db.Computers.FirstOrDefault(c => c.ComputerId == computerId /*&& c.WebAccount.Email == User.Identity.Name*/);
+            
             if (computer == null) return View("Error");
-            var today = DateTime.Today.AddHours(-1);
-            var endTime = DateTime.Today.AddDays(1).AddTicks(-1).AddHours(-1);
+            var easternZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
+            var today = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, easternZone).Date.AddHours(-1);
+            //var today = DateTime.Now.AddHours(1).Date;
+            var endTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow,easternZone).Date.AddDays(1).AddTicks(-1).AddHours(-1);
+            //var endTime = DateTime.Now.AddHours(1).Date.AddDays(1).AddTicks(-1);
 
             var viewModel = computer.ToViewModel(
                 db.Disks.Where(d => d.ComputerId == computer.ComputerId).ToList(),

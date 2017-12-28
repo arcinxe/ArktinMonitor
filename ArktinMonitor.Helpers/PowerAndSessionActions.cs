@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace ArktinMonitor.Helpers
 {
-    public static class PowerAndSessions
+    public static class PowerAndSessionActions
     {
         [DllImport("user32")]
         private static extern bool ExitWindowsEx(uint uFlags, uint dwReason);

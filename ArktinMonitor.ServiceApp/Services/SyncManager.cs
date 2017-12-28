@@ -29,6 +29,7 @@ namespace ArktinMonitor.ServiceApp.Services
                 SyncIntervalTimeLogs();
                 SyncBlockedApps();
                 SyncBlockedSites();
+                SyncTimeLimits();
             }
             catch (Exception e)
             {
@@ -190,6 +191,22 @@ namespace ArktinMonitor.ServiceApp.Services
                 }
 
             //LocalLogger.Log(returnApps);
+            JsonLocalDatabase.Instance.Computer = _computer;
+        }
+
+        private static void SyncTimeLimits()
+        {
+            _computer = JsonLocalDatabase.Instance.Computer;
+            var client = new ServerClient();
+            var response = client.GetFromServer(Settings.ApiUrl, $"api/TimeLimits/{_computer.ComputerId}", _jsonWebToken);
+            var returnLimits = response.Content.ReadAsAsync<List<DailyTimeLimitResource>>().Result.ToList();
+            foreach (var user in _computer.ComputerUsers)
+            {
+                user.DailyTimeLimits.Clear();
+                var userLimits = returnLimits.Where(rs => rs.ComputerUserId == user.ComputerUserId)
+                    .Select(s => s.ToLocal());
+                user.DailyTimeLimits.AddRange(userLimits);
+            }
             JsonLocalDatabase.Instance.Computer = _computer;
         }
 

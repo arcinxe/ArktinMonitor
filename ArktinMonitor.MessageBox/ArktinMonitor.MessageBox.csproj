@@ -52,5 +52,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ArktinMonitor.Helpers\ArktinMonitor.Helpers.csproj">
+      <Project>{d4342049-9ee2-41de-8f83-ae638af733c7}</Project>
+      <Name>ArktinMonitor.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ArktinMonitor.Models\ArktinMonitor.Data.csproj">
+      <Project>{2c7a4512-1a9b-40a8-9653-d11fd8ac5247}</Project>
+      <Name>ArktinMonitor.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

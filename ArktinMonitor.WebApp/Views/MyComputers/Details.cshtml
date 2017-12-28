@@ -100,6 +100,8 @@
             };
             // Start the connection.
             $.connection.hub.start().done(function () {
+                $("#debug").text($.connection.hub.id);
+                
                 $("#computer-details").click(checkSignalrConnection ());
                 checkSignalrConnection();
                 $("#tts-message").keypress(function (e) {

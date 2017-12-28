@@ -119,6 +119,7 @@
     <Compile Include="Services\SitesBlocker.cs" />
     <Compile Include="Services\HubService.cs" />
     <Compile Include="Services\TempSignalR.cs" />
+    <Compile Include="Services\TimeLimitsManager.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Services\SyncManager.cs" />
   </ItemGroup>

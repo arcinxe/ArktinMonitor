@@ -32,6 +32,7 @@ namespace ArktinMonitor.WebApp.Controllers
                 {
                     BlockedApps = _db.BlockedApps.Where(a => a.ComputerUserId == user.ComputerUserId).ToList(),
                     BlockedSites = _db.BlockedSites.Where(s => s.ComputerUserId == user.ComputerUserId).ToList(),
+                    DailyTimeLimits = _db.DailyTimeLimits.Where(l => l.ComputerUserId == user.ComputerUserId).ToList(),
                     Details = user
                 };
                 viewModel.Users.Add(viewModelUser);
@@ -264,13 +265,125 @@ namespace ArktinMonitor.WebApp.Controllers
         [HttpPost, ActionName("Delete")]
         [Route("Users/{appId}/DeleteApp")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteAppConfirmed(int id)
+        public ActionResult DeleteAppConfirmed(int appId)
         {
-            BlockedApp blockedApp = _db.BlockedApps.Find(id);
+            BlockedApp blockedApp = _db.BlockedApps.Find(appId);
+            var computerId = blockedApp?.ComputerUser.ComputerId;
             _db.BlockedApps.Remove(blockedApp);
             _db.SaveChanges();
-            return RedirectToAction("Users");
+            return RedirectToAction("Users", "Users", new { computerId = computerId });
+
         }
 
+        // GET: DailyTimeLimits/Details/5
+        [Route("Users/{timeLimitId}/TimeLimitDetails")]
+        public ActionResult TimeLimitDetails(int? timeLimitId)
+        {
+            if (timeLimitId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            DailyTimeLimit dailyTimeLimit = _db.DailyTimeLimits.Find(timeLimitId);
+            if (dailyTimeLimit == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ComputerId = _db.DailyTimeLimits.FirstOrDefault(a => a.DailyTimeLimitId == timeLimitId).ComputerUser.ComputerId;
+            return View(dailyTimeLimit);
+        }
+
+        // GET: DailyTimeLimits/Create
+        [Route("Users/{computerId}/AddTimeLimit")]
+        public ActionResult AddTimeLimit(int computerId)
+        {
+            ViewBag.ComputerUserId = new SelectList(_db.ComputerUsers.
+                Where(u => u.ComputerId == computerId /*&& !_db.DailyTimeLimits.Any(l => l.ComputerUserId == u.ComputerUserId)*/), "ComputerUserId", "Name");
+            return View();
+        }
+
+        // POST: DailyTimeLimits/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Users/{computerId}/AddTimeLimit")]
+        public ActionResult AddTimeLimit([Bind(Include = "DailyTimeLimitId,ComputerUserId,TimeAmount,Active")] DailyTimeLimit dailyTimeLimit)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.DailyTimeLimits.Add(dailyTimeLimit);
+                _db.SaveChanges();
+                return RedirectToAction("Users");
+            }
+
+            ViewBag.ComputerUserId = new SelectList(_db.ComputerUsers, "ComputerUserId", "Name", dailyTimeLimit.ComputerUserId);
+            return View(dailyTimeLimit);
+        }
+
+        // GET: DailyTimeLimits/Edit/5
+        [Route("Users/{timeLimitId}/EditTimeLimit")]
+        public ActionResult EditTimeLimit(int? timeLimitId)
+        {
+            if (timeLimitId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            DailyTimeLimit dailyTimeLimit = _db.DailyTimeLimits.Find(timeLimitId);
+            if (dailyTimeLimit == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ComputerId = dailyTimeLimit.ComputerUser.ComputerId;
+            ViewBag.ComputerUserId = new SelectList(_db.ComputerUsers.Where(u => u.ComputerId == dailyTimeLimit.ComputerUser.ComputerId/* && !_db.DailyTimeLimits.Any(l => l.ComputerUserId == u.ComputerUserId)*/), "ComputerUserId", "Name", dailyTimeLimit.ComputerUserId);
+            return View(dailyTimeLimit);
+        }
+
+        // POST: DailyTimeLimits/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Users/{timeLimitId}/EditTimeLimit")]
+        public ActionResult EditTimeLimit([Bind(Include = "DailyTimeLimitId,ComputerUserId,TimeAmount,Active")] DailyTimeLimit dailyTimeLimit)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Entry(dailyTimeLimit).State = EntityState.Modified;
+                _db.SaveChanges();
+                return RedirectToAction("Users", "Users", new { computerId = _db.ComputerUsers.FirstOrDefault(u => u.ComputerUserId == dailyTimeLimit.ComputerUserId)?.ComputerId });
+            }
+            ViewBag.ComputerUserId = new SelectList(_db.ComputerUsers.Where(u => u.ComputerId == dailyTimeLimit.ComputerUser.ComputerId), "ComputerUserId", "Name", dailyTimeLimit.ComputerUserId);
+            return View(dailyTimeLimit);
+        }
+
+        // GET: DailyTimeLimits/Delete/5
+        [Route("Users/{timeLimitId}/DeleteTimeLimit")]
+        public ActionResult DeleteTimeLimit(int? timeLimitId)
+        {
+            if (timeLimitId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            DailyTimeLimit dailyTimeLimit = _db.DailyTimeLimits.Find(timeLimitId);
+            if (dailyTimeLimit == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ComputerId = dailyTimeLimit.ComputerUser.ComputerId;
+            return View(dailyTimeLimit);
+        }
+
+        // POST: DailyTimeLimits/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Route("Users/{timeLimitId}/DeleteTimeLimit")]
+        public ActionResult DeleteTimeLimitConfirmed(int timeLimitId)
+        {
+            DailyTimeLimit dailyTimeLimit = _db.DailyTimeLimits.Find(timeLimitId);
+            var computerId = dailyTimeLimit?.ComputerUser.ComputerId;
+            _db.DailyTimeLimits.Remove(dailyTimeLimit);
+            _db.SaveChanges();
+            return RedirectToAction("Users", "Users", new { computerId = computerId });
+        }
     }
 }
