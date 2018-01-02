@@ -16,15 +16,13 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ArktinMonitor.Setup", "Arkt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.IdleTimeCounter", "ArktinMonitor.IdleTimeCounter\ArktinMonitor.IdleTimeCounter.csproj", "{1F20B46F-433C-438F-A83C-447DAA810685}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.MessageBox", "ArktinMonitor.MessageBox\ArktinMonitor.MessageBox.csproj", "{3F9F560C-C76A-427E-8D9C-A4DD14DE541C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.Helpers", "ArktinMonitor.Helpers\ArktinMonitor.Helpers.csproj", "{D4342049-9EE2-41DE-8F83-AE638AF733C7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.DataGenerator", "ArktinMonitor.DataGenerator\ArktinMonitor.DataGenerator.csproj", "{FB7A99F8-3CED-4E76-9F1A-8F03A206AB87}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.DesktopApp", "ArktinMonitor.DesktopApp\ArktinMonitor.DesktopApp.csproj", "{D7619B51-1FC3-4A35-A3EC-DBB956F0EA5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.Tests", "ArktinMonitor.Tests\ArktinMonitor.Tests.csproj", "{53F79524-D449-4E42-BA14-0EB93BE772DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArktinMonitor.UserSessionWorker", "ArktinMonitor.UserSessionWorker\ArktinMonitor.UserSessionWorker.csproj", "{38C647E7-847D-44CF-85EE-C2923628D54A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,10 +48,6 @@ Global
 		{1F20B46F-433C-438F-A83C-447DAA810685}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F20B46F-433C-438F-A83C-447DAA810685}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F20B46F-433C-438F-A83C-447DAA810685}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3F9F560C-C76A-427E-8D9C-A4DD14DE541C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F9F560C-C76A-427E-8D9C-A4DD14DE541C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F9F560C-C76A-427E-8D9C-A4DD14DE541C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F9F560C-C76A-427E-8D9C-A4DD14DE541C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D4342049-9EE2-41DE-8F83-AE638AF733C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D4342049-9EE2-41DE-8F83-AE638AF733C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4342049-9EE2-41DE-8F83-AE638AF733C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -66,10 +60,10 @@ Global
 		{D7619B51-1FC3-4A35-A3EC-DBB956F0EA5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7619B51-1FC3-4A35-A3EC-DBB956F0EA5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7619B51-1FC3-4A35-A3EC-DBB956F0EA5B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{53F79524-D449-4E42-BA14-0EB93BE772DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{53F79524-D449-4E42-BA14-0EB93BE772DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{53F79524-D449-4E42-BA14-0EB93BE772DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{53F79524-D449-4E42-BA14-0EB93BE772DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38C647E7-847D-44CF-85EE-C2923628D54A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38C647E7-847D-44CF-85EE-C2923628D54A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38C647E7-847D-44CF-85EE-C2923628D54A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38C647E7-847D-44CF-85EE-C2923628D54A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

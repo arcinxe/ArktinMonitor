@@ -1,14 +1,15 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ArktinMonitor.MessageBox")]
+[assembly: AssemblyTitle("ArktinMonitor.UserSessionWorker")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ArktinMonitor.MessageBox")]
+[assembly: AssemblyProduct("ArktinMonitor.UserSessionWorker")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3f9f560c-c76a-427e-8d9c-a4dd14de541c")]
+[assembly: Guid("38c647e7-847d-44cf-85ee-c2923628d54a")]
 
 // Version information for an assembly consists of the following four values:
 //

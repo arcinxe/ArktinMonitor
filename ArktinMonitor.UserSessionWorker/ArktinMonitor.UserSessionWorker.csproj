@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3F9F560C-C76A-427E-8D9C-A4DD14DE541C}</ProjectGuid>
+    <ProjectGuid>{38C647E7-847D-44CF-85EE-C2923628D54A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>ArktinMonitor.MessageBox</RootNamespace>
-    <AssemblyName>ArktinMonitor.MessageBox</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>ArktinMonitor.UserSessionWorker</RootNamespace>
+    <AssemblyName>ArktinMonitor.UserSessionWorker</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
@@ -32,9 +32,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>ArktinMonitor.MessageBox.Program</StartupObject>
+    <ApplicationIcon>ArktinMonitor.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
@@ -48,19 +52,20 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ArktinMonitor.Helpers\ArktinMonitor.Helpers.csproj">
-      <Project>{d4342049-9ee2-41de-8f83-ae638af733c7}</Project>
+      <Project>{D4342049-9EE2-41DE-8F83-AE638AF733C7}</Project>
       <Name>ArktinMonitor.Helpers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ArktinMonitor.Models\ArktinMonitor.Data.csproj">
-      <Project>{2c7a4512-1a9b-40a8-9653-d11fd8ac5247}</Project>
-      <Name>ArktinMonitor.Data</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ArktinAvatar.ico" />
+    <Content Include="ArktinMonitor.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

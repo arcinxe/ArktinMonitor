@@ -11,6 +11,7 @@ namespace ArktinMonitor.ServiceApp.Services
         public static void UpdateComputer()
         {
             LocalLogger.Log($"Method {nameof(UpdateComputer)} is running");
+            HubService.LogOnPage("Updating computer data");
 
             var newComputer = ComputerHelper.GetComputer();
             try
@@ -38,6 +39,7 @@ namespace ArktinMonitor.ServiceApp.Services
         public static void UpdateDisks()
         {
             LocalLogger.Log($"Method {nameof(UpdateDisks)} is running");
+            HubService.LogOnPage("Updating disks data");
             var newDisks = ComputerHelper.GetDisks();
             try
             {
@@ -68,6 +70,10 @@ namespace ArktinMonitor.ServiceApp.Services
                 }
                 var removedDisks = computer.Disks.Except(newDisks).ToList();
                 removedDisks.ForEach(rd => computer.Disks.Remove(rd));
+                if (removedDisks.Any() && computer.Disks.FirstOrDefault() != null)
+                {
+                    computer.Disks.FirstOrDefault().Synced = false;
+                }
 
                 db.Computer = computer;
             }
@@ -81,6 +87,7 @@ namespace ArktinMonitor.ServiceApp.Services
         public static void UpdateUsers()
         {
             LocalLogger.Log($"Method {nameof(UpdateUsers)} is running");
+            HubService.LogOnPage("Updating users");
             try
             {
                 var newComputerUsers = ComputerUsersHelper.GetComputerUsers();

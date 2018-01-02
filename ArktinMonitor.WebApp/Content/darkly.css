@@ -49,6 +49,7 @@ html {
 .arktinHeader {
     margin-top: 4px;
     margin-bottom: 4px;
+    display: inline-block;
 }
 .card-dark {
     margin: 10px;
@@ -107,6 +108,9 @@ span.span-total-time {
     margin: 5px;
 }
 
+#log-textarea {
+    font-size: 0.8em;
+}
 
 .longShadow{
     color:#fff;
@@ -3387,7 +3391,8 @@ output {
     .form-control[disabled],
     .form-control[readonly],
     fieldset[disabled] .form-control {
-        background-color: #ebebeb;
+        background-color: #303030;
+        /*background-color: #ebebeb;*/
         opacity: 1;
     }
 
@@ -3398,6 +3403,9 @@ output {
 
 textarea.form-control {
     height: auto;
+    width: 100%;
+    max-width: 100%;
+    resize: vertical;
 }
 
 input[type="search"] {

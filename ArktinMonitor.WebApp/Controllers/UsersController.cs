@@ -18,7 +18,7 @@ namespace ArktinMonitor.WebApp.Controllers
         [Route("Users/{computerId}")]
         public ActionResult Users(int computerId)
         {
-            var computer = _db.Computers.FirstOrDefault(c => c.ComputerId == computerId /*&& c.WebAccount.Email == User.Identity.Name*/);
+            var computer = _db.Computers.FirstOrDefault(c => c.ComputerId == computerId && c.WebAccount.Email == User.Identity.Name);
             var users = _db.ComputerUsers.Where(u => u.ComputerId == computerId).ToList();
             var viewModel = new ComputerUsersViewModel
             {

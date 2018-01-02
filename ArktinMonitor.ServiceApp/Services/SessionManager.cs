@@ -26,16 +26,24 @@ namespace ArktinMonitor.ServiceApp.Services
             return Unlocked ? user : null;
         }
 
+        public static string CurrentUserAppDataFolder
+        {
+            get
+            {
+                var username = GetActive();
+                return username == null ? null : Path
+                    .Combine(Path.GetPathRoot(Environment.SystemDirectory), $@"Users\{username}\AppData\Local\Arktin");
+            }
+        }
+
         /// <summary>
         /// Checks amount of time that past since last user interaction (use mouse or keyboard)
         /// </summary>
         /// <returns>Returns TimeSpan of the  time that past since last user interaction</returns>
         public static TimeSpan GetIdleTime()
         {
-            var username = GetActive();
-            var filePath = Settings.PortableMode
-                ? Path.Combine(Settings.ExecutablesPath, "IdleTime.an")
-                : username == null ? null : $@"C:\Users\{username}\AppData\Local\Arktin\IdleTime.an";
+            if (CurrentUserAppDataFolder == null) return new TimeSpan();
+            var filePath = Path.Combine(CurrentUserAppDataFolder, "IdleTime.an");
             try
             {
                 var processes = Process.GetProcessesByName("ArktinMonitor.IdleTimeCounter");
@@ -66,6 +74,7 @@ namespace ArktinMonitor.ServiceApp.Services
             catch (Exception e)
             {
                 LocalLogger.Log("IdleTimeCounter", e);
+                return new TimeSpan();
             }
             var idleTimeInMiliSeconds = JsonHelper.DeserializeJson<long>(filePath);
             var result = new TimeSpan(idleTimeInMiliSeconds * 10000);
@@ -90,16 +99,22 @@ namespace ArktinMonitor.ServiceApp.Services
         {
             CallAppInUsersSession("lock");
         }
-
         public static void SendMessageToCurrentUser(string text)
         {
-            CallAppInUsersSession($"message \"{text}\"");;
+            CallAppInUsersSession($"message \"{text}\""); ;
+            HubService.LogOnPage($"Text message received: \"{text}\"");
+        }
+
+        public static void CaptureScreenOfCurrentUser()
+        {
+            CallAppInUsersSession("screen");
+            System.Threading.Thread.Sleep(100);
         }
 
         private static void CallAppInUsersSession(string parameter)
         {
             ExecuteHelper.StartProcessAsCurrentUser(
-                Path.Combine(Settings.ExecutablesPath, "ArktinMonitor.IdleTimeCounter.exe"), " " + parameter);
+                Path.Combine(Settings.ExecutablesPath, "ArktinMonitor.UserSessionWorker.exe"), " " + parameter);
         }
     }
 }

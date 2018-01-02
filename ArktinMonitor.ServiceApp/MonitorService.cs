@@ -43,6 +43,7 @@ namespace ArktinMonitor.ServiceApp
                            changeDescription.Reason == SessionChangeReason.SessionUnlock;
             SessionManager.Unlocked = unlocked;
             LocalLogger.Log($"{changeDescription.Reason}. Unlocked: {unlocked}");
+            HubService.LogOnPage($"Session changed to {changeDescription.Reason}");
         }
     }
 }

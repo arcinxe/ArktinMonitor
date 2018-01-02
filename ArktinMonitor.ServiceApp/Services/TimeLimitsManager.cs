@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ArktinMonitor.Helpers;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ArktinMonitor.Helpers;
 
 namespace ArktinMonitor.ServiceApp.Services
 {
@@ -41,15 +38,26 @@ namespace ArktinMonitor.ServiceApp.Services
 
                 var timeLeft = limit.TimeAmount - totalTime;
                 LocalLogger.Log($"User {userName} has limit set to {limit.TimeAmount}, Time used: {totalTime} Time left: {timeLeft}");
-                if (timeLeft.TotalSeconds < 0)
+                HubService.LogOnPage($"Current user {userName} has limit set to {limit.TimeAmount}, Time used: {totalTime} Time left: {timeLeft}");
+                if (timeLeft.Hours == 0 && timeLeft.Minutes == 30)
                 {
-                    LocalLogger.Log($"Logging off user {userName}");
-                    SessionManager.LogOutCurrentUser();
+                    TextToSpeechHelper.Speak($"Because of the time limit set to {limit.TimeAmount.Hours} hours and {limit.TimeAmount.Minutes} minutes, You have {(int)timeLeft.TotalMinutes}  {(timeLeft.Minutes == 1 ? "minute" : "minutes")} left of using the computer today!");
                 }
+                var reminederMinutes = new[] {20, 10, 5, 2, 1};
+                if (timeLeft.Hours == 0 && reminederMinutes.Contains(timeLeft.Minutes))
+                {
+                    TextToSpeechHelper.Speak($"You have {timeLeft.Minutes} {(timeLeft.Minutes == 1 ? "minute":"minutes")} left!");
+                }
+                if (!(timeLeft.TotalSeconds < 0)) return;
+                LocalLogger.Log($"Logging off user {userName}");
+                TextToSpeechHelper.Speak("End of time, logging off!");
+                HubService.LogOnPage($"Logging off..");
+                SessionManager.LogOutCurrentUser();
+                HubService.LogOnPage($"User {userName} has been logged of");
             }
             catch (Exception e)
             {
-                LocalLogger.Log(nameof(TimeLimitsManager),e);
+                LocalLogger.Log(nameof(TimeLimitsManager), e);
             }
         }
     }

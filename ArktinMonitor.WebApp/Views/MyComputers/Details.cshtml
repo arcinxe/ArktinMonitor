@@ -74,18 +74,36 @@
     </div>
     <div class="col-md-4">
         <div id="div-tts" class="card-dark">
-            <h4 id="language" title="Click here to change language">Messaging</h4>
+            <h4 class="arktinHeader" id="language" title="Click here to change language">Messaging</h4>
             <input type="text" class="form-control message" placeholder="Send TTS message" id="tts-message">
             <input type="text" class="form-control message" placeholder="Send text message" id="txt-message">
         </div>
     </div>
+    <div class="col-md-4">
+        <div class="card-dark">
+            <h4 class="arktinHeader">Log</h4>
+            <a id="clear-log" href="#">Clear</a>
+            <textarea style="height: 105px" class="form-control" id="log-textarea" readonly placeholder="Nothing here yet.."></textarea>
+        </div>
+    </div>
+    @*<div class="col-md-4">
+        <div class="card-dark">
+            <h4 class="arktinHeader">Log</h4>
+            <a href="#" id="request-image-button">Test</a>
+            <p id="screen"></p>
+        </div>
+    </div>*@
     <div class="col-md-12">
-        <div id="div-graph" class="card-dark">
-
-            <canvas id="graph" width="0" height="0"
-                    style="border: 1px solid gray; border: 1px solid rgba(255,255,255,0.3)">
-                Your browser does not support the HTML5 canvas tag.
-            </canvas>
+        <div class="card-dark">
+            <div>
+                <h4 class="arktinHeader" data-toggle="tooltip" title="Each bar represents time spent by users, semi-transparent bars mean that user was not active (didn't use a mouse or keyboard)">Usage of the computer by users</h4>
+            </div>
+            <div id="div-graph">
+                <canvas id="graph" width="0" height="0"
+                        style="border: 1px solid gray; border: 1px solid rgba(255, 255, 255, 0.3)">
+                    Your browser does not support the HTML5 canvas tag.
+                </canvas>
+            </div>
         </div>
     </div>
 
@@ -118,12 +136,22 @@
                         "M12,18A6,6 0 0,1 6,12C6,11 6.25,10.03 6.7,9.2L5.24,7.74C4.46,8.97 4,10.43 4,12A8,8 0 0,0 12,20V23L16,19L12,15M12,4V1L8,5L12,9V6A6,6 0 0,1 18,12C18,13 17.75,13.97 17.3,14.8L18.76,16.26C19.54,15.03 20,13.57 20,12A8,8 0 0,0 12,4Z");
                 }
             };
+            hubConnection.client.logOnPage = function(text) {
+                $("#log-textarea").val(function(i, oldText) {
+                    return text + "\n" + oldText;
+                });
+            };
+            //hubConnection.client.displayImageOnPage = function(encodedImage) {
+            //    $("#screen").text(encodedImage);
+            //};
             // Start the connection.
             $.connection.hub.start().done(function () {
-                $("#debug").text($.connection.hub.id);
-
+                //$("#debug").text($.connection.hub.id);
+                hubConnection.server.joinToGroup(window.location.pathname.split("/").pop());
                 $("#computer-details").click(checkSignalrConnection ());
-                checkSignalrConnection();
+                //checkSignalrConnection();
+
+
                 $("#tts-message").keypress(function (e) {
                     if (e.which == 13) {
                         //alert($("body").data("language"));
@@ -143,36 +171,38 @@
                     }
                 });
                 $("#shutdown-button").click(function(e) {
-                    if(confirm("Do you really want to shutdown your pc"))
+                    if(confirm("Do you really want to shutdown your pc?"))
                         hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "shutdown", 1);
                     return false;
                 });
                 $("#restart-button").click(function(e) {
-                    if(confirm("Do you really want to restart your pc"))
+                    if(confirm("Do you really want to restart your pc?"))
                         hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "restart", 1);
                     return false;
                 });
                 $("#lock-button").click(function(e) {
-                    if(confirm("Do you really want to lock your pc"))
+                    if(confirm("Do you really want to lock your pc?"))
                         hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "lock", 1);
                     return false;
                 });
                 $("#logoff-button").click(function(e) {
-                    if(confirm("Do you really want to log off current user from your pc"))
+                    if(confirm("Do you really want to log off current user from your pc?"))
                         hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "logoff", 1);
                     return false;
                 });
                 $("#hibernate-button").click(function(e) {
-                    if(confirm("Do you really want to hibernate your pc"))
+                    if(confirm("Do you really want to hibernate your pc?"))
                         hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "hibernate", 1);
                     return false;
                 });
                 $("#sleep-button").click(function(e) {
-                    if(confirm("Do you really want to put your pc to sleep mode"))
+                    if(confirm("Do you really want to put your pc to sleep mode?"))
                         hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "sleep", 1);
                     return false;
                 });
-
+                //$("#request-image-button").click(function(e) {
+                //    hubConnection.server.requestScreenShot(window.location.pathname.split("/").pop());
+                //});
 
 
                 function checkSignalrConnection () {
@@ -189,6 +219,7 @@
             $('[data-toggle="tooltip"]').tooltip();
         }
 
+        $("#clear-log").click(function() { $("#log-textarea").val("")});
 
     </script>
 }

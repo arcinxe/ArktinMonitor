@@ -16,6 +16,7 @@ namespace ArktinMonitor.ServiceApp.Services
         public static void SyncData()
         {
             LocalLogger.Log($"Method {nameof(SyncData)} is running");
+            HubService.LogOnPage("Syncing data started..");
             try
             {
                 _jsonWebToken = Credentials.GetJsonWebToken();
@@ -36,6 +37,7 @@ namespace ArktinMonitor.ServiceApp.Services
                 LocalLogger.Log($"{nameof(SyncManager)} > {nameof(Credentials.GetJsonWebToken)}", e);
             }
             LocalLogger.Log($"Method {nameof(SyncData)} completed");
+            HubService.LogOnPage("Syncing done!");
         }
 
         private static void SyncBlockedSites()
@@ -76,16 +78,16 @@ namespace ArktinMonitor.ServiceApp.Services
         private static void SyncDisks()
         {
             _computer = JsonLocalDatabase.Instance.Computer;
-            var disks = _computer.Disks.Where(d => !d.Synced).Select(d => d.ToResourceModel(_computer.ComputerId)).ToList();
-            if (disks.Count == 0) return;
-            LocalLogger.Log($"Syncing {disks.Count} {(disks.Count > 1 ? "disks" : "disk")}.");
+            //var disks = _computer.Disks.Where(d => !d.Synced).Select(d => d.ToResourceModel(_computer.ComputerId)).ToList();
+            var disks = _computer.Disks;
+            if (disks.All(d => d.Synced)) return;
+            LocalLogger.Log($"Syncing {disks.Count}.");
             var client = new ServerClient();
-            var response = client.PostToServer(Settings.ApiUrl, "api/Disks", disks, _jsonWebToken);
+            var response = client.PostToServer(Settings.ApiUrl, "api/Disks", disks.Select(d => d.ToResourceModel(_computer.ComputerId)).ToList(), _jsonWebToken);
             //LocalLogger.Log(response);
             if (!response.IsSuccessStatusCode) return;
             var returnDisks = response.Content.ReadAsAsync<List<DiskResource>>().Result.Select(d => d.ToLocal()).ToList();
-            _computer.Disks.RemoveAll(d => !d.Synced);
-            _computer.Disks.AddRange(returnDisks);
+            _computer.Disks = returnDisks;
             JsonLocalDatabase.Instance.Computer = _computer;
         }
 

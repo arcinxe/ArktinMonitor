@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ArktinMonitor.Helpers;
+using Microsoft.AspNet.SignalR.Client;
+using System;
 using System.IO;
 using System.Threading.Tasks;
-using ArktinMonitor.Helpers;
-using Microsoft.AspNet.SignalR.Client;
 
 namespace ArktinMonitor.ServiceApp.Services
 {
@@ -12,7 +12,6 @@ namespace ArktinMonitor.ServiceApp.Services
 
         private static IHubProxy _myHubProxy;
 
-        //private static bool _running;
         public static bool IsRunning()
         {
             return HubConnection.State != ConnectionState.Disconnected;
@@ -21,11 +20,8 @@ namespace ArktinMonitor.ServiceApp.Services
         public static void Start()
         {
             LocalLogger.Log($"Method {nameof(HubService)} is running");
-
-
             try
             {
-
                 var credentialsManager = new CredentialsManager(Settings.ApiUrl, Settings.UserRelatedStoragePath,
                     Settings.SystemRelatedStoragePath, "ArktinMonitor");
 
@@ -39,8 +35,6 @@ namespace ArktinMonitor.ServiceApp.Services
                 if (_myHubProxy == null)
                 {
                     _myHubProxy = HubConnection.CreateHubProxy("MyComputerHub");
-                    //HubConnection.Reconnected += () => { LocalLogger.Log("Reconnected to hub"); };
-                    //HubConnection.Closed += () => { LocalLogger.Log("Connection closed"); };
                     HubConnection.StateChanged += state =>
                     {
                         LocalLogger.Log(
@@ -50,39 +44,62 @@ namespace ArktinMonitor.ServiceApp.Services
                     _myHubProxy.On<string, string>("addNewMessageToPage",
                         (name, message) => LocalLogger.Log($"{name} - {message}\n"));
 
-                    _myHubProxy.On<string, string>("fart", TextToSpeechHelper.Speak);
+                    _myHubProxy.On<string, string>("fart", Speak);
                     _myHubProxy.On<string>("getInstalledVoices", GetInstalledVoicesList);
                     _myHubProxy.On<string>("sendMessageToCurrentUser", SessionManager.SendMessageToCurrentUser);
                     _myHubProxy.On<string, int>("powerAction", PowerAction);
+                    //_myHubProxy.On("captureScreen", CaptureScreen);
                     _myHubProxy.On<string>("ping", Pong);
                 }
-                //myHubProxy.On("fart", () => Console.WriteLine("Purrrrrr!"));
                 LocalLogger.Log("Starting hub connection");
 
                 HubConnection.Start().Wait();
-
 
                 LocalLogger.Log("Joining to group");
                 JoinToGroup();
             }
             catch (Exception e)
             {
-                //_running = false;
                 LocalLogger.Log(nameof(Start), e);
-                //HubConnection.Stop();
             }
             HubConnection.Error += exception =>
             {
-                LocalLogger.Log(nameof(HubConnection.Error), exception);
-                if (exception is System.TimeoutException)
+                if (!(exception is System.TimeoutException))
                 {
-                    //HubConnection.Stop();
-
+                    LocalLogger.Log(nameof(HubConnection.Error), exception);
                 }
-                //_running = false;
             };
-            //_running = true;
         }
+
+        //private static void CaptureScreen()
+        //{
+        //    SessionManager.CaptureScreenOfCurrentUser();
+        //    var base64Image = Base64Converter.PngFileToBase64(Path.Combine(SessionManager.CurrentUserAppDataFolder, "ss.an"));
+        //    SendImage(base64Image);
+        //}
+
+        //private static void SendImage(string base64Image)
+        //{
+        //    if (HubConnection.State != ConnectionState.Connected) return;
+
+        //    try
+        //    {
+        //        var computer = JsonLocalDatabase.Instance.Computer;
+        //        if (computer.ComputerId != 0)
+        //        {
+        //            _myHubProxy.Invoke("SendImageToPage", computer.ComputerId, base64Image).ContinueWith(task =>
+        //            {
+        //                if (!task.IsFaulted) return;
+        //                if (task.Exception != null)
+        //                    LocalLogger.Log("SendImage", task.Exception);
+        //            }).Wait();
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        LocalLogger.Log(nameof(SendImage), e);
+        //    }
+        //}
 
         private static void GetInstalledVoicesList(string connectionId)
         {
@@ -93,15 +110,10 @@ namespace ArktinMonitor.ServiceApp.Services
                     .ContinueWith(
                         task =>
                         {
-                            if (task.IsFaulted)
-                            {
-                                if (task.Exception != null)
-                                    //Console.WriteLine("There was an error opening the connection:{0}",
-                                    //    task.Exception.GetBaseException());
-                                    LocalLogger.Log(nameof(GetInstalledVoicesList), task.Exception);
-                            }
+                            if (!task.IsFaulted) return;
+                            if (task.Exception != null)
+                                LocalLogger.Log(nameof(GetInstalledVoicesList), task.Exception);
                         });
-
             }
             catch (Exception e)
             {
@@ -109,6 +121,11 @@ namespace ArktinMonitor.ServiceApp.Services
             }
         }
 
+        private static void Speak(string text, string languageCodeOrVoiceName)
+        {
+            TextToSpeechHelper.Speak(text, languageCodeOrVoiceName);
+            LogOnPage($"Voice message received: \"{text}\"");
+        }
 
         private static void JoinToGroup()
         {
@@ -119,12 +136,37 @@ namespace ArktinMonitor.ServiceApp.Services
                 {
                     _myHubProxy.Invoke("JoinToGroup", computer.ComputerId).ContinueWith(task =>
                     {
-                        if (task.IsFaulted)
-                        {
-                            if (task.Exception != null)
-                                //LocalLogger.Log($"There was an error opening the connection {task.Exception.GetBaseException()}");
-                                LocalLogger.Log("JoinToGroup", task.Exception);
-                        }
+                        if (!task.IsFaulted) return;
+                        if (task.Exception != null)
+                            LocalLogger.Log("JoinToGroup", task.Exception);
+                    }).Wait();
+                }
+            }
+            catch (Exception e)
+            {
+                LocalLogger.Log(nameof(JoinToGroup), e);
+            }
+        }
+
+        public static void LogOnPage(string text)
+        {
+            Task.Run(() => LogDataOnPage(text));
+        }
+
+        private static void LogDataOnPage(string text)
+        {
+            if (HubConnection.State != ConnectionState.Connected) return;
+
+            try
+            {
+                var computer = JsonLocalDatabase.Instance.Computer;
+                if (computer.ComputerId != 0)
+                {
+                    _myHubProxy.Invoke("LogDataOnPage", computer.ComputerId, text).ContinueWith(task =>
+                    {
+                        if (!task.IsFaulted) return;
+                        if (task.Exception != null)
+                            LocalLogger.Log("LogOnPage", task.Exception);
                     }).Wait();
                 }
             }
@@ -142,15 +184,10 @@ namespace ArktinMonitor.ServiceApp.Services
                 _myHubProxy.Invoke("Pong", JsonLocalDatabase.Instance.Computer.ComputerId, connectionId).ContinueWith(
                     task =>
                     {
-                        if (task.IsFaulted)
-                        {
-                            if (task.Exception != null)
-                                //Console.WriteLine("There was an error opening the connection:{0}",
-                                //    task.Exception.GetBaseException());
-                                LocalLogger.Log("Pong", task.Exception);
-                        }
+                        if (!task.IsFaulted) return;
+                        if (task.Exception != null)
+                            LocalLogger.Log("Pong", task.Exception);
                     });
-
             }
             catch (Exception e)
             {
@@ -160,55 +197,62 @@ namespace ArktinMonitor.ServiceApp.Services
 
         private static void PowerAction(string nameOfAction, int delayInSeconds)
         {
+            var user = SessionManager.GetActive();
             switch (nameOfAction)
             {
                 case "lock":
-                    SessionManager.DisconnectCurrentUser();
+                    if (!string.IsNullOrWhiteSpace(user))
+                    {
+                        LogOnPage($"Locking computer..");
+                        SessionManager.DisconnectCurrentUser();
+                        LogOnPage($"Computer locked!");
+                    }
+                    else
+                    {
+                        LogOnPage($"No user logged in!");
+                    }
                     break;
+
                 case "logoff":
-                    SessionManager.LogOutCurrentUser();
+                    if (!string.IsNullOrWhiteSpace(user))
+                    {
+                        LogOnPage($"Logging off user {user}..");
+                        SessionManager.LogOutCurrentUser();
+                        LogOnPage($"User {user} has been logged off!");
+                    }
+                    else
+                    {
+                        LogOnPage($"No user logged in!");
+                    }
                     break;
+
                 case "shutdown":
+                    LogOnPage("Shutdown in progress..");
                     PowerAndSessionActions.Shutdown(delayInSeconds);
                     break;
+
                 case "restart":
+                    LogOnPage("Restart in progress..");
                     PowerAndSessionActions.Restart();
                     break;
+
                 case "hibernate":
+                    LogOnPage("Hibernation in progress..");
                     PowerAndSessionActions.Hibernate();
                     break;
+
                 case "sleep":
+                    LogOnPage("Putting computer in sleep mode in progress..");
                     PowerAndSessionActions.Sleep();
                     break;
+
                 default:
                     LocalLogger.Log("Unknown SignalR action has been called. " +
                     $"{nameof(PowerAction)}(string nameOfAction = \"{nameOfAction}\" int delay = {delayInSeconds})");
                     break;
             }
         }
-        //private static void GroupName()
-        //{
-        //    try
-        //    {
-        //        LocalLogger.Log("GetGroupname");
-        //        _myHubProxy.Invoke("GetGroupname").ContinueWith(
-        //            task =>
-        //            {
-        //                if (task.IsFaulted)
-        //                {
-        //                    if (task.Exception != null)
-        //                        //Console.WriteLine("There was an error opening the connection:{0}",
-        //                        //    task.Exception.GetBaseException());
-        //                        LocalLogger.Log("Pong", task.Exception);
-        //                }
-        //            });
 
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        LocalLogger.Log(nameof(HubService), e);
-        //    }
-        //}
         public static void Stop()
         {
             Task.Run(() =>
@@ -222,11 +266,5 @@ namespace ArktinMonitor.ServiceApp.Services
         {
             HubConnection.Start();
         }
-
-        //private static void TempAction(string text)
-        //{
-        //    Helpers.ExecuteHelper.StartProcessAsCurrentUser(
-        //        Path.Combine(Settings.ExecutablesPath, "ArktinMonitor.IdleTimeCounter.exe"), " " + text);
-        //}
     }
 }

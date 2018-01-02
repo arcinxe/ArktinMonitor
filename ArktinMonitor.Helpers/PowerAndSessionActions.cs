@@ -15,13 +15,13 @@ namespace ArktinMonitor.Helpers
         public static void Shutdown(int seconds = 1)
         {
             LocalLogger.Log($"Method {nameof(Shutdown)} called!");
-            Process.Start("shutdown", $"/s /t {seconds}");
+            Process.Start("shutdown", $"/s /f /t {seconds}");
         }
 
-        public static void Restart()
+        public static void Restart(int seconds = 1)
         {
             LocalLogger.Log($"Method {nameof(Restart)} called!");
-            Process.Start("shutdown", "/r /t 1");
+            Process.Start("shutdown", $"/r /f /t {seconds}");
         }
 
         public static void LogOut()

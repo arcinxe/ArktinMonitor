@@ -23,7 +23,7 @@ namespace ArktinMonitor.WebApp.Controllers
         public ActionResult Index()
         {
             var db = new ArktinMonitorDataAccess();
-            var computers = db.Computers/*.Where(c => c.WebAccount.Email == User.Identity.Name)*/.ToList();
+            var computers = db.Computers.Where(c => c.WebAccount.Email == User.Identity.Name).ToList();
 
             var viewModel = computers
                 .Select(c => c.ToViewModel(
@@ -39,7 +39,7 @@ namespace ArktinMonitor.WebApp.Controllers
         public ActionResult Details(int computerId)
         {
             var db = new ArktinMonitorDataAccess();
-            var computer = db.Computers.FirstOrDefault(c => c.ComputerId == computerId /*&& c.WebAccount.Email == User.Identity.Name*/);
+            var computer = db.Computers.FirstOrDefault(c => c.ComputerId == computerId && c.WebAccount.Email == User.Identity.Name);
             
             if (computer == null) return View("Error");
             var easternZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
@@ -49,7 +49,7 @@ namespace ArktinMonitor.WebApp.Controllers
             //var endTime = DateTime.Now.AddHours(1).Date.AddDays(1).AddTicks(-1);
 
             var viewModel = computer.ToViewModel(
-                db.Disks.Where(d => d.ComputerId == computer.ComputerId).ToList(),
+                db.Disks.Where(d => d.ComputerId == computer.ComputerId && !d.Removed).ToList(),
                  db.ComputerUsers.Where(u => u.ComputerId == computer.ComputerId).ToList(),
                  db.LogTimeIntervals.Where(l => l.ComputerId == computer.ComputerId && l.StartTime >= today && l.StartTime <= endTime).ToList());
 

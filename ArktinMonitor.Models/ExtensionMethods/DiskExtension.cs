@@ -53,7 +53,8 @@ namespace ArktinMonitor.Data.ExtensionMethods
                 Letter = disk.Letter,
                 FreeSpaceInGigaBytes = disk.FreeSpaceInGigaBytes,
                 ComputerId = disk.ComputerId,
-                DiskId = disk.DiskId
+                DiskId = disk.DiskId,
+                Removed = false
             };
         }
 

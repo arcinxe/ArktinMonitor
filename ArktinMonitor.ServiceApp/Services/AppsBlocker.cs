@@ -19,8 +19,9 @@ namespace ArktinMonitor.ServiceApp.Services
             {
                 var user = JsonLocalDatabase.Instance.Computer.ComputerUsers?
                     .FirstOrDefault(u => u.Name == ComputerUsersHelper.CurrentlyLoggedInUser());
-                if (user?.BlockedApps == null || user.BlockedApps.Count==0) return;
+                if (user?.BlockedApps == null || user.BlockedApps.Count == 0) return;
                 var processes = GetProcesses();
+                var count = 0;
                 foreach (var process in processes)
                 {
                     if (user.BlockedApps.Where(a => a.Active).All(app => app.Path != process.Path)) continue;
@@ -28,13 +29,14 @@ namespace ArktinMonitor.ServiceApp.Services
                     {
                         Process.GetProcessById(process.ProcessId).Kill();
                         LocalLogger.Log($"App {process.Path} with PID {process.ProcessId} has been closed!");
+                        count++;
                     }
                     catch (Exception e)
                     {
                         LocalLogger.Log("AppBlocker", e);
                     }
                 }
-
+                if (count > 0) HubService.LogOnPage($"Killed {count} apps!");
             }
             catch (Exception e)
             {

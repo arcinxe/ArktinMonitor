@@ -43,9 +43,12 @@ function drawGraph() {
     // Generating array of colors.
     var amoutOfColors = users.length;
     var hslColors = [];
-    for (var i = 0; i < amoutOfColors; i++) {
+    for (var index = 0; index < amoutOfColors; index++) {
+        var modifier = 10;
         var hueDifference = Math.floor(360 / amoutOfColors);
-        hslColors.push(i * hueDifference + ",70%,60%");
+        var color = hueDifference * index;
+        var modifiedColor = (color + modifier) > 360 ? color + modifier - 360 : color + modifier;
+        hslColors.push(modifiedColor + ",70%,60%");
     }
 
     console.table(hslColors);
@@ -104,8 +107,8 @@ function drawGraph() {
 
         //canvas.width = div.clientWidth - 20;// Minus padding
         canvas.width = div.clientWidth * window.devicePixelRatio - 20;
-        canvas.height = (130 * window.devicePixelRatio);
-        canvas.style.width = div.clientWidth - 20 + "px";
+        canvas.height = (150 * window.devicePixelRatio);
+        canvas.style.width = div.clientWidth - 0 + "px";
         //canvas.style.height = 150+"px";
         // canvas.height = div.clientHeight;
         /**

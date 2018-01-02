@@ -50,7 +50,7 @@ namespace ArktinMonitor.ServiceApp.Services
                 {
                     var action = ActionsQueue.Dequeue();
                     action?.Invoke();
-                    LocalLogger.Log($"{ActionsQueue.Count} actions waiting in queue..");
+                    //LocalLogger.Log($"{ActionsQueue.Count} actions waiting in queue..");
                 }
                 catch (Exception e)
                 {
