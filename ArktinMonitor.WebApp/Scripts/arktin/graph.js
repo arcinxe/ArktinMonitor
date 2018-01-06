@@ -51,7 +51,7 @@ function drawGraph() {
         hslColors.push(modifiedColor + ",70%,60%");
     }
 
-    console.table(hslColors);
+    //console.table(hslColors);
 
     // Sorting users in on page and setting color bars.
     var count = 0;
@@ -107,7 +107,7 @@ function drawGraph() {
 
         //canvas.width = div.clientWidth - 20;// Minus padding
         canvas.width = div.clientWidth * window.devicePixelRatio - 20;
-        canvas.height = (150 * window.devicePixelRatio);
+        canvas.height = (110 * window.devicePixelRatio);
         canvas.style.width = div.clientWidth - 0 + "px";
         //canvas.style.height = 150+"px";
         // canvas.height = div.clientHeight;
@@ -156,8 +156,8 @@ function drawGraph() {
             ctx.lineTo(hourLinePosition, height - 1);
             ctx.stroke();
             ctx.beginPath();
-            //ctx.setLineDash([]);
-            ctx.strokeStyle = "rgba(220,220,220,0.2)";
+            ctx.setLineDash([]);
+            ctx.strokeStyle = "rgba(220,220,220,0.3)";
             ctx.lineWidth = 0.15;
             for (var l = 1; l < 6; l++) {
                 var tenMinutesLinePosition = Math.floor((width / 24 * i) + width / 144 * l);
@@ -192,10 +192,10 @@ function drawGraph() {
                 + startTime.getSeconds()) / 86400 * canvas.width;
             var widthOfLog =
                 (log.Duration / 86400) * canvas.width;
-            ctx.fillRect(startDrawingPosition, 10, widthOfLog, height * 0.8);
+            ctx.fillRect(startDrawingPosition, 10, widthOfLog, height * 0.78);
         });
-        console.table(logs);
-        console.table(users);
+        //console.table(logs);
+        //console.table(users);
         ctx.stroke();
     }
 };
