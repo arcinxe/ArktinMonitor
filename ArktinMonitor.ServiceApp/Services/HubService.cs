@@ -26,10 +26,13 @@ namespace ArktinMonitor.ServiceApp.Services
                     Settings.SystemRelatedStoragePath, "ArktinMonitor");
 
                 var bearerToken = credentialsManager.LoadJsonWebToken().AccessToken;
-                if (!HubConnection.Headers.TryGetValue("Authorization", out var value) ||
-                    value != "Bearer " + bearerToken)
+                if (!HubConnection.Headers.TryGetValue("Authorization", out var value))
                 {
                     HubConnection.Headers.Add("Authorization", "Bearer " + bearerToken);
+                }
+                if (value != "Bearer " + bearerToken)
+                {
+                    HubConnection.Headers["Authorization"] = "Bearer " + bearerToken;
                 }
 
                 if (_myHubProxy == null)

@@ -35,7 +35,7 @@ namespace ArktinMonitor.WebApp.Controllers
             if (!exist)
             {
                 var oldComputer =
-                    _db.Computers.AsNoTracking().FirstOrDefault(c => c.Name == computer.Name && c.MacAddress == computer.MacAddress && c.WebAccount.Email == User.Identity.Name);
+                    _db.Computers.AsNoTracking().FirstOrDefault(c => c.Name == computer.Name && c.WebAccount.Email == User.Identity.Name);
                 if (oldComputer != null)
                 {
                     exist = true;

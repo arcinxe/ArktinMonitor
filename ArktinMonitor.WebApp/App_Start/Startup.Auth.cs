@@ -53,7 +53,7 @@ namespace ArktinMonitor.WebApp
                 TokenEndpointPath = new PathString("/Token"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/Account/ExternalLogin"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),//TODO: Change value later
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(30),//TODO: Change value later
                 AllowInsecureHttp = true //TODO: change to https later
             };
 

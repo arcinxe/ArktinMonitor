@@ -73,9 +73,10 @@ namespace ArktinMonitor.Helpers
                 if (!SaveOnDisk) return;
                 try
                 {
+                    var timestamp = DateTime.Now;
                     if (Append)
                     {
-                        using (var sw = new StreamWriter(Path.Combine(StoragePath, FileName), true))
+                        using (var sw = new StreamWriter(Path.Combine(StoragePath, FileName + timestamp), true))
                         {
                             sw.WriteLine(Format(data, separator));
                         }
@@ -85,9 +86,9 @@ namespace ArktinMonitor.Helpers
                         var currentContent = new StringBuilder();
                         try
                         {
-                            var rawList = File.ReadAllLines(Path.Combine(StoragePath, FileName)).ToList();
-                            foreach (var item in rawList)
-                            {
+                            var rawList = File.ReadAllLines(Path.Combine(StoragePath, FileName + timestamp)).ToList();
+                            foreach (var item in rawList) 
+                            { 
                                 currentContent.Append(item + Environment.NewLine);
                             }
                         }
@@ -96,7 +97,7 @@ namespace ArktinMonitor.Helpers
                             // ignored (file does not exist)
                         }
                         if (!Directory.Exists(StoragePath)) Directory.CreateDirectory(StoragePath);
-                        File.WriteAllText(Path.Combine(StoragePath, FileName), Format(data, separator) + Environment.NewLine + currentContent);
+                        File.WriteAllText(Path.Combine(StoragePath, FileName + timestamp), Format(data, separator) + Environment.NewLine + currentContent);
                     }
 
                 }
