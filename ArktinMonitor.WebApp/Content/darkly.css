@@ -83,6 +83,22 @@ span.span-total-time {
     float: right;
 }
 
+#div-processes {
+    height: 150px !important;
+    overflow: auto;
+    background-color: #303030;
+    border-radius: 2px;
+}
+
+#table-processes {
+    margin: 10px;
+    font-size: 0.8em;
+}
+
+.system-process {
+    color: #ff8363
+}
+
 #graph {
     /*width: 100%;*/
     /*height: 200px;*/

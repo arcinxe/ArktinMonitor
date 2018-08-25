@@ -105,6 +105,18 @@ namespace ArktinMonitor.ServiceApp.Services
             HubService.LogOnPage($"Text message received: \"{text}\"");
         }
 
+        public static void Send(string data)
+        {
+            CallAppInUsersSession($"keys \"{data}\"");
+            LocalLogger.Log($"keys \"{data}\"");
+        }
+
+        public static void RunApp(string executablePath)
+        {
+            CallAppInUsersSession("run " + executablePath);
+            LocalLogger.Log($"App  {executablePath} ran");
+        }
+
         public static void CaptureScreenOfCurrentUser()
         {
             CallAppInUsersSession("screen");

@@ -35,17 +35,19 @@ namespace ArktinMonitor.WebApp.Controllers
         }
 
         // Get: MyComputers
-        [Route("Details/{computerId}")]
-        public ActionResult Details(int computerId)
+        [Route("Details/{computerId}/{daysOffset?}")]
+        public ActionResult Details(int computerId, int daysOffset = 0)
         {
             var db = new ArktinMonitorDataAccess();
             var computer = db.Computers.FirstOrDefault(c => c.ComputerId == computerId && c.WebAccount.Email == User.Identity.Name);
             
             if (computer == null) return View("Error");
             var easternZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
-            var today = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, easternZone).Date.AddHours(-1);
+            var today = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, easternZone)
+                .Date.AddHours(-1).AddDays(daysOffset);
             //var today = DateTime.Now.AddHours(1).Date;
-            var endTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow,easternZone).Date.AddDays(1).AddTicks(-1).AddHours(-1);
+            var endTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow,easternZone)
+                .Date.AddDays(1).AddTicks(-1).AddHours(-1).AddDays(daysOffset);
             //var endTime = DateTime.Now.AddHours(1).Date.AddDays(1).AddTicks(-1);
 
             var viewModel = computer.ToViewModel(

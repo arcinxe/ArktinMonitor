@@ -20,7 +20,7 @@ namespace ArktinMonitor.ServiceApp.Services
                 var user = JsonLocalDatabase.Instance.Computer.ComputerUsers?
                     .FirstOrDefault(u => u.Name == ComputerUsersHelper.CurrentlyLoggedInUser());
                 if (user?.BlockedApps == null || user.BlockedApps.Count == 0) return;
-                var processes = GetProcesses();
+                var processes = ArktinMonitor.Helpers.Processes.GetProcesses();
                 var count = 0;
                 foreach (var process in processes)
                 {
@@ -44,29 +44,6 @@ namespace ArktinMonitor.ServiceApp.Services
             }
         }
 
-        private static IEnumerable<BasicProcess> GetProcesses()
-        {
-            const string wmiQueryString = "SELECT ProcessId, ExecutablePath FROM Win32_Process";
-            var searcher = new ManagementObjectSearcher(wmiQueryString);
-            var results = searcher.Get();
-
-            var query = from p in Process.GetProcesses()
-                        join mo in results.Cast<ManagementObject>()
-                        on p.Id equals (int)(uint)mo["ProcessId"]
-                        where (string)mo["ExecutablePath"] != null
-                        select new BasicProcess()
-                        {
-                            ProcessId = p.Id,
-                            Path = (string)mo["ExecutablePath"]
-                        };
-            return query.ToList();
-        }
-
-        private class BasicProcess
-        {
-            public int ProcessId { get; set; }
-
-            public string Path { get; set; }
-        }
+      
     }
 }

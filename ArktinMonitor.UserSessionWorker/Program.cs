@@ -20,12 +20,18 @@ namespace ArktinMonitor.UserSessionWorker
                     break;
                 case "message":
                     MessageBox.Show(args[1], "ArktinMonitor", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
-                //System.Windows.Forms.MessageBox.Show(args[1], "ArktinMonitor");
-                break;
+                    //System.Windows.Forms.MessageBox.Show(args[1], "ArktinMonitor");
+                    break;
                 case "screen":
                     Directory.CreateDirectory(Settings.UserRelatedStoragePath);
                     var path = Path.Combine(Settings.UserRelatedStoragePath, "ss.an");
                     ScreenCapture.CaptureScreenToFile(path);
+                    break;
+                case "keys":
+                    Helpers.KeySender.Test(args[1]);
+                    break;
+                case "run":
+                    Helpers.Processes.RunApp(args[1], args.ElementAtOrDefault(2));
                     break;
             }
         }

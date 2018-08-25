@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ArktinMonitor.Helpers;
 using Microsoft.AspNet.SignalR;
 
 namespace ArktinMonitor.WebApp.Hubs
@@ -21,6 +22,19 @@ namespace ArktinMonitor.WebApp.Hubs
         public void PowerAction(int id, string actionName, int delayInSeconds)
         {
             Clients.Group($"{Context.User.Identity.Name}:{id}").powerAction(actionName, delayInSeconds);
+        }
+
+        public void RequestProcessList(int id)
+        {
+            var groupName = $"{Context.User.Identity.Name}:{id}";
+            Clients.Group(groupName).getProcesses();
+        }
+
+        public void SendProcessesToPage(int id, List<Processes.BasicProcess> processes)
+        {
+            var groupName = $"{Context.User.Identity.Name}:{id}";
+                Clients.Group(groupName).displayProcesses(processes);
+//            LogDataOnPage(id,processes.FirstOrDefault()?.Name);
         }
 
         //public void RequestScreenShot(int id)

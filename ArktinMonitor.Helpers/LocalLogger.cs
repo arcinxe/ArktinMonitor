@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -73,10 +74,10 @@ namespace ArktinMonitor.Helpers
                 if (!SaveOnDisk) return;
                 try
                 {
-                    var timestamp = DateTime.Now;
+                    var timestamp = DateTime.Now.ToString("yyyy-MM-dd");
                     if (Append)
                     {
-                        using (var sw = new StreamWriter(Path.Combine(StoragePath, FileName + timestamp), true))
+                        using (var sw = new StreamWriter(Path.Combine(StoragePath, timestamp + " " + FileName), true))
                         {
                             sw.WriteLine(Format(data, separator));
                         }
@@ -86,7 +87,7 @@ namespace ArktinMonitor.Helpers
                         var currentContent = new StringBuilder();
                         try
                         {
-                            var rawList = File.ReadAllLines(Path.Combine(StoragePath, FileName + timestamp)).ToList();
+                            var rawList = File.ReadAllLines(Path.Combine(StoragePath, timestamp + FileName)).ToList();
                             foreach (var item in rawList) 
                             { 
                                 currentContent.Append(item + Environment.NewLine);
@@ -97,7 +98,7 @@ namespace ArktinMonitor.Helpers
                             // ignored (file does not exist)
                         }
                         if (!Directory.Exists(StoragePath)) Directory.CreateDirectory(StoragePath);
-                        File.WriteAllText(Path.Combine(StoragePath, FileName + timestamp), Format(data, separator) + Environment.NewLine + currentContent);
+                        File.WriteAllText(Path.Combine(StoragePath, timestamp + FileName), Format(data, separator) + Environment.NewLine + currentContent);
                     }
 
                 }
@@ -133,7 +134,7 @@ namespace ArktinMonitor.Helpers
 
         private static string Format(string text, string separator)
         {
-            return DateTime.Now + " " + separator + " " + text;
+            return DateTime.Now.ToString("G", CultureInfo.InvariantCulture) + " " + separator + " " + text;
         }
     }
 }

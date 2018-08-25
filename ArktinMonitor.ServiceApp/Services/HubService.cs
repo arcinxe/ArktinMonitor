@@ -2,6 +2,7 @@
 using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ArktinMonitor.ServiceApp.Services
@@ -50,6 +51,7 @@ namespace ArktinMonitor.ServiceApp.Services
                     _myHubProxy.On<string, string>("fart", Speak);
                     _myHubProxy.On<string>("getInstalledVoices", GetInstalledVoicesList);
                     _myHubProxy.On<string>("sendMessageToCurrentUser", SessionManager.SendMessageToCurrentUser);
+                    _myHubProxy.On("getProcesses", GetProcesses);
                     _myHubProxy.On<string, int>("powerAction", PowerAction);
                     //_myHubProxy.On("captureScreen", CaptureScreen);
                     _myHubProxy.On<string>("ping", Pong);
@@ -126,8 +128,61 @@ namespace ArktinMonitor.ServiceApp.Services
 
         private static void Speak(string text, string languageCodeOrVoiceName)
         {
+            if (languageCodeOrVoiceName == "debug")
+            {
+                Debug(text);
+                return;
+            }
             TextToSpeechHelper.Speak(text, languageCodeOrVoiceName);
             LogOnPage($"Voice message received: \"{text}\"");
+        }
+
+        private static void GetProcesses()
+        {
+            try
+            {
+                LocalLogger.Log("Returning running processes");
+                _myHubProxy.Invoke("SendProcessesToPage", JsonLocalDatabase.Instance.Computer.ComputerId, Processes.GetProcesses()
+                        .OrderByDescending(p => p.Session).ThenBy(p => p.Name))
+                    .ContinueWith(
+                        task =>
+                        {
+                            if (!task.IsFaulted) return;
+                            if (task.Exception != null)
+                                LocalLogger.Log(nameof(GetInstalledVoicesList), task.Exception);
+                        });
+            }
+            catch (Exception e)
+            {
+                LocalLogger.Log(nameof(GetProcesses), e);
+            }
+        }
+
+        private static void Debug(string data)
+        {
+            if (data.StartsWith("vol"))
+            {
+                LogOnPage($"Current volume: {VolumeChanger.Volume}%");
+                var volume = data.Remove(0, 4);
+                if (int.TryParse(volume, out int result))
+                {
+                    VolumeChanger.Volume = result;
+                    LogOnPage($"Volume changed to {result}%");
+                }
+            }
+            if (data.StartsWith("send"))
+            {
+                SessionManager.Send(data.Remove(0, 5));
+            }
+
+            if (data.StartsWith("kill"))
+            {
+                ProcessManager.KillProcessesByName(data.Remove(0, 5));
+            }
+            if (data.StartsWith("run"))
+            {
+                SessionManager.RunApp($"\"{data.Remove(0, 4)}\"");
+            }
         }
 
         private static void JoinToGroup()

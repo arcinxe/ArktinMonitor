@@ -23,7 +23,6 @@
             <p>@Model.MacAddress</p>
         </div>
     </div>
-
     <div class="col-md-4">
         <div id="users" class="card-dark">
             <h4 class="arktinHeader">@Html.ActionLink("Users", "Users", "Users")</h4>
@@ -86,13 +85,28 @@
             <textarea style="height: 105px" class="form-control" id="log-textarea" readonly placeholder="Nothing here yet.."></textarea>
         </div>
     </div>
-    @*<div class="col-md-4">
+    <div class="col-md-4">
         <div class="card-dark">
-            <h4 class="arktinHeader">Log</h4>
-            <a href="#" id="request-image-button">Test</a>
-            <p id="screen"></p>
+            <h4 class="arktinHeader">Processes</h4>
+            <div id="div-processes">
+                <table style="width: 100%" id="table-processes" class="table table-striped table-hover">
+                    <tr id="tableHeader">
+                        <th>
+                            Name
+                        </th>
+                    </tr>
+                </table>
+            </div>
+
         </div>
-    </div>*@
+    </div>
+    @*<div class="col-md-4">
+            <div class="card-dark">
+                <h4 class="arktinHeader">Log</h4>
+                <a href="#" id="request-image-button">Test</a>
+                <p id="screen"></p>
+            </div>
+        </div>*@
     <div class="col-md-12">
         <div class="card-dark">
             <div>
@@ -107,6 +121,26 @@
         </div>
     </div>
 
+    <div class="modal fade" id="process-modal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Process name</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the modal.</p>
+                    <input type="text" name="bookId" value=""/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
     <script type="text/javascript">
         var logs = @Html.Raw(JsonConvert.SerializeObject(Model.LogTimeIntervals, Formatting.Indented,
                        new JsonSerializerSettings{DateFormatHandling = DateFormatHandling.IsoDateFormat}));
@@ -122,8 +156,9 @@
     <script src="~/signalr/hubs"></script>
     <!--SignalR script to update the chat page and send messages.-->
     <script>
-        $("#language").click(function() {
-            $("body").data("language",prompt("Enter language code, (e.g., pl-PL, en-US), or exact name of voice to use",""));
+       
+        $("#language").click(function () {
+            $("body").data("language", prompt("Enter language code, (e.g., pl-PL, en-US), or exact name of voice to use", ""));
         });
         $(function () {
             // Reference the auto-generated proxy for the hub.
@@ -136,11 +171,31 @@
                         "M12,18A6,6 0 0,1 6,12C6,11 6.25,10.03 6.7,9.2L5.24,7.74C4.46,8.97 4,10.43 4,12A8,8 0 0,0 12,20V23L16,19L12,15M12,4V1L8,5L12,9V6A6,6 0 0,1 18,12C18,13 17.75,13.97 17.3,14.8L18.76,16.26C19.54,15.03 20,13.57 20,12A8,8 0 0,0 12,4Z");
                 }
             };
-            hubConnection.client.logOnPage = function(text) {
-                $("#log-textarea").val(function(i, oldText) {
+            hubConnection.client.logOnPage = function (text) {
+                $("#log-textarea").val(function (i, oldText) {
                     return text + "\n" + oldText;
                 });
             };
+            hubConnection.client.displayProcesses = function (processes) {
+                $("#table-processes").data(processes);
+                processes.forEach(function (process) {
+                    var className = process.Session === 0 ? " class='system-process'" : "";
+                    $("#table-processes tr:last")
+                        .after('<tr' + className + '><td data-pid=' + process.ProcessId + ' type="button" data-toggle="modal" data-target="#myModal">' +
+                            process.Name +
+                            '</td></tr>');
+                });
+
+                $('#process-modal').on('show.bs.modal', function(e) {
+                    console.log("showing modal");
+                    //get data-id attribute of the clicked element
+                    var processId = $(e.relatedTarget).attr("data-pid");
+
+                    //populate the textbox
+                    $(e.currentTarget).find('input[name="bookId"]').val(processId);
+                });
+            };
+
             //hubConnection.client.displayImageOnPage = function(encodedImage) {
             //    $("#screen").text(encodedImage);
             //};
@@ -148,7 +203,7 @@
             $.connection.hub.start().done(function () {
                 //$("#debug").text($.connection.hub.id);
                 hubConnection.server.joinToGroup(window.location.pathname.split("/").pop());
-                $("#computer-details").click(checkSignalrConnection ());
+                $("#computer-details").click(checkSignalrConnection());
                 //checkSignalrConnection();
 
 
@@ -170,33 +225,33 @@
                         return false;    //<---- Add this line
                     }
                 });
-                $("#shutdown-button").click(function(e) {
-                    if(confirm("Do you really want to shutdown your pc?"))
+                $("#shutdown-button").click(function (e) {
+                    if (confirm("Do you really want to shutdown your pc?"))
                         hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "shutdown", 1);
                     return false;
                 });
-                $("#restart-button").click(function(e) {
-                    if(confirm("Do you really want to restart your pc?"))
+                $("#restart-button").click(function (e) {
+                    if (confirm("Do you really want to restart your pc?"))
                         hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "restart", 1);
                     return false;
                 });
-                $("#lock-button").click(function(e) {
-                    if(confirm("Do you really want to lock your pc?"))
+                $("#lock-button").click(function (e) {
+                    if (confirm("Do you really want to lock your pc?"))
                         hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "lock", 1);
                     return false;
                 });
-                $("#logoff-button").click(function(e) {
-                    if(confirm("Do you really want to log off current user from your pc?"))
+                $("#logoff-button").click(function (e) {
+                    if (confirm("Do you really want to log off current user from your pc?"))
                         hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "logoff", 1);
                     return false;
                 });
-                $("#hibernate-button").click(function(e) {
-                    if(confirm("Do you really want to hibernate your pc?"))
+                $("#hibernate-button").click(function (e) {
+                    if (confirm("Do you really want to hibernate your pc?"))
                         hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "hibernate", 1);
                     return false;
                 });
-                $("#sleep-button").click(function(e) {
-                    if(confirm("Do you really want to put your pc to sleep mode?"))
+                $("#sleep-button").click(function (e) {
+                    if (confirm("Do you really want to put your pc to sleep mode?"))
                         hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "sleep", 1);
                     return false;
                 });
@@ -205,12 +260,13 @@
                 //});
 
 
-                function checkSignalrConnection () {
+                function checkSignalrConnection() {
                     // Call the Send method on the hub.
                     $("#connection-icon").attr("d",
                         "M20,4H14V10L16.24,7.76C17.32,8.85 18,10.34 18,12C18,13 17.75,13.94 17.32,14.77L18.78,16.23C19.55,15 20,13.56 20,12C20,9.79 19.09,7.8 17.64,6.36L20,4M2.86,5.41L5.22,7.77C4.45,9 4,10.44 4,12C4,14.21 4.91,16.2 6.36,17.64L4,20H10V14L7.76,16.24C6.68,15.15 6,13.66 6,12C6,11 6.25,10.06 6.68,9.23L14.76,17.31C14.5,17.44 14.26,17.56 14,17.65V19.74C14.79,19.53 15.54,19.2 16.22,18.78L18.58,21.14L19.85,19.87L4.14,4.14L2.86,5.41M10,6.35V4.26C9.2,4.47 8.45,4.8 7.77,5.22L9.23,6.68C9.5,6.56 9.73,6.44 10,6.35Z");
                     hubConnection.server.ping(window.location.pathname.split("/").pop());
                 }
+                hubConnection.server.requestProcessList(window.location.pathname.split("/").pop());
             });
         });
         //$(document).ready(updateToolTips());
@@ -219,7 +275,7 @@
             $('[data-toggle="tooltip"]').tooltip();
         }
 
-        $("#clear-log").click(function() { $("#log-textarea").val("")});
+        $("#clear-log").click(function () { $("#log-textarea").val("") });
 
     </script>
 }
