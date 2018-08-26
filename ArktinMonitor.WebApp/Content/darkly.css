@@ -99,6 +99,9 @@ span.span-total-time {
     color: #ff8363
 }
 
+#modal-process-path {
+    word-wrap: break-word;
+}
 #graph {
     /*width: 100%;*/
     /*height: 200px;*/

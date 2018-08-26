@@ -128,13 +128,16 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Process name</h4>
+                    <h4 id="modal-process-title" class="modal-title">Process name</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Some text in the modal.</p>
-                    <input type="text" name="bookId" value=""/>
+                    <p id="modal-process-description">Description</p>
+                    <p id="modal-process-path">Path: </p>
+                    <p id="modal-process-pid">PID: </p>
+                    <p id="modal-process-session">Session ID: </p>
                 </div>
                 <div class="modal-footer">
+                    <button id="modal-process-kill-button" type="button" class="btn btn-danger" data-dismiss="modal">Kill</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -156,7 +159,7 @@
     <script src="~/signalr/hubs"></script>
     <!--SignalR script to update the chat page and send messages.-->
     <script>
-       
+
         $("#language").click(function () {
             $("body").data("language", prompt("Enter language code, (e.g., pl-PL, en-US), or exact name of voice to use", ""));
         });
@@ -181,18 +184,26 @@
                 processes.forEach(function (process) {
                     var className = process.Session === 0 ? " class='system-process'" : "";
                     $("#table-processes tr:last")
-                        .after('<tr' + className + '><td data-pid=' + process.ProcessId + ' type="button" data-toggle="modal" data-target="#myModal">' +
+                        .after('<tr' + className + '><td data-pid=' + process.ProcessId + ' type="button" data-toggle="modal" data-target="#process-modal">' +
                             process.Name +
                             '</td></tr>');
                 });
 
-                $('#process-modal').on('show.bs.modal', function(e) {
+                $('#process-modal').on('show.bs.modal', function (e) {
                     console.log("showing modal");
                     //get data-id attribute of the clicked element
                     var processId = $(e.relatedTarget).attr("data-pid");
-
+                    var process = Object.values($("#table-processes").data()).find(p => p.ProcessId == processId);
                     //populate the textbox
-                    $(e.currentTarget).find('input[name="bookId"]').val(processId);
+                    $(e.currentTarget).find('#modal-process-pid').text("PID: " + processId);
+                    $(e.currentTarget).find('#modal-process-title').text(process.Name);
+                    $(e.currentTarget).find('#modal-process-path').text("Path: " + process.Path);
+                    $(e.currentTarget).find('#modal-process-session').text("Session ID: " + process.Session);
+                    $("#modal-process-kill-button").click(function (e) {
+                        debugger;
+                        hubConnection.server.fart(window.location.pathname.split("/").pop(), "kill " +  $("#modal-process-title").text(), "debug");
+                        return false;
+                    });
                 });
             };
 
@@ -255,6 +266,7 @@
                         hubConnection.server.powerAction(window.location.pathname.split("/").pop(), "sleep", 1);
                     return false;
                 });
+
                 //$("#request-image-button").click(function(e) {
                 //    hubConnection.server.requestScreenShot(window.location.pathname.split("/").pop());
                 //});
