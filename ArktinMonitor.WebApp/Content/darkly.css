@@ -93,6 +93,7 @@ span.span-total-time {
 #table-processes {
     margin: 10px;
     font-size: 0.8em;
+    width: 93% !important;
 }
 
 .system-process {
