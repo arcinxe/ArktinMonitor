@@ -105,7 +105,7 @@ namespace ArktinMonitor.ServiceApp.Services
             HubService.LogOnPage($"Text message received: \"{text}\"");
         }
 
-        public static void Send(string data)
+        public static void SendKeys(string data)
         {
             CallAppInUsersSession($"keys \"{data}\"");
             LocalLogger.Log($"keys \"{data}\"");
@@ -114,7 +114,7 @@ namespace ArktinMonitor.ServiceApp.Services
         public static void RunApp(string executablePath)
         {
             CallAppInUsersSession("run " + executablePath);
-            LocalLogger.Log($"App  {executablePath} ran");
+            LocalLogger.Log($"App {executablePath} ran");
         }
 
         public static void CaptureScreenOfCurrentUser()
@@ -126,7 +126,7 @@ namespace ArktinMonitor.ServiceApp.Services
         private static void CallAppInUsersSession(string parameter)
         {
             ExecuteHelper.StartProcessAsCurrentUser(
-                Path.Combine(Settings.ExecutablesPath, "ArktinMonitor.UserSessionWorker.exe"), " " + parameter);
+                Path.Combine(Settings.ExecutablesPath, "ArktinMonitor.UserSessionWorker.exe"), $" {parameter}");
         }
     }
 }

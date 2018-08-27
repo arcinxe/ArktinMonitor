@@ -12,6 +12,7 @@ namespace ArktinMonitor.ServiceApp.Services
         private static readonly HubConnection HubConnection = new HubConnection(Settings.ApiUrl);
 
         private static IHubProxy _myHubProxy;
+        private static string _connectionId = string.Empty;
 
         public static bool IsRunning()
         {
@@ -41,20 +42,17 @@ namespace ArktinMonitor.ServiceApp.Services
                     _myHubProxy = HubConnection.CreateHubProxy("MyComputerHub");
                     HubConnection.StateChanged += state =>
                     {
+                        _connectionId = HubConnection.ConnectionId;
+                        if (state.NewState == ConnectionState.Connected) Pong(_connectionId);
                         LocalLogger.Log(
                             $"State of connection to hub changed from {state.OldState} to {state.NewState}");
                     };
 
-                    _myHubProxy.On<string, string>("addNewMessageToPage",
-                        (name, message) => LocalLogger.Log($"{name} - {message}\n"));
 
-                    _myHubProxy.On<string, string>("fart", Speak);
-                    _myHubProxy.On<string>("getInstalledVoices", GetInstalledVoicesList);
-                    _myHubProxy.On<string>("sendMessageToCurrentUser", SessionManager.SendMessageToCurrentUser);
-                    _myHubProxy.On("getProcesses", GetProcesses);
+                    _myHubProxy.On<string, string>("command", ExecuteCommand);
                     _myHubProxy.On<string, int>("powerAction", PowerAction);
-                    //_myHubProxy.On("captureScreen", CaptureScreen);
                     _myHubProxy.On<string>("ping", Pong);
+                    _myHubProxy.On("requestProcesses", GetProcesses);
                 }
                 LocalLogger.Log("Starting hub connection");
 
@@ -62,6 +60,7 @@ namespace ArktinMonitor.ServiceApp.Services
 
                 LocalLogger.Log("Joining to group");
                 JoinToGroup();
+                //Pong(_connectionId);
             }
             catch (Exception e)
             {
@@ -75,6 +74,113 @@ namespace ArktinMonitor.ServiceApp.Services
                 }
             };
         }
+
+        private static void ExecuteCommand(string command, string attributes)
+        {
+            //TextToSpeechHelper.VoiceDebug($"received command {command}.");// TODO: Remove this
+            //TextToSpeechHelper.VoiceDebug($"with following attributes: {attributes}.");// This too
+            switch (command)
+            {
+                case "speak":
+                    Speak(attributes);
+                    break;
+                case "run":
+                    RunApp(attributes);
+                    break;
+                case "keys":
+                    SendKeys(attributes);
+                    break;
+                case "kill":
+                    KillProcesses(attributes);
+                    break;
+                case "text":
+                    SendTextMessage(attributes);
+                    break;
+                case "volume":
+                    ManageVolume(attributes);
+                    break;
+                case "voices":
+                    GetInstalledVoicesList();
+                    break;
+                case "log":
+                    LocalLogger.Log("Web browser client: " + attributes);
+                    break;
+                case "process":
+                    GetProcessDetails(attributes);
+                    break;
+                case "processes":
+                    GetProcesses();
+                    break;
+                default:
+                    //var message = $"Unsupported command [{command}] with attributes {attributes}";
+                    //LocalLogger.Log(message);
+                    //LogDataOnPage(message);
+                    break;
+            }
+            //var text = $"Command [{command}] with attributes [{attributes}] has been executed";
+            //LocalLogger.Log(text);
+            //LogDataOnPage(text);
+        }
+
+        private static void RunApp(string executablePath)
+        {
+            SessionManager.RunApp(executablePath);
+            var message = $"Following app has been executed: \"{executablePath}\"";
+            LogDataOnPage(message);
+            LocalLogger.Log(message);
+        }
+
+        private static void SendTextMessage(string text)
+        {
+            SessionManager.SendMessageToCurrentUser(text);
+            var message = $"Received text message: \"{text}\"";
+            LogDataOnPage(message);
+            LocalLogger.Log(message);
+        }
+
+        private static void SendKeys(string keys)
+        {
+            SessionManager.SendKeys(keys);
+            var message = $"Received following keys: [{keys}]";
+            LogDataOnPage(message);
+            LocalLogger.Log(message);
+        }
+
+        private static void KillProcesses(string nameOrPid)
+        {
+            var count = ProcessManager.KillThis(nameOrPid);
+            var message = count > 0 ? $"Killed {count} process/es" : "No processed killed";
+            LogDataOnPage(message);
+            LocalLogger.Log(message);
+        }
+
+        private static void GetProcessDetails(string processId)
+        {
+            if (int.TryParse(processId, out var result))
+            {
+                var details = Processes.GetProcessDetails(result);
+                LocalLogger.Log($"Returning details of process: [{processId}]");
+                _myHubProxy.Invoke("FillProcessDetails", JsonLocalDatabase.Instance.Computer.ComputerId, details)
+                    .ContinueWith(
+                        task =>
+                        {
+                            if (!task.IsFaulted) return;
+                            if (task.Exception != null)
+                                LocalLogger.Log(nameof(GetProcessDetails), task.Exception);
+                        });
+            }
+        }
+
+        private static void ManageVolume(string volume)
+        {
+            LogOnPage($"Current volume: {VolumeChanger.Volume}%");
+            if (int.TryParse(volume, out int result))
+            {
+                VolumeChanger.Volume = result;
+                LogOnPage($"Volume changed to {result}%");
+            }
+        }
+
 
         //private static void CaptureScreen()
         //{
@@ -106,7 +212,7 @@ namespace ArktinMonitor.ServiceApp.Services
         //    }
         //}
 
-        private static void GetInstalledVoicesList(string connectionId)
+        private static void GetInstalledVoicesList()
         {
             try
             {
@@ -126,15 +232,10 @@ namespace ArktinMonitor.ServiceApp.Services
             }
         }
 
-        private static void Speak(string text, string languageCodeOrVoiceName)
+        private static void Speak(string text)
         {
-            if (languageCodeOrVoiceName == "debug")
-            {
-                Debug(text);
-                return;
-            }
-            TextToSpeechHelper.Speak(text, languageCodeOrVoiceName);
-            LogOnPage($"Voice message received: \"{text}\"");
+            LogOnPage($"Voice message received: \"{text.Split('|').FirstOrDefault()}\"");
+            TextToSpeechHelper.Speak(text.Split('|').FirstOrDefault(), text.Split('|').ElementAtOrDefault(1));
         }
 
         private static void GetProcesses()
@@ -149,7 +250,7 @@ namespace ArktinMonitor.ServiceApp.Services
                         {
                             if (!task.IsFaulted) return;
                             if (task.Exception != null)
-                                LocalLogger.Log(nameof(GetInstalledVoicesList), task.Exception);
+                                LocalLogger.Log(nameof(GetProcesses), task.Exception);
                         });
             }
             catch (Exception e)
@@ -158,32 +259,6 @@ namespace ArktinMonitor.ServiceApp.Services
             }
         }
 
-        private static void Debug(string data)
-        {
-            if (data.StartsWith("vol"))
-            {
-                LogOnPage($"Current volume: {VolumeChanger.Volume}%");
-                var volume = data.Remove(0, 4);
-                if (int.TryParse(volume, out int result))
-                {
-                    VolumeChanger.Volume = result;
-                    LogOnPage($"Volume changed to {result}%");
-                }
-            }
-            if (data.StartsWith("send"))
-            {
-                SessionManager.Send(data.Remove(0, 5));
-            }
-
-            if (data.StartsWith("kill"))
-            {
-                ProcessManager.KillProcessesByName(data.Remove(0, 5));
-            }
-            if (data.StartsWith("run"))
-            {
-                SessionManager.RunApp($"\"{data.Remove(0, 4)}\"");
-            }
-        }
 
         private static void JoinToGroup()
         {

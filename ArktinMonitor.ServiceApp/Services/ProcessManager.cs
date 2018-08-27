@@ -18,7 +18,7 @@ namespace ArktinMonitor.ServiceApp.Services
             {
                 try
                 {
-//                    LocalLogger.Log($"Killing process: {process.Name} : {process.ProcessId}");
+                    //                    LocalLogger.Log($"Killing process: {process.Name} : {process.ProcessId}");
                     Process.GetProcessById(process.ProcessId).Kill();
                     HubService.LogOnPage($"Killed process: {process.Name} : {process.ProcessId}");
                 }
@@ -28,6 +28,28 @@ namespace ArktinMonitor.ServiceApp.Services
                 }
             }
             return basicProcesses.Count();
+        }
+
+        public static bool KillProcessesById(int processId)
+        {
+            try
+            {
+                var process = Process.GetProcessById(processId);
+                process.Kill();
+                HubService.LogOnPage($"Killed process: {process.ProcessName} : {process.Id}");
+                return false;
+            }
+            catch (Exception e)
+            {
+                LocalLogger.Log(nameof(KillProcessesByName), e);
+                return true;
+            }
+        }
+
+        public static int KillThis(string nameOrPid)
+        {
+            if (int.TryParse(nameOrPid, out var pid)) return KillProcessesById(pid) ? -1 : 1;
+            return KillProcessesByName(nameOrPid);
         }
 
     }

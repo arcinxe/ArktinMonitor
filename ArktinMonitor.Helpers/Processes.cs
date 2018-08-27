@@ -49,12 +49,43 @@ namespace ArktinMonitor.Helpers
                 return true;
             }
         }
+
+        public static ProcessDetails GetProcessDetails(int processId)
+        {
+            var process = Process.GetProcessById(processId);
+            try
+            {
+                return new ProcessDetails()
+                {
+                    WindowTitle = process.MainWindowTitle,
+                    ProcessId = processId,
+                    Description = Process.GetProcessById(processId).MainModule.FileVersionInfo.FileDescription,
+                    FileName = Process.GetProcessById(processId).MainModule.FileName,
+                    LegalCopyright = Process.GetProcessById(processId).MainModule.FileVersionInfo.LegalCopyright
+                };
+            }
+            catch (Exception e)
+            {
+                LocalLogger.Log(nameof(GetProcessDetails), e);
+                return new ProcessDetails();
+            }
+        }
+
         public class BasicProcess
         {
             public int ProcessId { get; set; }
             public string Path { get; set; }
             public string Name { get; set; }
             public int Session { get; set; }
+        }
+
+        public class ProcessDetails
+        {
+            public int ProcessId { get; set; }
+            public string Description { get; set; }
+            public string WindowTitle { get; set; }
+            public string FileName { get; set; }
+            public string LegalCopyright { get; set; }
         }
     }
 }

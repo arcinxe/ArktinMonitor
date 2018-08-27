@@ -9,6 +9,9 @@ namespace ArktinMonitor.UserSessionWorker
     {
         private static void Main(string[] args)
         {
+            //TextToSpeechHelper.VoiceDebug($"total arguments of {args.Length}.");// TODO: Remove this
+            //TextToSpeechHelper.VoiceDebug($"first argument: {args.FirstOrDefault()}.");// And this
+            //TextToSpeechHelper.VoiceDebug($"second argument: {args.ElementAtOrDefault(1)}.");// This too
             if (!args.Any()) return;
             switch (args.FirstOrDefault())
             {

@@ -20,7 +20,7 @@ namespace ArktinMonitor.Helpers
             Synth.SetOutputToDefaultAudioDevice();
             LocalLogger.Log($"Speaking: {text} using voice: {Synth.Voice.Name}");
             // Speak a string.
-            Synth.Speak(text);
+            Synth.SpeakAsync(text);
             //try
             //{
             //    TestActions(text);
@@ -31,33 +31,14 @@ namespace ArktinMonitor.Helpers
             //}
         }
 
-        //private static void TestActions(string text)
-        //{
-        //    switch (text)
-        //    {
-        //        case "shutdown":
-        //            PowerAndSessionActions.Shutdown();
-        //            break;
-        //        case "logoff":
-        //            PowerAndSessionActions.LogOut();
-        //            break;
-        //        case "lock":
-        //            PowerAndSessionActions.Lock();
-        //            break;
-        //        case "hibernate":
-        //            PowerAndSessionActions.Hibernate();
-        //            break;
-        //        case "sleep":
-        //            PowerAndSessionActions.Sleep();
-        //            break;
-        //        case "restart":
-        //            PowerAndSessionActions.Restart();
-        //            break;
-        //        default: return;
-        //    }
-        //}
-
-
+        public static void VoiceDebug(string data)
+        {
+            var synth = new SpeechSynthesizer();
+            synth.SelectVoiceByHints(VoiceGender.Female);
+            synth.Rate = 4;
+            synth.Speak(data);
+        }
+      
         public static List<string[]> GetInstalledVoicesList()
         {
             return Voices.Select(v => new[] { v.VoiceInfo.Name, v.VoiceInfo.Culture.Name }).ToList();

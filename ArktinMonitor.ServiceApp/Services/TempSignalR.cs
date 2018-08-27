@@ -88,7 +88,7 @@ namespace ArktinMonitor.ServiceApp.Services
             {
                 //System.Threading.Thread.Sleep(1000);
 
-                myHubProxy.Invoke("Send", "service", Console.ReadLine()).ContinueWith(task =>
+                myHubProxy.Invoke("SendKeys", "service", Console.ReadLine()).ContinueWith(task =>
                 {
                     if (task.IsFaulted)
                     {

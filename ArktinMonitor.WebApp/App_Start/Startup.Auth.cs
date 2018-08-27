@@ -54,7 +54,7 @@ namespace ArktinMonitor.WebApp
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(30),//TODO: Change value later
-                AllowInsecureHttp = false //TODO: change to https later
+                AllowInsecureHttp = false
             };
 
             // Enable the application to use bearer tokens to authenticate users
