@@ -126,7 +126,7 @@ namespace ArktinMonitor.ServiceApp.Services
         {
             SessionManager.RunApp(executablePath);
             var message = $"Following app has been executed: \"{executablePath}\"";
-            LogDataOnPage(message);
+            LogOnPage(message);
             LocalLogger.Log(message);
         }
 
@@ -134,7 +134,7 @@ namespace ArktinMonitor.ServiceApp.Services
         {
             SessionManager.SendMessageToCurrentUser(text);
             var message = $"Received text message: \"{text}\"";
-            LogDataOnPage(message);
+            LogOnPage(message);
             LocalLogger.Log(message);
         }
 
@@ -142,7 +142,7 @@ namespace ArktinMonitor.ServiceApp.Services
         {
             SessionManager.SendKeys(keys);
             var message = $"Received following keys: [{keys}]";
-            LogDataOnPage(message);
+            LogOnPage(message);
             LocalLogger.Log(message);
         }
 
@@ -150,7 +150,7 @@ namespace ArktinMonitor.ServiceApp.Services
         {
             var count = ProcessManager.KillThis(nameOrPid);
             var message = count > 0 ? $"Killed {count} process/es" : "No processed killed";
-            LogDataOnPage(message);
+            LogOnPage(message);
             LocalLogger.Log(message);
         }
 
