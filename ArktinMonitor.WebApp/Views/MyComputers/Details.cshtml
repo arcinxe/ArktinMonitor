@@ -88,12 +88,13 @@
     <div class="col-md-4">
         <div class="card-dark">
             <h4 class="arktinHeader">Processes</h4>
+            <a id="refresh-processes" href="#">Refresh</a>
             <div id="div-processes">
                 <table style="width: 100%" id="table-processes" class="table table-striped table-hover">
                     <tr id="tableHeader">
-                        <th>
+                        @*<th>
                             Name
-                        </th>
+                        </th>*@
                     </tr>
                 </table>
             </div>
@@ -124,12 +125,12 @@
                     <h4 id="modal-process-title" class="modal-title">Process name</h4>
                 </div>
                 <div class="modal-body">
-                    <p id="modal-process-description">Description</p>
+                    @*<p id="modal-process-description">Description</p>*@
                     <p id="modal-process-path">Path: </p>
+                    <p id="modal-process-legal">Legal copyright: </p>
                     <p id="modal-process-pid">PID: </p>
                     <p id="modal-process-session">Session ID: </p>
-                    <p id="modal-process-window-title">Title: </p>
-                    <p id="modal-process-legal">Legal copyright: </p>
+                    @*<p id="modal-process-window-title">Title: </p>*@
                 </div>
                 <div class="modal-footer">
                     <button id="modal-process-kill-button" type="button" class="btn btn-danger" data-dismiss="modal">Kill</button>
@@ -162,6 +163,7 @@
                 if (id == $("#computer-details").attr("data-id")) {
                     $("#connection-icon").attr("d",
                         "M12,18A6,6 0 0,1 6,12C6,11 6.25,10.03 6.7,9.2L5.24,7.74C4.46,8.97 4,10.43 4,12A8,8 0 0,0 12,20V23L16,19L12,15M12,4V1L8,5L12,9V6A6,6 0 0,1 18,12C18,13 17.75,13.97 17.3,14.8L18.76,16.26C19.54,15.03 20,13.57 20,12A8,8 0 0,0 12,4Z");
+                    hubConnection.server.requestProcesses($("#computer-details").attr("data-id"));
                 }
             };
             hubConnection.client.logOnPage = function (text) {
@@ -190,6 +192,7 @@
                     $(e.currentTarget).find('#modal-process-path').text("Path: " + process.Path);
                     $(e.currentTarget).find('#modal-process-session').text("Session ID: " + process.Session);
                     hubConnection.server.fart($("#computer-details").attr("data-id"), "process", processId);
+                    $("#modal-process-kill-button").off();
                     $("#modal-process-kill-button").click(function (e) {
                         hubConnection.server.fart($("#computer-details").attr("data-id"), "kill", processId);
                         return false;
@@ -197,7 +200,8 @@
                 });
             };
             hubConnection.client.updateProcessDetails = function (processDetails) {
-                $("#modal-process-window-title").text("Window title: " + processDetails.WindowTitle);
+                //$("#modal-process-window-title").text("Window title: " + processDetails.WindowTitle);
+                $("#modal-process-legal").text("Legal copyright: " + processDetails.LegalCopyright);
             };
             // Start the connection.
             $.connection.hub.start().done(function () {
@@ -250,7 +254,10 @@
                 $("#language").click(function () {
                     hubConnection.server.fart($("#computer-details").attr("data-id"), $("#tts-message").val(), $("#txt-message").val());
                 });
-
+                $("#refresh-processes").click(function () {
+                    $("#table-processes").find('tr').slice(1).remove()
+                    hubConnection.server.requestProcesses($("#computer-details").attr("data-id"));
+                });
 
                 function checkSignalrConnection() {
                     // Call the Send method on the hub.
@@ -262,7 +269,7 @@
                 $("#computer-details").click(function (e) {
                     checkSignalrConnection();
                 });
-                hubConnection.server.requestProcesses($("#computer-details").attr("data-id"));
+                //hubConnection.server.requestProcesses($("#computer-details").attr("data-id"));
             });
         });
 

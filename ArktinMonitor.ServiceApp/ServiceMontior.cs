@@ -16,7 +16,7 @@ namespace ArktinMonitor.ServiceApp
         {
             try
             {
-                System.IO.File.Create(@"D:\start.txt");
+                //System.IO.File.Create(@"D:\start.txt");
                 Monitor.Run();
             }
             catch (Exception)
@@ -29,7 +29,7 @@ namespace ArktinMonitor.ServiceApp
         {
             try
             {
-                System.IO.File.Create(@"D:\stop.txt");
+                //System.IO.File.Create(@"D:\stop.txt");
                 Monitor.Stop();
             }
             catch (Exception)

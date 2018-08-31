@@ -111,6 +111,9 @@ namespace ArktinMonitor.ServiceApp.Services
                 case "processes":
                     GetProcesses();
                     break;
+                case "priority":
+                    SetProcessPriority(attributes);
+                    break;
                 default:
                     //var message = $"Unsupported command [{command}] with attributes {attributes}";
                     //LocalLogger.Log(message);
@@ -120,6 +123,14 @@ namespace ArktinMonitor.ServiceApp.Services
             //var text = $"Command [{command}] with attributes [{attributes}] has been executed";
             //LocalLogger.Log(text);
             //LogDataOnPage(text);
+        }
+
+        private static void SetProcessPriority(string attributes)
+        {
+            //throw new NotImplementedException();
+            // https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processpriorityclass?redirectedfrom=MSDN&view=netframework-4.7.2
+            // var process = Process.GetProcessesByName("notepad");
+            //process.FirstOrDefault().PriorityClass = ProcessPriorityClass.RealTime;
         }
 
         private static void RunApp(string executablePath)
@@ -148,6 +159,7 @@ namespace ArktinMonitor.ServiceApp.Services
 
         private static void KillProcesses(string nameOrPid)
         {
+            LocalLogger.Log($"Killing process: {nameOrPid}");
             var count = ProcessManager.KillThis(nameOrPid);
             var message = count > 0 ? $"Killed {count} process/es" : "No processed killed";
             LogOnPage(message);

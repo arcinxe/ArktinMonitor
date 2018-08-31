@@ -43,7 +43,7 @@ namespace ArktinMonitor.ServiceApp
                 hostConfigurator.SetInstanceName("ArktinMonitorService");
 
 
-                hostConfigurator.StartAutomatically();
+                hostConfigurator.StartAutomaticallyDelayed();
 
                 hostConfigurator.EnableServiceRecovery(r =>
                 {
@@ -54,7 +54,7 @@ namespace ArktinMonitor.ServiceApp
                     r.SetResetPeriod(0);
                 });
 
-                hostConfigurator.DependsOnEventLog(); // Windows Event Log
+                //hostConfigurator.DependsOnEventLog(); // Windows Event Log
 
                 hostConfigurator.EnableShutdown();
                 hostConfigurator.EnablePauseAndContinue();
