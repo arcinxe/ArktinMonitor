@@ -222,32 +222,32 @@
                     }
                 });
                 $("#shutdown-button").click(function (e) {
-                    if (confirm("Do you really want to shutdown your pc?"))
+                    if (confirm("Do you really want to shutdown @Model.Name?"))
                         hubConnection.server.powerAction($("#computer-details").attr("data-id"), "shutdown", 1);
                     return false;
                 });
                 $("#restart-button").click(function (e) {
-                    if (confirm("Do you really want to restart your pc?"))
+                    if (confirm("Do you really want to restart @Model.Name?"))
                         hubConnection.server.powerAction($("#computer-details").attr("data-id"), "restart", 1);
                     return false;
                 });
                 $("#lock-button").click(function (e) {
-                    if (confirm("Do you really want to lock your pc?"))
+                    if (confirm("Do you really want to lock @Model.Name?"))
                         hubConnection.server.powerAction($("#computer-details").attr("data-id"), "lock", 1);
                     return false;
                 });
                 $("#logoff-button").click(function (e) {
-                    if (confirm("Do you really want to log off current user from your pc?"))
+                    if (confirm("Do you really want to log off current user from @Model.Name?"))
                         hubConnection.server.powerAction($("#computer-details").attr("data-id"), "logoff", 1);
                     return false;
                 });
                 $("#hibernate-button").click(function (e) {
-                    if (confirm("Do you really want to hibernate your pc?"))
+                    if (confirm("Do you really want to hibernate @Model.Name?"))
                         hubConnection.server.powerAction($("#computer-details").attr("data-id"), "hibernate", 1);
                     return false;
                 });
                 $("#sleep-button").click(function (e) {
-                    if (confirm("Do you really want to put your pc to sleep mode?"))
+                    if (confirm("Do you really want to put @Model.Name to sleep mode?"))
                         hubConnection.server.powerAction($("#computer-details").attr("data-id"), "sleep", 1);
                     return false;
                 });
